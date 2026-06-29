@@ -2209,6 +2209,7 @@ gcc main.c -o main
       <div class="chip" onclick="scrollToWXChapter(8)">自定义组件</div>
       <div class="chip" onclick="scrollToWXChapter(9)">程序设计大题</div>
       <div class="chip" onclick="scrollToWXChapter(10)">📝 100题速记</div>
+      <div class="chip" onclick="scrollToWXChapter(11)">📝 双项选择题</div>
     </div>
 
     <!-- ============= CH1 基础概念与配置 ============= -->
@@ -2800,6 +2801,81 @@ gcc main.c -o main
 }</pre></div>
         </div>
 
+        <div class="kb-card">
+          <h4>📝 题型7：进阶轮播图 · 竖向 + 自定义指示器 <span class="tag">B卷必考</span></h4>
+          <p>需求：竖向轮播、自定义指示器颜色、间隔2500ms、循环自动播放。</p>
+          <div class="codebox"><div class="codebox-head"><span class="lang">wxml</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-tag">&lt;swiper</span> <span class="c-at">indicator-dots</span>=<span class="c-str">"true"</span> <span class="c-at">autoplay</span>=<span class="c-str">"true"</span>
+  <span class="c-at">circular</span>=<span class="c-str">"true"</span> <span class="c-at">interval</span>=<span class="c-str">"2500"</span>
+  <span class="c-at">vertical</span>=<span class="c-str">"true"</span>
+  <span class="c-at">indicator-color</span>=<span class="c-str">"rgba(255,255,255,.3)"</span>
+  <span class="c-at">indicator-active-color</span>=<span class="c-str">"#07c160"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;swiper-item&gt;</span><span class="c-tag">&lt;image</span> <span class="c-at">src</span>=<span class="c-str">"/img/1.jpg"</span><span class="c-tag">/&gt;&lt;/swiper-item&gt;</span>
+  <span class="c-tag">&lt;swiper-item&gt;</span><span class="c-tag">&lt;image</span> <span class="c-at">src</span>=<span class="c-str">"/img/2.jpg"</span><span class="c-tag">/&gt;&lt;/swiper-item&gt;</span>
+  <span class="c-tag">&lt;swiper-item&gt;</span><span class="c-tag">&lt;image</span> <span class="c-at">src</span>=<span class="c-str">"/img/3.jpg"</span><span class="c-tag">/&gt;&lt;/swiper-item&gt;</span>
+<span class="c-tag">&lt;/swiper&gt;</span></pre></div>
+          <div class="callout callout-key"><strong>要点：</strong>vertical=true 控制竖向轮播；indicator-color / indicator-active-color 自定义指示器颜色。</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 题型8：navigator 标签跳转 · 页面传参 <span class="tag">A卷必考</span></h4>
+          <p>需求：首页 3 个跳转按钮使用 &lt;navigator&gt; 跳转至详情页，传递商品名称和价格，详情页接收展示。</p>
+          <div class="codebox"><div class="codebox-head"><span class="lang">wxml — 首页</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-tag">&lt;navigator</span> <span class="c-at">url</span>=<span class="c-str">"/pages/detail/detail?name=商品A&amp;price=99"</span><span class="c-tag">&gt;</span>商品A - ¥99<span class="c-tag">&lt;/navigator&gt;</span>
+<span class="c-tag">&lt;navigator</span> <span class="c-at">url</span>=<span class="c-str">"/pages/detail/detail?name=商品B&amp;price=199"</span><span class="c-tag">&gt;</span>商品B - ¥199<span class="c-tag">&lt;/navigator&gt;</span>
+<span class="c-tag">&lt;navigator</span> <span class="c-at">url</span>=<span class="c-str">"/pages/detail/detail?name=商品C&amp;price=299"</span><span class="c-tag">&gt;</span>商品C - ¥299<span class="c-tag">&lt;/navigator&gt;</span></pre></div>
+          <div class="codebox"><div class="codebox-head"><span class="lang">js — 详情页 detail.js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-fn">Page</span>({
+  <span class="c-fn">onLoad</span>(<span class="c-fn">options</span>) {
+    <span class="c-cm">// options.name / options.price 接收 URL 参数</span>
+    <span class="c-fn">this</span>.<span class="c-fn">setData</span>({
+      <span class="c-fn">name</span>: <span class="c-fn">options</span>.<span class="c-fn">name</span>,
+      <span class="c-fn">price</span>: <span class="c-fn">options</span>.<span class="c-fn">price</span>
+    })
+  }
+})</pre></div>
+          <div class="callout callout-key"><strong>要点：</strong>&lt;navigator&gt; 的 url 属性传参用 ?key=value&amp;key2=value2；onLoad(options) 接收参数。</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 题型9：API 跳转 · navigateTo / redirectTo / navigateBack <span class="tag">A卷必考</span></h4>
+          <p>需求：页面三个按钮，分别实现 navigateTo 跳转、redirectTo 重定向、navigateBack 返回上一页。</p>
+          <div class="codebox"><div class="codebox-head"><span class="lang">wxml</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-tag">&lt;button</span> <span class="c-at">bindtap</span>=<span class="c-str">"goNav"</span><span class="c-tag">&gt;</span>navigateTo 跳转<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-at">bindtap</span>=<span class="c-str">"goRedirect"</span><span class="c-tag">&gt;</span>redirectTo 重定向<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-at">bindtap</span>=<span class="c-str">"goBack"</span><span class="c-tag">&gt;</span>navigateBack 返回<span class="c-tag">&lt;/button&gt;</span></pre></div>
+          <div class="codebox"><div class="codebox-head"><span class="lang">js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-fn">Page</span>({
+  <span class="c-fn">goNav</span>() {
+    <span class="c-fn">wx</span>.<span class="c-fn">navigateTo</span>({ <span class="c-fn">url</span>: <span class="c-str">'/pages/logs/logs'</span> })
+  },
+  <span class="c-fn">goRedirect</span>() {
+    <span class="c-fn">wx</span>.<span class="c-fn">redirectTo</span>({ <span class="c-fn">url</span>: <span class="c-str">'/pages/logs/logs'</span> })
+  },
+  <span class="c-fn">goBack</span>() {
+    <span class="c-fn">wx</span>.<span class="c-fn">navigateBack</span>({ <span class="c-fn">delta</span>: <span class="c-num">1</span> })
+  }
+})</pre></div>
+          <div class="callout callout-warn"><strong>区别：</strong>navigateTo 保留当前页（可返回）；redirectTo 关闭当前页（不可返回）；navigateBack 返回上一页。navigateTo 不可跳转 tabBar 页！</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 题型10：scroll-view 纵向滚动列表 <span class="tag">B卷必考</span></h4>
+          <p>需求：定义多条商品数据，使用 scroll-view 实现纵向滚动列表。</p>
+          <div class="codebox"><div class="codebox-head"><span class="lang">js — data</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-fn">Page</span>({
+  <span class="c-fn">data</span>: {
+    <span class="c-fn">goods</span>: [
+      { <span class="c-fn">id</span>: <span class="c-num">1</span>, <span class="c-fn">name</span>: <span class="c-str">'苹果'</span>, <span class="c-fn">price</span>: <span class="c-num">5</span> },
+      { <span class="c-fn">id</span>: <span class="c-num">2</span>, <span class="c-fn">name</span>: <span class="c-str">'香蕉'</span>, <span class="c-fn">price</span>: <span class="c-num">3</span> },
+      { <span class="c-fn">id</span>: <span class="c-num">3</span>, <span class="c-fn">name</span>: <span class="c-str">'橙子'</span>, <span class="c-fn">price</span>: <span class="c-num">4</span> },
+      { <span class="c-fn">id</span>: <span class="c-num">4</span>, <span class="c-fn">name</span>: <span class="c-str">'葡萄'</span>, <span class="c-fn">price</span>: <span class="c-num">8</span> },
+      { <span class="c-fn">id</span>: <span class="c-num">5</span>, <span class="c-fn">name</span>: <span class="c-str">'草莓'</span>, <span class="c-fn">price</span>: <span class="c-num">12</span> }
+    ]
+  }
+})</pre></div>
+          <div class="codebox"><div class="codebox-head"><span class="lang">wxml</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-tag">&lt;scroll-view</span> <span class="c-at">scroll-y</span>=<span class="c-str">"true"</span> <span class="c-at">style</span>=<span class="c-str">"height:400rpx"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;view</span> <span class="c-at">wx:for</span>=<span class="c-str">"{{goods}}"</span> <span class="c-at">wx:key</span>=<span class="c-str">"id"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;text&gt;</span>{{item.name}} - ¥{{item.price}}<span class="c-tag">&lt;/text&gt;</span>
+  <span class="c-tag">&lt;/view&gt;</span>
+<span class="c-tag">&lt;/scroll-view&gt;</span></pre></div>
+          <div class="callout callout-key"><strong>要点：</strong>scroll-y=true 开启纵向滚动；必须设置固定高度（style="height:xxx"）才有滚动效果！scroll-view 搭配 wx:for 实现长列表滚动。</div>
+        </div>
+
         <div class="callout callout-tip"><strong>练习方法：</strong>每道大题分3遍手写：第1遍看提示写 → 第2遍遮答案默写 → 第3遍完整独立书写。注意区分 wxml（结构）、wxss（样式）、js（逻辑）三块代码！</div>
 
       </div>
@@ -2958,6 +3034,276 @@ gcc main.c -o main
         </div>
 
         <div class="callout callout-tip"><strong>考前策略：</strong>通读以上知识点 → 重点背诵带 <strong>加粗</strong> 的关键词 → 对照前10章代码手写练习 → 考试稳过！</div>
+
+      </div>
+    </div>
+
+    <!-- ============= CH12 双项选择题 ============= -->
+    <div class="chapter-section" id="wx-ch11">
+      <div class="chapter-head" onclick="toggleBody(this)">
+        <div class="chapter-num">12</div>
+        <h3>双项选择题 · 40题精练 · 全部答案</h3>
+        <span class="chapter-toggle">▼</span>
+      </div>
+      <div class="chapter-body open">
+
+        <div class="kb-card">
+          <h4>📝 第一组 1-10</h4>
+
+          <p><strong>1.</strong> 微信开发者工具调试面板中，用于打印日志、查看页面 data 数据的面板是（）</p>
+          <ul>
+            <li>A. Console 面板</li><li>B. Sources 面板</li><li>C. AppData 面板</li><li>D. Network 面板</li><li>E. Debug 面板</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、C（Console 打印日志，AppData 查看 data 数据）</div>
+
+          <p><strong>2.</strong> 关于小程序配置文件功能描述正确的两项是（）</p>
+          <ul>
+            <li>A. project.config.json 保存本地开发配置</li><li>B. app.js 用于编写页面样式代码</li><li>C. app.json 配置页面路由与全局窗口</li><li>D. pages 目录存放全局样式文件</li><li>E. index.config.json 全局配置文件</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、C（project.config.json 保存开发配置，app.json 配置路由与窗口）</div>
+
+          <p><strong>3.</strong> 小程序样式文件生效范围说法正确的是（）</p>
+          <ul>
+            <li>A. app.wxss 全局公共样式</li><li>B. page.json 内可写 CSS 代码</li><li>C. 页面 wxss 仅作用于当前页面</li><li>D. index.js 控制组件样式布局</li><li>E. app.json 定义样式属性</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、C（app.wxss 全局生效，页面 wxss 仅当前页面生效）</div>
+
+          <p><strong>4.</strong> 小程序相比原生 App 的优势包含（）</p>
+          <ul>
+            <li>A. 可脱离微信独立运行</li><li>B. 无需下载，扫码直接打开</li><li>C. 开发周期长、成本高</li><li>D. 自动静默更新，无需手动升级</li><li>E. 无法推送服务消息</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（免安装即用、自动静默更新）</div>
+
+          <p><strong>5.</strong> WXSS 选择器语法规范描述正确两项（）</p>
+          <ul>
+            <li>A. id 可页面重复使用</li><li>B. element 选择器通过组件名匹配元素</li><li>C. class 允许多组件共用同名类</li><li>D. view:after 在组件开头插入内容</li><li>E. 小程序原生支持 * 通配符选择器</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、C（element 按组件名匹配，class 可多组件共用）</div>
+
+          <p><strong>6.</strong> 开发者工具新建空白小程序项目说法正确（）</p>
+          <ul>
+            <li>A. 只能用第三方工具创建</li><li>B. 支持正式 AppID 与测试号两种模式</li><li>C. 空白模板自动生成 app.json、project.config.json</li><li>D. 测试号项目可直接上线</li><li>E. 创建后项目名称不可修改</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、C（支持正式/测试号，空白模板自动生成配置）</div>
+
+          <p><strong>7.</strong> 下列不属于 App 应用生命周期的函数是（）</p>
+          <ul>
+            <li>A. onLaunch</li><li>B. onLoad</li><li>C. onShow</li><li>D. onUnload</li><li>E. onHide</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（onLoad、onUnload 属于 Page 生命周期）</div>
+
+          <p><strong>8.</strong> 下列选项中，属于 BackgroundAudioManager 监听方法（）</p>
+          <ul>
+            <li>A. onPlay</li><li>B. onStop</li><li>C. onEnd</li><li>D. onError</li><li>E. videoSrc</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、B（onPlay 播放监听、onStop 停止监听）</div>
+
+          <p><strong>9.</strong> tabBar 根节点内置标准属性为（）</p>
+          <ul>
+            <li>A. backgroundImg</li><li>B. color</li><li>C. iconSize</li><li>D. list</li><li>E. border</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（color 文字颜色、list 导航项数组）</div>
+
+          <p><strong>10.</strong> wx.request 网络请求符合微信规范的两项（）</p>
+          <ul>
+            <li>A. 可随意请求任意外网域名</li><li>B. 仅支持 HTTPS 协议</li><li>C. URL 可携带端口号</li><li>D. complete 成功失败都会执行</li><li>E. header 可修改 Referer</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（仅支持 HTTPS，complete 回调始终执行）</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 第二组 11-20</h4>
+
+          <p><strong>11.</strong> 开发者工具主界面核心组成模块（）</p>
+          <ul>
+            <li>A. 数据库面板</li><li>B. 模拟器</li><li>C. 音频播放器</li><li>D. 编辑器</li><li>E. 资源管理器</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（模拟器 + 编辑器是核心模块）</div>
+
+          <p><strong>12.</strong> 小程序运行环境特点描述正确两项（）</p>
+          <ul>
+            <li>A. 需要安装包下载使用</li><li>B. 依托微信客户端运行</li><li>C. 和网页 WebApp 入口完全相同</li><li>D. 兼容安卓、iOS 双平台</li><li>E. 可脱离微信独立启动</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（依托微信运行，跨双平台）</div>
+
+          <p><strong>13.</strong> 开发者工具下载与模板规则正确（）</p>
+          <ul>
+            <li>A. 仅 Windows 系统支持安装</li><li>B. 公众平台官网可下载安装包</li><li>C. 测试号无 AppID 也能直接上线</li><li>D. 分为小程序、插件两类启动模板</li><li>E. 开发插件使用普通小程序模板</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（官网下载安装包，分小程序/插件模板）</div>
+
+          <p><strong>14.</strong> 下列选项中，关于微信小程序事件说法正确的是（）</p>
+          <ul>
+            <li>A. 微信小程序中事件分为冒泡事件和非冒泡事件</li><li>B. 事件对象可以携带额外信息，如 id, dataset, touches</li><li>C. bind 为组件绑定非冒泡事件，catch 则绑定冒泡事件</li><li>D. 同一组件只能绑定一次事件处理函数</li><li>E. 小程序事件不支持冒泡机制</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、B（事件分冒泡/非冒泡两类，事件对象可携带额外信息）</div>
+
+          <p><strong>15.</strong> swiper 轮播基础展示属性（）</p>
+          <ul>
+            <li>A. disabled</li><li>B. indicator-dots</li><li>C. border-radius</li><li>D. autoplay</li><li>E. bindchange</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（indicator-dots 显示指示器，autoplay 自动播放）</div>
+
+          <p><strong>16.</strong> 小程序事件相关规则描述正确两项（）</p>
+          <ul>
+            <li>A. catch 绑定允许事件冒泡</li><li>B. 事件分为冒泡、非冒泡两类</li><li>C. 单个组件仅能绑定一个事件函数</li><li>D. 事件对象携带 dataset、touches 数据</li><li>E. bind 绑定阻止冒泡传递</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（事件分两类，事件对象含 dataset/touches）</div>
+
+          <p><strong>17.</strong> app.js 应用入口文件规则正确（）</p>
+          <ul>
+            <li>A. App () 可在页面 js 重复调用</li><li>B. App () 注册全局小程序实例</li><li>C. getApp () 只能在页面调用</li><li>D. getApp () 获取全局应用对象</li><li>E. app.js 不注册 App 也能运行</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（App() 注册实例，getApp() 获取对象）</div>
+
+          <p><strong>18.</strong> BackgroundAudioManager 基础属性（）</p>
+          <ul>
+            <li>A. width</li><li>B. src</li><li>C. webUrl</li><li>D. title</li><li>E. loop</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（src 音频资源地址、title 音频标题）</div>
+
+          <p><strong>19.</strong> 微信小程序 tabBar 的配置中，常用的属性包含（）</p>
+          <ul>
+            <li>A. color</li><li>B. selected</li><li>C. list</li><li>D. position</li><li>E. backgroundImg</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、C（color 文字颜色、list 导航项数组）</div>
+
+          <p><strong>20.</strong> scroll-view 控制滚动方向核心属性（）</p>
+          <ul>
+            <li>A. placeholder</li><li>B. scroll-x</li><li>C. bindinput</li><li>D. scroll-y</li><li>E. enable-flex</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（scroll-x 横向、scroll-y 纵向）</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 第三组 21-30</h4>
+
+          <p><strong>21.</strong> Console 控制台具备的功能（）</p>
+          <ul>
+            <li>A. 查看完整网络请求报文</li><li>B. 打印调试日志</li><li>C. 读取全部项目资源文件</li><li>D. 临时运行 JS 代码调试</li><li>E. 读取本地 Storage 缓存</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（打印日志、运行 JS 调试代码）</div>
+
+          <p><strong>22.</strong> pages 路由与页面配置规则正确两项（）</p>
+          <ul>
+            <li>A. pages 数组最后一项是首页</li><li>B. pages 数组第一项为默认首页</li><li>C. page.json 无法覆盖 app.json 配置</li><li>D. 每个页面独立对应 page.json 文件</li><li>E. page.json 可直接写 CSS 样式</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（首项为首页，每个页面独立 page.json）</div>
+
+          <p><strong>23.</strong> 不属于页面 Page 生命周期的回调（）</p>
+          <ul>
+            <li>A. onReady</li><li>B. onLaunch</li><li>C. onUnload</li><li>D. onPageNotFound</li><li>E. onHide</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（onLaunch、onPageNotFound 属于 App 生命周期）</div>
+
+          <p><strong>24.</strong> text 文本组件原生属性（）</p>
+          <ul>
+            <li>A. src</li><li>B. selectable</li><li>C. border</li><li>D. space</li><li>E. scroll-y</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（selectable 可选、space 空格显示方式）</div>
+
+          <p><strong>25.</strong> WXSS class、id 选择器使用规范（）</p>
+          <ul>
+            <li>A. id 优先级低于 class</li><li>B. class 可多个组件共用</li><li>C. class 样式用 #定义</li><li>D. id 页面内建议唯一不重复</li><li>E. id 样式用。定义</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（class 可共用，id 建议唯一）</div>
+
+          <p><strong>26.</strong> 测试号开发小程序存在的限制（）</p>
+          <ul>
+            <li>A. 可直接提交上线审核</li><li>B. 无法发布上线</li><li>C. 无需配置合法 request 域名</li><li>D. 访问外网必须配置合法域名</li><li>E. 不能使用模拟器预览</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（测试号无法上线，访问外网需合法域名）</div>
+
+          <p><strong>27.</strong> tabBar 的 list 条目必填属性（）</p>
+          <ul>
+            <li>A. width</li><li>B. pagePath</li><li>C. borderType</li><li>D. text</li><li>E. height</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（pagePath 页面路径、text 文字标签）</div>
+
+          <p><strong>28.</strong> wx.request 的 header 可自定义内容（）</p>
+          <ul>
+            <li>A. Referer（微信固定不可改）</li><li>B. content-type 设置请求格式</li><li>C. host 域名锁定不可修改</li><li>D. token 存储登录凭证</li><li>E. user-agent 禁止自定义</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（可自定义 content-type、token 等）</div>
+
+          <p><strong>29.</strong> 小程序原生多媒体组件包含（）</p>
+          <ul>
+            <li>A. &lt;table&gt;</li><li>B. &lt;video&gt;</li><li>C. &lt;navigator&gt;</li><li>D. &lt;radio&gt;</li><li>E. &lt;button&gt;</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、C（&lt;video&gt; 视频组件属于多媒体，&lt;navigator&gt; 可导航打开多媒体内容）</div>
+
+          <p><strong>30.</strong> 小程序默认冒泡触摸事件为（）</p>
+          <ul>
+            <li>A. input</li><li>B. tap</li><li>C. load</li><li>D. touchstart</li><li>E. scroll</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（tap 单击、touchstart 触摸开始均冒泡）</div>
+        </div>
+
+        <div class="kb-card">
+          <h4>📝 第四组 31-40</h4>
+
+          <p><strong>31.</strong> 全局 App 实例使用规则正确两项（）</p>
+          <ul>
+            <li>A. 页面销毁清空全局数据</li><li>B. 可挂载全局变量、工具函数</li><li>C. getApp () 不能在 app.js 内部调用</li><li>D. 全页面共用同一个 App 实例</li><li>E. 仅支持存储字符串数据</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（可挂载全局变量，全页面共用同一实例）</div>
+
+          <p><strong>32.</strong> swiper 控制自动轮播、切换间隔属性（）</p>
+          <ul>
+            <li>A. vertical</li><li>B. autoplay</li><li>C. circular</li><li>D. interval</li><li>E. duration</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（autoplay 自动轮播、interval 切换间隔）</div>
+
+          <p><strong>33.</strong> scroll-view 实现横向滚动必备配置（）</p>
+          <ul>
+            <li>A. scroll-y="true"</li><li>B. scroll-x="true"</li><li>C. enable-flex="true"</li><li>D. 父容器设置 white-space: nowrap</li><li>E. scroll-top="0"</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（scroll-x 开启横向滚动，父容器 nowrap 禁止换行）</div>
+
+          <p><strong>34.</strong> BackgroundAudioManager 无法实现的功能（）</p>
+          <ul>
+            <li>A. 锁屏后台播放音频</li><li>B. 调整视频画面尺寸</li><li>C. 监听音频播放结束</li><li>D. 渲染轮播指示器</li><li>E. 设置音频封面图片</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（BAM 是音频管理器，无法处理视频画面和轮播指示器）</div>
+
+          <p><strong>35.</strong> bind 与 catch 事件修饰符区别正确两项（）</p>
+          <ul>
+            <li>A. bind 阻断事件冒泡</li><li>B. bind 允许事件向上冒泡</li><li>C. catch 不影响冒泡传递</li><li>D. catch 终止事件向上冒泡</li><li>E. 两者冒泡逻辑无区别</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>B、D（bind 允许冒泡、catch 阻止冒泡）</div>
+
+          <p><strong>36.</strong> 仅作用于单个页面、不全局生效的文件（）</p>
+          <ul>
+            <li>A. index.js</li><li>B. index.wxss</li><li>C. app.wxss</li><li>D. app.json</li><li>E. project.config.json</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、B（页面 js 和 wxss 仅作用于当前页面）</div>
+
+          <p><strong>37.</strong> input 组件 type 合法取值（）</p>
+          <ul>
+            <li>A. number</li><li>B. password</li><li>C. video</li><li>D. radio</li><li>E. scroll</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、B（number 数字键盘、password 密码输入）</div>
+
+          <p><strong>38.</strong> 小程序上线前必须完成的配置（）</p>
+          <ul>
+            <li>A. 公众平台配置 request 合法域名</li><li>B. 更换正式 AppID，弃用测试号</li><li>C. 删除所有 page.json 配置</li><li>D. 注释 tabBar 全部代码</li><li>E. 清空 app.js 全局自定义变量</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、B（配置合法域名、使用正式 AppID）</div>
+
+          <p><strong>39.</strong> Network 调试面板可查看的请求信息（）</p>
+          <ul>
+            <li>A. 请求地址、请求方式</li><li>B. 页面全部 data 绑定数据</li><li>C. 接口返回数据、状态码</li><li>D. Storage 本地缓存内容</li><li>E. App 生命周期打印日志</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、C（Network 显示请求地址/方式、返回数据/状态码）</div>
+
+          <p><strong>40.</strong> 下面关于小程序 app.js 文件的说法，正确的是（）</p>
+          <ul>
+            <li>A. app.js 文件是一个应用级逻辑代码文件</li><li>B. app.js 文件通过 App ({}) 函数定义应用程序，通过 getApp ( ) 函数来获取应用</li><li>C. getApp ( ) 方法返回的是对象</li><li>D. App ( ) 必须在 app.js 中注册，且不能注册多个</li><li>E. app.js 可以重复注册多个 App 实例</li>
+          </ul>
+          <div class="callout callout-key"><strong>✅ 答案：</strong>A、D（app.js 是应用级逻辑代码，App() 必须注册且不能多次注册）</div>
+        </div>
+
+        <div class="callout callout-tip"><strong>刷题策略：</strong>先通读题目自选答案 → 对比下方答案 → 对错题重点标记反复看 → 理解每个选项为什么对/错。</div>
 
       </div>
     </div>
