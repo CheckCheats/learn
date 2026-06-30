@@ -82,9 +82,7 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ═══════════════ HERO SECTION ═══════════════ */
 .hero{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:100px 24px 60px}
 .hero-content{position:relative;z-index:1}
-50%{transform:translateY(-6px)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
 .hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
 .hero h1 .gradient{background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-2);max-width:500px;margin:0 auto 12px}
@@ -385,16 +383,9 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
   .cursor-glow{display:none}
   }
 
-50%{opacity:1}}
-
 </style>
 </head>
 <body>
-
-<div class="bar-wrap"><div class="bar"></div></div>
-<div class="status">加载中...</div>
-</div>
-
 <!-- PARTICLES -->
 <!-- CURSOR GLOW -->
 <!-- PROGRESS -->
@@ -3938,321 +3929,236 @@ module.exports = { formatPrice: formatPrice, formatDate: formatDate, limitText: 
 <!-- BACK TO TOP -->
 <button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>
-/* ═══════════ LOADER ═══════════ */
-(function(){var l=document.getElementById('loader');if(l){setTimeout(function(){l.classList.add('hide')},1200)}})();
-
-const html = document.documentElement;
-function toggleTheme(){
-  const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
-  html.dataset.theme = next;
-  document.getElementById('themeBtn').textContent = next === 'dark' ? '🌙' : '☀️';
-  localStorage.setItem('ev-theme', next);
-}
-(function(){
-  const saved = localStorage.getItem('ev-theme');
-  if(saved){ html.dataset.theme = saved; document.getElementById('themeBtn').textContent = saved === 'dark' ? '🌙' : '☀️'; }
-})();
-/* ═══════════ NAV ═══════════ */
-function navigate(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page)?.classList.add('active');
-  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
-  const links = document.querySelectorAll('.nav-link');
-  if(page==='home') links[0]?.classList.add('active');
-  if(page==='vue3') links[1]?.classList.add('active');
-  if(page==='softtest') links[2]?.classList.add('active');
-  if(page==='netos') links[3]?.classList.add('active');
-  if(page==='python') links[4]?.classList.add('active');
-  if(page==='wxmini') links[5]?.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(window.innerWidth<769) closeMenu();
-}
-function toggleMenu(){
-  document.getElementById('navLinks').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('show');
-}
-function closeMenu(){
-  document.getElementById('navLinks').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
-/* ═══════════ SCROLL EFFECTS ═══════════ */
-const topnav = document.getElementById('topnav');
-const btt = document.getElementById('btt');
-const fill = document.getElementById('progressFill');
-window.addEventListener('scroll',()=>{
-  const y = window.scrollY;
-  const h = document.documentElement;
-  topnav.classList.toggle('scrolled', y > 50);
-  btt.classList.toggle('show', y > 400);
-  fill.style.width = (y / (h.scrollHeight - h.clientHeight) * 100) + '%';
-});
-/* ═══════════ REVEAL ON SCROLL ═══════════ */
-const ro = new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}});
-},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
-/* ═══════════ UNIFIED CHAPTER TOC SYSTEM ═══════════ */
-// Subject ID → page ID mapping
-const subjectPageMap = {
-  vue3: 'vue3', softtest: 'softtest', netos: 'netos',
-  python: 'python', wxmini: 'wxmini'
-};
-function buildSubjectTOC(subjectId) {
-  const page = document.getElementById('page-' + subjectId);
-  if (!page) return;
-  const sections = page.querySelectorAll('.chapter-section');
-  if (!sections.length) return;
-  // Populate select dropdown
-  const select = document.getElementById(subjectId + 'TocSelect');
-  if (select) {
-    select.innerHTML = '<option value="">📖 跳转到章节...</option>';
-    sections.forEach((sec, i) => {
-      const num = sec.querySelector('.chapter-num');
-      const title = sec.querySelector('h3');
-      if (title) {
-        const label = (num ? num.textContent.trim() + '. ' : '') + title.textContent.trim();
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.textContent = label;
-        select.appendChild(opt);
-      }
-    });
-  }
-  // Update chapter count
-  const count = document.getElementById(subjectId + 'Count');
-  if (count) count.textContent = sections.length + ' 章节';
-  // Build/update sidebar TOC
-  buildSidebarTOC(subjectId, sections);
-  setupTOCScroll(subjectId, sections, select);
-}
-function buildSidebarTOC(subjectId, sections) {
-  let sidebar = document.getElementById('tocSidebar');
-  if (!sidebar) {
-    sidebar = document.createElement('div');
-    sidebar.id = 'tocSidebar';
-    sidebar.className = 'toc-sidebar';
-    sidebar.innerHTML = '<div class="toc-sidebar-title">📑 目录导航</div>';
-    document.body.appendChild(sidebar);
-  }
-  const titleDiv = sidebar.querySelector('.toc-sidebar-title');
-  sidebar.innerHTML = '';
-  sidebar.appendChild(titleDiv);
-  sections.forEach((sec, i) => {
-    const num = sec.querySelector('.chapter-num');
-    const title = sec.querySelector('h3');
-    if (!title) return;
-    const label = (num ? num.textContent.trim() + '. ' : '') + title.textContent.trim();
-    const item = document.createElement('div');
-    item.className = 'toc-sidebar-item';
-    item.dataset.subject = subjectId;
-    item.dataset.index = i;
-    const numSpan = document.createElement('span');
-    numSpan.className = 'num';
-    numSpan.textContent = num ? num.textContent.trim() : (i + 1);
-    item.appendChild(numSpan);
-    const textSpan = document.createElement('span');
-    textSpan.textContent = label;
-    item.appendChild(textSpan);
-    item.addEventListener('click', () => { jumpToChapter(subjectId, i); });
-    sidebar.appendChild(item);
-  });
-  updateSidebarVisibility();
-}
-function updateSidebarVisibility() {
-  var sidebar = document.getElementById('tocSidebar');
-  if (!sidebar) return;
-  var active = document.querySelector('.page.active');
-  if (!active || active.id === 'page-home' || window.innerWidth < 1024) {
-    sidebar.classList.remove('show');
-    if (active) active.classList.remove('review-with-sidebar');
-    return;
-  }
-  sidebar.classList.add('show');
-  active.classList.add('review-with-sidebar');
-}
-function setupTOCScroll(subjectId, sections, select) {
-  const sidebar = document.getElementById('tocSidebar');
-  const sidebarItems = sidebar ? sidebar.querySelectorAll('.toc-sidebar-item') : [];
-  // Disconnect old observer if any
-  if (window._tocObserver) window._tocObserver.disconnect();
-  window._tocObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const i = [...sections].indexOf(entry.target);
-      if (i === -1) return;
-      if (select) select.value = String(i);
-      sidebarItems.forEach((item, j) => {
-        item.classList.toggle('active', j === i && item.dataset.subject === subjectId);
-      });
-    });
-  }, { threshold: 0.15, rootMargin: '-60px 0px -40% 0px' });
-  sections.forEach(sec => window._tocObserver.observe(sec));
-}
-function jumpToChapter(subjectId, index) {
-  const page = document.getElementById('page-' + subjectId);
-  if (!page) return;
-  const sections = page.querySelectorAll('.chapter-section');
-  if (index < 0 || index >= sections.length) return;
-  sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
-  const body = sections[index].querySelector('.chapter-body');
-  const icon = sections[index].querySelector('.chapter-toggle');
-  if (body && !body.classList.contains('open')) { body.classList.add('open'); if (icon) icon.classList.add('open'); }
-  const select = document.getElementById(subjectId + 'TocSelect');
-  if (select) select.value = String(index);
-  const sidebar = document.getElementById('tocSidebar');
-  if (sidebar) {
-    sidebar.querySelectorAll('.toc-sidebar-item').forEach(item => {
-      item.classList.toggle('active', item.dataset.subject === subjectId && parseInt(item.dataset.index) === index);
-    });
-  }
-}
-function toggleAllChapters(subjectId) {
-  const page = document.getElementById('page-' + subjectId);
-  if (!page) return;
-  const btn = document.getElementById(subjectId + 'ToggleAllBtn');
-  const sections = page.querySelectorAll('.chapter-section');
-  let anyClosed = false;
-  sections.forEach(sec => {
-    const body = sec.querySelector('.chapter-body');
-    if (body && !body.classList.contains('open')) anyClosed = true;
-  });
-  const shouldOpen = anyClosed;
-  sections.forEach(sec => {
-    const body = sec.querySelector('.chapter-body');
-    const icon = sec.querySelector('.chapter-toggle');
-    if (body) { body.classList.toggle('open', shouldOpen); if (icon) icon.classList.toggle('open', shouldOpen); }
-  });
-  if (btn) btn.textContent = shouldOpen ? '📂 收起全部' : '📂 展开全部';
-}
-/* ═══════════ TOC: Build on page navigation ═══════════ */
-// Simple approach: hook into all nav-link clicks
-document.addEventListener('click', function(e) {
-  const link = e.target.closest('.nav-link, .subject-card');
-  if (!link) return;
-  // Find which page it navigates to
-  const onclick = link.getAttribute('onclick') || '';
-  const match = onclick.match(/navigate\(\'(\w+)\'\)/);
-  if (match) {
-    const page = match[1];
-    if (page !== 'home') {
-      setTimeout(function() { buildSubjectTOC(page); }, 100);
-    } else {
-      var s = document.getElementById('tocSidebar');
-      if (s) s.classList.remove('show');
-    }
-  }
-});
-// Also build TOC on first page load if not home
-document.addEventListener('DOMContentLoaded', function() {
-  const active = document.querySelector('.page.active');
-  if (active && active.id !== 'page-home') {
-    const sid = active.id.replace('page-', '');
-    setTimeout(function() { buildSubjectTOC(sid); }, 200);
-  }
-});
-// Window resize: update sidebar visibility
-window.addEventListener('resize', function() {
-  updateSidebarVisibility();
-});
-/* ═══════════ WORD EXPORT (HTML→.doc) ═══════════ */
+var root=document.documentElement;
+function toggleTheme(){var t=root.dataset.theme;root.dataset.theme=t==="dark"?"light":"dark";var b=document.getElementById("themeBtn");b.textContent=root.dataset.theme==="dark"?"🌙":"☀️";localStorage.setItem("ev-theme",root.dataset.theme)}
+(function(){var s=localStorage.getItem("ev-theme");if(s){root.dataset.theme=s;document.getElementById("themeBtn").textContent=s==="dark"?"🌙":"☀️"}})();
+function navigate(n){var pages=document.querySelectorAll(".page");for(var i=0;i<pages.length;i++){pages[i].classList.remove("active")}var p=document.getElementById("page-"+n);if(p){p.classList.add("active")}var links=document.querySelectorAll(".nav-link");for(var i=0;i<links.length;i++){links[i].classList.remove("active")}var idx={"home":0,"vue3":1,"softtest":2,"netos":3,"python":4,"wxmini":5};if(idx[n]!==undefined&&links[idx[n]]){links[idx[n]].classList.add("active")}window.scrollTo(0,0);if(window.innerWidth<769){closeMenu()}}
+function toggleMenu(){var m=document.getElementById("navLinks");var o=document.getElementById("overlay");if(m){m.classList.toggle("open")}if(o){o.classList.toggle("show")}}
+function closeMenu(){var m=document.getElementById("navLinks");var o=document.getElementById("overlay");if(m){m.classList.remove("open")}if(o){o.classList.remove("show")}}
+function toggleBody(h){var b=h.nextElementSibling;var i=h.querySelector(".chapter-toggle");if(b){b.classList.toggle("open")}if(i){i.classList.toggle("open")}}
+function copyCode(b){var p=b.closest(".codebox").querySelector("pre");navigator.clipboard.writeText(p.textContent).then(function(){b.textContent="已复制";setTimeout(function(){b.textContent="复制"},1500)})}
+window.addEventListener("scroll",function(){var y=window.scrollY;var n=document.getElementById("topnav");if(n){n.classList.toggle("scrolled",y>50)}var t=document.getElementById("btt");if(t){t.classList.toggle("show",y>400)}var f=document.getElementById("progressFill");if(f){f.style.width=(y/(document.documentElement.scrollHeight-document.documentElement.clientHeight)*100)+"%"}});
 function exportWord() {
-  var overlay = document.getElementById('exportOverlay');
+  var o = document.getElementById('exportOverlay');
+  if (!o) return;
+  o.classList.add('show');
   var box = document.getElementById('exportBox');
-  if (!overlay) return;
-  overlay.classList.add('show');
-  box.classList.remove('done');
-  box.querySelector('h3').textContent = '正在导出 Word 文档...';
-  box.querySelector('p').textContent = '请稍候...';
+  if (box) box.classList.remove('done');
   setTimeout(function() {
     try {
-      var css = 'body{font-family:"Microsoft YaHei","Noto Sans SC",sans-serif;font-size:11pt;color:#333;line-height:1.6;padding:30px;max-width:100%}' +
-        'h1{font-size:24pt;color:#6366f1;border-bottom:2px solid #6366f1;padding-bottom:8px;margin:30px 0 16px;text-align:center}' +
-        'h2{font-size:15pt;color:#4f46e5;margin:20px 0 10px;border-left:3px solid #6366f1;padding-left:10px}' +
-        'h3{font-size:13pt;color:#1a1a2e;margin:16px 0 6px}' +
-        'h4{font-size:11pt;color:#6366f1;margin:10px 0 4px}' +
-        'table{width:100%;border-collapse:collapse;margin:8px 0;font-size:10pt}' +
-        'th{background:#f0f0ff;padding:5px 8px;border:1px solid #ccc;text-align:left;font-weight:bold}' +
-        'td{padding:4px 8px;border:1px solid #ccc}' +
-        'pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:3px;padding:8px;font-family:Consolas,monospace;font-size:9pt;line-height:1.4;white-space:pre-wrap;margin:6px 0}' +
-        'code{background:#f0f0f0;padding:1px 3px;border-radius:2px;font-family:Consolas,monospace;font-size:9.5pt}' +
-        '.card{border:1px solid #e1e4e8;border-radius:4px;padding:10px 12px;margin:8px 0;background:#fafafa}' +
-        '.callout{background:#f0f5ff;border-left:3px solid #6366f1;padding:6px 10px;margin:6px 0;font-size:10pt}' +
-        '.quiz-item{padding:6px 10px;margin:4px 0;border:1px solid #eee;border-radius:3px}' +
-        '.quiz-answer{color:#2e7d32;margin-top:2px;font-size:9.5pt}' +
-        '.tag{display:inline-block;padding:1px 6px;background:#eef2ff;color:#4f46e5;border-radius:8px;font-size:8.5pt}';
-      var allHtml = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>期末复习知识点汇总</title><style>' + css + '
-/* ═══════════════ LOADING SCREEN ═══════════════ */
-
-</style></head><body>';
-      allHtml += '<h1>📚 期末复习知识点汇总</h1><p style="text-align:center;color:#666;margin-bottom:30px">ExamVerse · 5大科目全部知识点</p>';
       var subs = [
-        { id: 'page-vue3', name: 'Vue.js 前端开发' },
+        { id: 'page-vue3', name: 'Vue.js' },
         { id: 'page-softtest', name: '软件测试' },
         { id: 'page-netos', name: '网络操作系统' },
-        { id: 'page-python', name: 'Python 程序设计' },
-        { id: 'page-wxmini', name: '微信小程序开发' }
+        { id: 'page-python', name: 'Python' },
+        { id: 'page-wxmini', name: '微信小程序' }
       ];
-      subs.forEach(function(sub) {
-        var page = document.getElementById(sub.id);
-        if (!page) return;
-        var sections = page.querySelectorAll('.chapter-section');
-        if (!sections.length) return;
-        allHtml += '<h1>' + sub.name + '</h1>';
-        sections.forEach(function(sec) {
-          var num = sec.querySelector('.chapter-num');
-          var title = sec.querySelector('h3');
-          if (!title) return;
-          allHtml += '<h2>' + (num ? num.textContent.trim() + '. ' : '') + title.textContent.trim() + '</h2>';
-          sec.querySelectorAll('.kb-card').forEach(function(card) {
-            allHtml += '<div class="card">';
-            var h4 = card.querySelector('h4');
-            if (h4) allHtml += '<h4>' + h4.innerHTML + '</h4>';
-            card.querySelectorAll('.codebox').forEach(function(cb) {
-              var pre = cb.querySelector('pre');
-              if (pre) allHtml += '<pre>' + pre.innerHTML.replace(/<[^>]+>/g,'') + '</pre>';
-            });
-            card.querySelectorAll('.tbl').forEach(function(tbl) {
-              allHtml += '<table>';
-              tbl.querySelectorAll('tr').forEach(function(row) {
-                allHtml += '<tr>';
-                row.querySelectorAll('th,td').forEach(function(cell) {
-                  allHtml += '<' + cell.tagName.toLowerCase() + '>' + cell.innerHTML.replace(/<[^>]+>/g,'') + '</' + cell.tagName.toLowerCase() + '>';
-                });
-                allHtml += '</tr>';
-              });
-              allHtml += '</table>';
-            });
-            card.querySelectorAll('.callout').forEach(function(co) {
-              allHtml += '<div class="callout">' + co.innerHTML + '</div>';
-            });
-            allHtml += '</div>';
-          });
-          sec.querySelectorAll('.quiz').forEach(function(q) {
-            var qText = q.querySelector('.quiz-q');
-            var qAns = q.querySelector('.quiz-ans');
-            if (qText) allHtml += '<div class="quiz-item"><div><b>' + qText.innerHTML + '</b></div>' + (qAns ? '<div class="quiz-answer">' + qAns.innerHTML + '</div>' : '') + '</div>';
-          });
-        });
-      });
-      allHtml += '<p style="text-align:center;color:#999;margin-top:40px;font-size:9pt">ExamVerse 期末复习宇宙 · Make by DeepSeek-V4.0-Pro</p></body></html>';
-      var blob = new Blob([allHtml], { type: 'application/msword;charset=utf-8' });
+      var text = '期末复习知识点汇总\n\n';
+      for (var si = 0; si < subs.length; si++) {
+        var p = document.getElementById(subs[si].id);
+        if (!p) continue;
+        text += '====== ' + subs[si].name + ' ======\n\n';
+        var secs = p.querySelectorAll('.chapter-section');
+        for (var i = 0; i < secs.length; i++) {
+          var n = secs[i].querySelector('.chapter-num');
+          var t = secs[i].querySelector('h3');
+          if (!t) continue;
+          text += (n ? n.textContent.trim() + '. ' : '') + t.textContent.trim() + '\n';
+          var cards = secs[i].querySelectorAll('.kb-card');
+          for (var j = 0; j < cards.length; j++) {
+            var h4 = cards[j].querySelector('h4');
+            if (h4) text += '  ' + h4.textContent.trim() + '\n';
+          }
+        }
+      }
+      var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
       var url = URL.createObjectURL(blob);
       var a = document.createElement('a');
       a.href = url;
-      a.download = '期末复习知识点汇总.doc';
+      a.download = '期末复习备忘录.txt';
       a.click();
       URL.revokeObjectURL(url);
-      box.classList.add('done');
-      box.querySelector('h3').textContent = '✅ 导出成功！';
-      box.querySelector('p').textContent = '文档已下载';
-      setTimeout(function() { overlay.classList.remove('show'); }, 1500);
+      if (box) box.classList.add('done');
+      if (box) box.querySelector('h3').textContent = '导出成功';
+      if (box) box.querySelector('p').textContent = '文档已下载';
     } catch(e) {
-      box.querySelector('h3').textContent = '❌ 导出失败';
-      box.querySelector('p').textContent = e.message;
-      setTimeout(function() { overlay.classList.remove('show'); }, 2000);
+      if (box) box.querySelector('h3').textContent = '导出失败';
+      if (box) box.querySelector('p').textContent = e.message;
     }
+    setTimeout(function() { o.classList.remove('show'); }, 1500);
   }, 200);
 }
+
+
+function buildSubjectTOC(sid) {
+  var p = document.getElementById('page-' + sid);
+  if (!p) return;
+  var secs = p.querySelectorAll('.chapter-section');
+  if (!secs.length) return;
+  var sel = document.getElementById(sid + 'TocSelect');
+  if (sel) {
+    sel.innerHTML = '<option value="">跳转到章节...</option>';
+    for (var i = 0; i < secs.length; i++) {
+      var n = secs[i].querySelector('.chapter-num');
+      var t = secs[i].querySelector('h3');
+      if (!t) continue;
+      var l = (n ? n.textContent.trim() + '. ' : '') + t.textContent.trim();
+      var o = document.createElement('option');
+      o.value = i;
+      o.textContent = l;
+      sel.appendChild(o);
+    }
+  }
+  var cnt = document.getElementById(sid + 'Count');
+  if (cnt) cnt.textContent = secs.length + ' 章节';
+  buildSidebarTOC(sid, secs);
+  setupTOCScroll(sid, secs, sel);
+}
+function buildSidebarTOC(sid, secs) {
+  var sb = document.getElementById('tocSidebar');
+  if (!sb) {
+    sb = document.createElement('div');
+    sb.id = 'tocSidebar';
+    sb.className = 'toc-sidebar';
+    sb.innerHTML = '<div class="toc-sidebar-title">目录导航</div>';
+    document.body.appendChild(sb);
+  }
+  var td = sb.querySelector('.toc-sidebar-title');
+  sb.innerHTML = '';
+  sb.appendChild(td);
+  for (var i = 0; i < secs.length; i++) {
+    var n = secs[i].querySelector('.chapter-num');
+    var t = secs[i].querySelector('h3');
+    if (!t) continue;
+    var it = document.createElement('div');
+    it.className = 'toc-sidebar-item';
+    it.setAttribute('data-subject', sid);
+    it.setAttribute('data-index', i);
+    var ns = document.createElement('span');
+    ns.className = 'num';
+    ns.textContent = n ? n.textContent.trim() : (i + 1);
+    it.appendChild(ns);
+    var ts = document.createElement('span');
+    ts.textContent = (n ? n.textContent.trim() + '. ' : '') + t.textContent.trim();
+    it.appendChild(ts);
+    it.addEventListener('click', makeJump(sid, i));
+    sb.appendChild(it);
+  }
+  updateSidebarVisibility();
+}
+function makeJump(sid, i) {
+  return function() { jumpToChapter(sid, i); };
+}
+function updateSidebarVisibility() {
+  var sb = document.getElementById('tocSidebar');
+  if (!sb) return;
+  var a = document.querySelector('.page.active');
+  if (!a || a.id === 'page-home' || window.innerWidth < 1024) {
+    sb.classList.remove('show');
+    if (a) a.classList.remove('review-with-sidebar');
+    return;
+  }
+  sb.classList.add('show');
+  a.classList.add('review-with-sidebar');
+}
+function setupTOCScroll(sid, secs, sel) {
+  var sb = document.getElementById('tocSidebar');
+  var si = sb ? sb.querySelectorAll('.toc-sidebar-item') : [];
+  if (window._tocObs) window._tocObs.disconnect();
+  window._tocObs = new IntersectionObserver(function(entries) {
+    for (var j = 0; j < entries.length; j++) {
+      var e = entries[j];
+      if (!e.isIntersecting) continue;
+      var idx = -1;
+      for (var k = 0; k < secs.length; k++) {
+        if (secs[k] === e.target) { idx = k; break; }
+      }
+      if (idx === -1) continue;
+      if (sel) sel.value = String(idx);
+      for (var m = 0; m < si.length; m++) {
+        var sub = si[m].getAttribute('data-subject');
+        var ind = parseInt(si[m].getAttribute('data-index'));
+        if (sub === sid && ind === idx) {
+          si[m].classList.add('active');
+        } else {
+          si[m].classList.remove('active');
+        }
+      }
+    }
+  }, { threshold: 0.15, rootMargin: '-60px 0px -40% 0px' });
+  for (var k = 0; k < secs.length; k++) {
+    window._tocObs.observe(secs[k]);
+  }
+}
+function jumpToChapter(sid, idx) {
+  var p = document.getElementById('page-' + sid);
+  if (!p) return;
+  var secs = p.querySelectorAll('.chapter-section');
+  if (idx < 0 || idx >= secs.length) return;
+  secs[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  var bd = secs[idx].querySelector('.chapter-body');
+  var ic = secs[idx].querySelector('.chapter-toggle');
+  if (bd && !bd.classList.contains('open')) {
+    bd.classList.add('open');
+    if (ic) ic.classList.add('open');
+  }
+  var sel = document.getElementById(sid + 'TocSelect');
+  if (sel) sel.value = String(idx);
+  var sb = document.getElementById('tocSidebar');
+  if (sb) {
+    var items = sb.querySelectorAll('.toc-sidebar-item');
+    for (var i = 0; i < items.length; i++) {
+      var sub = items[i].getAttribute('data-subject');
+      var ind = parseInt(items[i].getAttribute('data-index'));
+      if (sub === sid && ind === idx) {
+        items[i].classList.add('active');
+      } else {
+        items[i].classList.remove('active');
+      }
+    }
+  }
+}
+function toggleAllChapters(sid) {
+  var p = document.getElementById('page-' + sid);
+  if (!p) return;
+  var b = document.getElementById(sid + 'ToggleAllBtn');
+  var secs = p.querySelectorAll('.chapter-section');
+  var anyClosed = false;
+  for (var i = 0; i < secs.length; i++) {
+    var bd = secs[i].querySelector('.chapter-body');
+    if (bd && !bd.classList.contains('open')) anyClosed = true;
+  }
+  var op = anyClosed;
+  for (var i = 0; i < secs.length; i++) {
+    var bd = secs[i].querySelector('.chapter-body');
+    var ic = secs[i].querySelector('.chapter-toggle');
+    if (bd) {
+      bd.classList.toggle('open', op);
+      if (ic) ic.classList.toggle('open', op);
+    }
+  }
+  if (b) b.textContent = op ? '收起全部' : '展开全部';
+}
+
+
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('.nav-link, .subject-card');
+  if (!el) return;
+  var oc = el.getAttribute('onclick') || '';
+  var m = oc.match(/navigate\('(\w+)'\)/);
+  if (m) {
+    var pg = m[1];
+    if (pg !== 'home') {
+      setTimeout(function() { buildSubjectTOC(pg); }, 100);
+    } else {
+      var sb = document.getElementById('tocSidebar');
+      if (sb) sb.classList.remove('show');
+    }
+  }
+});
+window.addEventListener('resize', function() {
+  updateSidebarVisibility();
+});
 
 </script>
 </body>
