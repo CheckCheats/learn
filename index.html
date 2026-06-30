@@ -59,6 +59,7 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 .page{display:none;min-height:100vh;position:relative;z-index:1}
 .page.active{display:block;animation:pageIn .5s var(--ease)}
 @keyframes pageIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
 .container{width:100%;max-width:100%;padding:0 20px;margin:0}
 /* ═══════════════ NAV BAR ═══════════════ */
 .topnav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:1000;width:calc(100% - 48px);max-width:1200px;
@@ -67,39 +68,56 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
   box-shadow:0 8px 32px rgba(0,0,0,.18),0 0 0 1px rgba(255,255,255,.04) inset;
   transition:all .2s}
 .topnav.scrolled{box-shadow:0 8px 32px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.06) inset}
+
 .topnav-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+
 .logo{font-size:18px;font-weight:800;background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em;white-space:nowrap;justify-self:start}
 .logo span{font-weight:400;font-size:12px;-webkit-text-fill-color:var(--text-3);margin-left:4px}
+
 .nav-links{display:flex;gap:4px;align-items:center;background:var(--bg-surface);border-radius:var(--radius-lg);padding:4px;border:1px solid var(--border);justify-self:center}
+
 .nav-link{padding:7px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:500;color:var(--text-2);transition:all .2s;position:relative;white-space:nowrap;letter-spacing:.01em}
 .nav-link:hover{color:var(--text-1);background:var(--accent-soft)}
 .nav-link.active{color:#fff;background:var(--gradient);box-shadow:0 2px 12px rgba(99,102,241,.3)}
 .nav-link.active::after{display:none}
+
 .nav-right{display:flex;gap:6px;align-items:center;flex-shrink:0;justify-self:end}
+
 .theme-btn{width:36px;height:36px;border-radius:var(--radius-full);background:var(--bg-surface);border:1px solid var(--border);color:var(--text-2);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .theme-btn:hover{border-color:var(--accent);color:var(--accent);transform:rotate(180deg)}
+
 .menu-btn{display:none;width:36px;height:36px;border-radius:var(--radius-md);background:var(--bg-surface);border:1px solid var(--border);color:var(--text-1);font-size:18px;align-items:center;justify-content:center}
 /* ═══════════════ HERO SECTION ═══════════════ */
 .hero{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:100px 24px 60px}
+
 .hero-content{position:relative;z-index:1}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
 .hero h1 .gradient{background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
 .hero-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-2);max-width:500px;margin:0 auto 12px}
+
 .hero-meta{font-size:13px;color:var(--text-3);margin-bottom:36px}
+
 .hero-stats{display:flex;gap:32px;justify-content:center;margin-bottom:40px;flex-wrap:wrap}
+
 .hero-stat{text-align:center}
 .hero-stat .num{font-size:32px;font-weight:800;background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-stat .label{font-size:12px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px}
+
 .hero-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:var(--radius-xl);background:var(--gradient);color:#fff;font-weight:600;font-size:15px;transition:all .2s;box-shadow:0 4px 20px rgba(99,102,241,.3)}
 .hero-cta:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 8px 30px rgba(99,102,241,.4)}
 .hero-cta:active{transform:scale(.97)}
 100%{top:18px;opacity:0}}
 /* ═══════════════ SUBJECTS GRID ═══════════════ */
 .section{padding:80px 0;position:relative;z-index:1}
+
 .section-title{font-size:clamp(1.5rem,3vw,2rem);font-weight:700;margin-bottom:8px}
+
 .section-desc{color:var(--text-2);font-size:15px;margin-bottom:40px}
+
 .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+
 .subject-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden;backdrop-filter:blur(10px)}
 .subject-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient);transform:scaleX(0);transform-origin:left;transition:transform var(--duration) var(--ease)}
 .subject-card:hover{border-color:var(--border-glow);transform:translateY(-4px);box-shadow:var(--shadow)}
@@ -116,12 +134,18 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 
 /* ═══════════════ REVIEW PAGE LAYOUT ═══════════════ */
 .review-header{padding:100px 0 40px;position:relative}
+
 .review-header-inner{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+
 .back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--radius-md);background:var(--bg-surface);border:1px solid var(--border);color:var(--text-2);font-size:13px;transition:all .2s}
 .back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
 .review-title{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800}
+
 .review-subtitle{color:var(--text-2);font-size:15px}
+
 .review-stats{display:flex;gap:24px;margin-top:16px;flex-wrap:wrap}
+
 .review-stat{font-size:13px;color:var(--text-3)}
 .review-stat strong{color:var(--accent-glow)}
 /* ═══════════════ TOC CONTROLS BAR ═══════════════ */
@@ -131,35 +155,44 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 .review-controls .toc-select:hover,.review-controls .toc-select:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .review-controls .toc-select-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-3);font-size:12px;transition:transform var(--duration) var(--ease)}
 .review-controls .toc-select:focus+.toc-select-icon{transform:translateY(-50%) rotate(180deg)}
+
 .ctrl-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-full);background:var(--bg-surface);border:1px solid var(--border);color:var(--text-2);font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:inherit}
 .ctrl-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .ctrl-btn.active{background:var(--gradient);color:#fff;border-color:transparent;box-shadow:0 2px 8px rgba(99,102,241,.25)}
+
 .chapter-count{font-size:12px;color:var(--text-3);white-space:nowrap}
 /* ═══════════════ SIDEBAR TOC (desktop) ═══════════════ */
 .toc-sidebar{position:fixed;left:0;top:72px;width:220px;height:calc(100vh - 72px);overflow-y:auto;z-index:40;padding:12px 0 24px;scrollbar-width:thin;scrollbar-color:var(--text-3) transparent;border-right:1px solid var(--border);background:var(--bg-secondary);opacity:0;pointer-events:none;transition:opacity .25s}
 .toc-sidebar.show{opacity:1;pointer-events:auto}
 .toc-sidebar::-webkit-scrollbar{width:3px}
 .toc-sidebar::-webkit-scrollbar-thumb{background:var(--text-3);border-radius:2px}
+
 .toc-sidebar-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-3);padding:12px 12px 8px;border-bottom:1px solid var(--border);margin-bottom:4px}
-.review-with-sidebar .review-header,.review-with-sidebar .review-controls,.review-with-sidebar .chapter-section{margin-left:240px;padding-right:20px}.toc-sidebar-item{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;color:var(--text-2);cursor:pointer;transition:all .2s;border-left:2px solid transparent}
+.review-with-sidebar .review-header,.review-with-sidebar .review-controls,.review-with-sidebar .chapter-section{margin-left:240px;padding-right:20px}
+.toc-sidebar-item{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;color:var(--text-2);cursor:pointer;transition:all .2s;border-left:2px solid transparent}
 .toc-sidebar-item:hover{color:var(--text-1);background:var(--accent-soft)}
 .toc-sidebar-item.active{color:var(--accent);background:var(--accent-soft);border-left-color:var(--accent);font-weight:600}
 .toc-sidebar-item .num{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:var(--bg-surface);color:var(--text-3);flex-shrink:0}
 .toc-sidebar-item.active .num{background:var(--accent);color:#fff}
 /* ═══════════ COMPACT CHAPTER HEADERS ═══════════ */
 .chapter-section{margin-bottom:32px;scroll-margin-top:100px}
+
 .chapter-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;cursor:pointer;padding:12px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);backdrop-filter:blur(10px);transition:all .2s}
 .chapter-head:hover{border-color:var(--border-glow);background:var(--bg-surface-hover)}
+
 .chapter-num{width:30px;height:30px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;background:var(--gradient);color:#fff;flex-shrink:0}
 .chapter-head h3{font-size:14px;font-weight:700;flex:1;line-height:1.3}
+
 .chapter-toggle{color:var(--text-3);transition:transform var(--duration) var(--ease);font-size:12px;flex-shrink:0}
 .chapter-toggle.open{transform:rotate(180deg)}
+
 .chapter-body{max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
 .chapter-body.open{max-height:none}
 /* ── Responsive TOC sidebar ── */
 @media(max-width:1400px){
   .toc-sidebar{left:calc(50% - 520px - 30px);width:180px}
-  .toc-sidebar-item{font-size:11px;padding:5px 10px}
+  
+.toc-sidebar-item{font-size:11px;padding:5px 10px}
 }
 @media(max-width:1200px){
   .toc-sidebar{display:none}.review-with-sidebar .review-header,.review-with-sidebar .review-controls,.review-with-sidebar .chapter-section{margin-left:0}
@@ -170,27 +203,39 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
   .review-controls{gap:6px;padding:8px 0;margin-bottom:12px}
   .review-controls .toc-select-wrap{flex:1;min-width:120px;max-width:none}
   .review-controls .toc-select{padding:7px 28px 7px 10px;font-size:12px}
-  .ctrl-btn{padding:5px 10px;font-size:11px}
-  .chapter-count{font-size:11px}
-  .chapter-section{margin-bottom:24px;scroll-margin-top:90px}
-  .chapter-head{padding:10px 12px;gap:8px;margin-bottom:12px}
-  .chapter-num{width:26px;height:26px;font-size:11px}
+  
+.ctrl-btn{padding:5px 10px;font-size:11px}
+  
+.chapter-count{font-size:11px}
+  
+.chapter-section{margin-bottom:24px;scroll-margin-top:90px}
+  
+.chapter-head{padding:10px 12px;gap:8px;margin-bottom:12px}
+  
+.chapter-num{width:26px;height:26px;font-size:11px}
   .chapter-head h3{font-size:13px}
 }
 @media(max-width:480px){
   .review-controls .toc-select{padding:6px 24px 6px 8px;font-size:11px}
-  .ctrl-btn{padding:4px 8px;font-size:10px}
-  .chapter-head{padding:8px 10px}
+  
+.ctrl-btn{padding:4px 8px;font-size:10px}
+  
+.chapter-head{padding:8px 10px}
   .chapter-head h3{font-size:12px}
-  .chapter-num{width:22px;height:22px;font-size:10px}
+  
+.chapter-num{width:22px;height:22px;font-size:10px}
 }
 /* ═══════════════ CALLOUT BOXES ═══════════════ */
 .kb-card h4{font-size:15px;font-weight:700;color:var(--accent-glow);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .kb-card p,.kb-card li{font-size:14px;color:var(--text-2);margin-bottom:5px}
 .kb-card ul{padding-left:18px}
+
 .callout{padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;margin:10px 0;font-size:13px;line-height:1.6}
+
 .callout-key{background:rgba(99,102,241,.08);border-left:3px solid var(--accent)}
+
 .callout-warn{background:rgba(248,113,113,.08);border-left:3px solid var(--danger)}
+
 .callout-tip{background:rgba(52,211,153,.08);border-left:3px solid var(--success)}
 .callout strong{font-weight:700}
 .callout-key strong{color:var(--accent-glow)}
@@ -198,14 +243,24 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 .callout-tip strong{color:var(--success)}
 /* ═══════════════ CODE BLOCKS ═══════════════ */
 .codebox{background:var(--code-bg);border:1px solid var(--code-border);border-radius:var(--radius-md);margin:10px 0;overflow:hidden;transition:background var(--duration) var(--ease),border-color var(--duration) var(--ease)}
+
 .codebox-head{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;background:var(--bg-surface);border-bottom:1px solid var(--code-border);font-size:12px;color:var(--text-3)}
 .codebox-head .lang{color:var(--cyan);font-weight:600}
+
 .copy-btn{background:none;border:1px solid var(--border);color:var(--text-3);padding:2px 10px;border-radius:var(--radius-sm);font-size:11px;transition:all .2s}
 .copy-btn:hover{color:var(--text-1);border-color:var(--accent)}
 .codebox pre{padding:14px;overflow-x:auto;font-family:var(--font-mono);font-size:13px;line-height:1.65;tab-size:2}
 .codebox code{font-family:var(--font-mono)}
-.c-kw{color:#ff7b72}.c-fn{color:#d2a8ff}.c-str{color:#a5d6ff}.c-cm{color:#8b949e}
-.c-tag{color:#7ee787}.c-at{color:#79c0ff}.c-num{color:#f0883e}.c-op{color:#ff7b72}
+
+.c-kw{color:#ff7b72}
+.c-fn{color:#d2a8ff}
+.c-str{color:#a5d6ff}
+.c-cm{color:#8b949e}
+
+.c-tag{color:#7ee787}
+.c-at{color:#79c0ff}
+.c-num{color:#f0883e}
+.c-op{color:#ff7b72}
 /* ═══════════════ TABLES ═══════════════ */
 .tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
 .tbl th{background:var(--bg-surface);padding:10px 14px;text-align:left;border:1px solid var(--border);color:var(--accent-glow);font-weight:600}
@@ -214,23 +269,30 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ═══════════════ QUIZ ═══════════════ */
 .quiz{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px 20px;margin:10px 0;cursor:pointer;backdrop-filter:blur(10px);transition:border-color var(--duration) var(--ease)}
 .quiz:hover{border-color:var(--border-glow)}
+
 .quiz-q{font-weight:600;font-size:14px;margin-bottom:8px}
 .quiz-q::before{content:'❓ '}
+
 .quiz-opts{list-style:none;padding:0}
 .quiz-opts li{padding:7px 14px;margin:4px 0;border-radius:var(--radius-sm);font-size:13px;border:1px solid var(--border);transition:all .2s;cursor:pointer}
 .quiz-opts li:hover{border-color:var(--accent);background:var(--accent-soft)}
 .quiz-opts li.correct{border-color:var(--success);background:rgba(52,211,153,.1);color:var(--success)}
 .quiz-opts li.wrong{border-color:var(--danger);background:rgba(248,113,113,.08);color:var(--danger)}
+
 .quiz-ans{margin-top:8px;padding:10px 14px;background:rgba(52,211,153,.06);border-radius:var(--radius-sm);font-size:13px;display:none;color:var(--text-2)}
 .quiz-ans.show{display:block}
 /* ═══════════════ FLOW DIAGRAM ═══════════════ */
 .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+
 .flow-box{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 14px;font-size:13px;font-weight:600;white-space:nowrap}
+
 .flow-arr{color:var(--accent);font-size:16px;font-weight:700}
+
 .diagram{background:var(--code-bg);border:1px solid var(--code-border);border-radius:var(--radius-md);padding:16px;margin:10px 0;font-family:var(--font-mono);font-size:12px;white-space:pre;overflow-x:auto;line-height:1.4;color:var(--cyan)}
 /* ═══════════════ FOOTER ═══════════════ */
 .footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);color:var(--text-3);font-size:13px;position:relative;z-index:1}
 .footer a{color:var(--accent-glow)}
+
 .footer-heart{color:var(--pink);display:inline-block;animation:pulse 1.5s ease-in-out infinite}
 /* ═══════════════ SCROLL REVEAL ═══════════════ */
 .reveal{opacity:0;transform:translateY(24px);transition:all .6s var(--ease)}
@@ -239,10 +301,12 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ═══════════════ EXPORT ═══════════════ */
 .export-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .export-overlay.show{opacity:1;pointer-events:auto}
+
 .export-box{padding:40px;border-radius:var(--radius-xl);background:var(--bg-secondary);border:1px solid var(--border);text-align:center;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .export-box .icon{font-size:48px;margin-bottom:16px}
 .export-box h3{font-size:18px;margin-bottom:8px}
 .export-box p{font-size:13px;color:var(--text-2);margin-bottom:20px}
+
 .export-spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 .export-box .done-icon{font-size:36px;display:none}
@@ -259,118 +323,191 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ── Tablet: 769px ~ 1024px ── */
 @media(max-width:1024px){
   .container{padding:0 20px}
-  .topnav{width:calc(100% - 32px);padding:7px 7px 7px 16px}
-  .nav-link{padding:6px 11px;font-size:12px}
-  .chapter-section{scroll-margin-top:110px}
-  .chapter-head{padding:12px 16px}
+  
+.topnav{width:calc(100% - 32px);padding:7px 7px 7px 16px}
+  
+.nav-link{padding:6px 11px;font-size:12px}
+  
+.chapter-section{scroll-margin-top:110px}
+  
+.chapter-head{padding:12px 16px}
   .chapter-head h3{font-size:15px}
-  .kb-card{padding:16px}
-  .subjects-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-  .subject-card{padding:22px}
+  
+.kb-card{padding:16px}
+  
+.subjects-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  
+.subject-card{padding:22px}
   .codebox pre{font-size:12px;padding:12px}
-  .tbl{font-size:12px}
+  
+.tbl{font-size:12px}
   .tbl th,.tbl td{padding:7px 10px}
 }
 /* ── Large phone / small tablet: 481px ~ 768px ── */
 @media(max-width:768px){
   .topnav{top:8px;width:calc(100% - 20px);padding:6px 6px 6px 12px}
-  .topnav-inner{grid-template-columns:1fr auto auto;gap:8px}
-  .logo{font-size:15px}
+  
+.topnav-inner{grid-template-columns:1fr auto auto;gap:8px}
+  
+.logo{font-size:15px}
   .logo span{display:none}
-  .nav-links{position:fixed;top:0;right:0;width:260px;height:100vh;height:100dvh;background:var(--bg-secondary);flex-direction:column;padding:72px 16px 24px;gap:4px;transform:translateX(100%);transition:transform var(--duration) var(--ease);border-left:1px solid var(--border);z-index:999;border-radius:0;border:none;justify-self:auto}
+  
+.nav-links{position:fixed;top:0;right:0;width:260px;height:100vh;height:100dvh;background:var(--bg-secondary);flex-direction:column;padding:72px 16px 24px;gap:4px;transform:translateX(100%);transition:transform var(--duration) var(--ease);border-left:1px solid var(--border);z-index:999;border-radius:0;border:none;justify-self:auto}
   .nav-links.open{transform:none}
-  .nav-link{width:100%;padding:12px 16px;font-size:14px;border-radius:var(--radius-md)}
-  .menu-btn{display:flex}
-  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;opacity:0;pointer-events:none;transition:opacity var(--duration)}
+  
+.nav-link{width:100%;padding:12px 16px;font-size:14px;border-radius:var(--radius-md)}
+  
+.menu-btn{display:flex}
+  
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998;opacity:0;pointer-events:none;transition:opacity var(--duration)}
   .overlay.show{opacity:1;pointer-events:auto}
-  .hero{padding:100px 20px 60px;min-height:auto}
+  
+.hero{padding:100px 20px 60px;min-height:auto}
   .hero h1{font-size:clamp(2rem,8vw,2.8rem)}
-  .hero-sub{font-size:15px;padding:0 8px}
-  .hero-stats{gap:16px;margin-bottom:32px}
+  
+.hero-sub{font-size:15px;padding:0 8px}
+  
+.hero-stats{gap:16px;margin-bottom:32px}
   .hero-stat .num{font-size:24px}
-  .hero-cta{padding:12px 28px;font-size:14px}
-  .section{padding:48px 0}
-  .section-desc{margin-bottom:28px}
-  .subjects-grid{grid-template-columns:1fr;gap:14px}
-  .subject-card{padding:20px}
+  
+.hero-cta{padding:12px 28px;font-size:14px}
+  
+.section{padding:48px 0}
+  
+.section-desc{margin-bottom:28px}
+  
+.subjects-grid{grid-template-columns:1fr;gap:14px}
+  
+.subject-card{padding:20px}
   .subject-card h3{font-size:16px}
   .subject-card p{font-size:12px}
-  .review-header{padding:80px 0 24px}
-  .review-title{font-size:clamp(1.4rem,5vw,2rem)}
-  .review-subtitle{font-size:13px}
-  .review-stats{gap:16px}
-  .review-stat{font-size:12px}
-  .kb-card{padding:14px;margin:10px 0}
+  
+.review-header{padding:80px 0 24px}
+  
+.review-title{font-size:clamp(1.4rem,5vw,2rem)}
+  
+.review-subtitle{font-size:13px}
+  
+.review-stats{gap:16px}
+  
+.review-stat{font-size:12px}
+  
+.kb-card{padding:14px;margin:10px 0}
   .kb-card h4{font-size:14px;margin-bottom:8px}
   .kb-card p,.kb-card li{font-size:13px}
-  .callout{padding:10px 12px;font-size:12px}
+  
+.callout{padding:10px 12px;font-size:12px}
   .codebox pre{font-size:11.5px;padding:10px;line-height:1.5}
-  .tbl{font-size:12px}
+  
+.tbl{font-size:12px}
   .tbl th{padding:8px 10px}
   .tbl td{padding:6px 10px}
-  .flow{gap:6px}
-  .flow-box{padding:4px 10px;font-size:12px}
-  .diagram{font-size:11px;padding:12px}
-  .btt{bottom:20px;right:20px;width:40px;height:40px;font-size:16px}
+  
+.flow{gap:6px}
+  
+.flow-box{padding:4px 10px;font-size:12px}
+  
+.diagram{font-size:11px;padding:12px}
+  
+.btt{bottom:20px;right:20px;width:40px;height:40px;font-size:16px}
 }
 /* ── Small phone: ≤ 480px ── */
 @media(max-width:480px){
   .topnav{top:6px;width:calc(100% - 16px);padding:5px 5px 5px 10px;border-radius:var(--radius-lg)}
-  .topnav-inner{gap:6px}
-  .logo{font-size:14px}
-  .theme-btn{width:32px;height:32px;font-size:14px}
-  .menu-btn{width:32px;height:32px;font-size:16px}
-  .nav-links{width:240px;padding:64px 14px 20px}
-  .hero{padding:80px 16px 48px}
+  
+.topnav-inner{gap:6px}
+  
+.logo{font-size:14px}
+  
+.theme-btn{width:32px;height:32px;font-size:14px}
+  
+.menu-btn{width:32px;height:32px;font-size:16px}
+  
+.nav-links{width:240px;padding:64px 14px 20px}
+  
+.hero{padding:80px 16px 48px}
   .hero h1{font-size:1.8rem}
-  .hero-sub{font-size:14px}
-  .hero-stats{gap:12px}
+  
+.hero-sub{font-size:14px}
+  
+.hero-stats{gap:12px}
   .hero-stat .num{font-size:20px}
   .hero-stat .label{font-size:10px}
-  .hero-cta{padding:10px 22px;font-size:13px}
-  .container{padding:0 14px}
-  .section{padding:36px 0}
-  .section-title{font-size:1.3rem}
-  .section-desc{font-size:13px;margin-bottom:20px}
-  .subject-card{padding:16px}
+  
+.hero-cta{padding:10px 22px;font-size:13px}
+  
+.container{padding:0 14px}
+  
+.section{padding:36px 0}
+  
+.section-title{font-size:1.3rem}
+  
+.section-desc{font-size:13px;margin-bottom:20px}
+  
+.subject-card{padding:16px}
   .subject-card .icon{width:40px;height:40px;font-size:20px;margin-bottom:12px}
   .subject-card h3{font-size:15px}
   .subject-card p{font-size:11px;margin-bottom:12px}
-  .tag{font-size:10px;padding:2px 8px}
+  
+.tag{font-size:10px;padding:2px 8px}
   
   
-  .review-header{padding:72px 0 20px}
-  .review-title{font-size:1.3rem}
-  .review-subtitle{font-size:12px}
-  .review-stats{gap:12px;margin-top:12px}
-  .review-stat{font-size:11px}
-  .back-btn{padding:6px 12px;font-size:12px}
-  .chapter-section{margin-bottom:24px;scroll-margin-top:90px}
-  .chapter-head{padding:10px 12px;gap:8px;margin-bottom:10px}
-  .chapter-num{width:28px;height:28px;font-size:12px;border-radius:6px}
+  
+.review-header{padding:72px 0 20px}
+  
+.review-title{font-size:1.3rem}
+  
+.review-subtitle{font-size:12px}
+  
+.review-stats{gap:12px;margin-top:12px}
+  
+.review-stat{font-size:11px}
+  
+.back-btn{padding:6px 12px;font-size:12px}
+  
+.chapter-section{margin-bottom:24px;scroll-margin-top:90px}
+  
+.chapter-head{padding:10px 12px;gap:8px;margin-bottom:10px}
+  
+.chapter-num{width:28px;height:28px;font-size:12px;border-radius:6px}
   .chapter-head h3{font-size:13px}
-  .kb-card{padding:12px;margin:8px 0}
+  
+.kb-card{padding:12px;margin:8px 0}
   .kb-card h4{font-size:13px;gap:6px}
   .kb-card p,.kb-card li{font-size:12px}
   .kb-card ul{padding-left:14px}
-  .callout{padding:8px 10px;font-size:11px;line-height:1.5}
-  .codebox{margin:8px 0}
+  
+.callout{padding:8px 10px;font-size:11px;line-height:1.5}
+  
+.codebox{margin:8px 0}
   .codebox pre{font-size:11px;padding:8px;line-height:1.45}
-  .codebox-head{padding:5px 10px;font-size:11px}
-  .copy-btn{padding:2px 8px;font-size:10px}
-  .tbl{font-size:11px}
+  
+.codebox-head{padding:5px 10px;font-size:11px}
+  
+.copy-btn{padding:2px 8px;font-size:10px}
+  
+.tbl{font-size:11px}
   .tbl th{padding:6px 8px;font-size:11px}
   .tbl td{padding:5px 8px;font-size:11px}
-  .quiz{padding:12px 14px}
-  .quiz-q{font-size:13px}
+  
+.quiz{padding:12px 14px}
+  
+.quiz-q{font-size:13px}
   .quiz-opts li{padding:6px 10px;font-size:12px}
-  .quiz-ans{padding:8px 10px;font-size:12px}
-  .flow{gap:4px}
-  .flow-box{padding:3px 8px;font-size:11px}
-  .flow-arr{font-size:14px}
-  .diagram{font-size:10px;padding:10px;line-height:1.3}
-  .footer{padding:28px 16px;font-size:12px}
-  .btt{bottom:16px;right:16px;width:36px;height:36px;font-size:14px}
+  
+.quiz-ans{padding:8px 10px;font-size:12px}
+  
+.flow{gap:4px}
+  
+.flow-box{padding:3px 8px;font-size:11px}
+  
+.flow-arr{font-size:14px}
+  
+.diagram{font-size:10px;padding:10px;line-height:1.3}
+  
+.footer{padding:28px 16px;font-size:12px}
+  
+.btt{bottom:16px;right:16px;width:36px;height:36px;font-size:14px}
 }
 @media(min-width:769px){
   .menu-btn,.overlay{display:none!important}
@@ -378,9 +515,11 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ── Reduced motion ── */
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
-  .reveal{opacity:1;transform:none}
+  
+.reveal{opacity:1;transform:none}
   #particles{display:none}
-  .cursor-glow{display:none}
+  
+.cursor-glow{display:none}
   }
 
 </style>
@@ -569,8 +708,7 @@ cd my-project && npm install && npm run dev</pre></div>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
 <span class="c-cm">&lt;!-- JS逻辑（组合式API） --&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">const</span> msg = <span class="c-fn">ref</span>(<span class="c-str">'Hello!'</span>)
 <span class="c-tag">&lt;/script&gt;</span>
 <span class="c-tag">&lt;style scoped&gt;</span>
@@ -700,12 +838,10 @@ emit(<span class="c-str">'change'</span>, <span class="c-num">100</span>)  <span
 </div>
 <div class="kb-card">
 <h4>provide / inject 跨级传值</h4>
-<div class="codebox"><div class="codebox-head"><span class="lang">vue - 祖先</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">provide</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<div class="codebox"><div class="codebox-head"><span class="lang">vue - 祖先</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">provide</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">const</span> money = <span class="c-fn">ref</span>(<span class="c-num">1000</span>)
 <span class="c-fn">provide</span>(<span class="c-str">'money'</span>, money)  <span class="c-cm">// 提供</span></pre></div>
-<div class="codebox"><div class="codebox-head"><span class="lang">vue - 后代</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { <span class="c-fn">inject</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<div class="codebox"><div class="codebox-head"><span class="lang">vue - 后代</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { <span class="c-fn">inject</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">const</span> money = <span class="c-fn">inject</span>(<span class="c-str">'money'</span>)  <span class="c-cm">// 注入</span></pre></div>
 <div class="callout callout-warn"><strong>易错：</strong>provide第1个参数是<strong>注入名(key)</strong>，第2个是<strong>值</strong>！不是反过来。</div>
 </div>
@@ -796,8 +932,7 @@ app.<span class="c-fn">directive</span>(<span class="c-str">'highlight'</span>, 
 <h4>安装 & 配置 <span class="tag">必考</span></h4>
 <div class="codebox"><div class="codebox-head"><span class="lang">bash + js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre>npm install vue-router@4  <span class="c-cm"># Vue3必须用v4</span>
 <span class="c-cm">// router/index.js</span>
-<span class="c-kw">import</span> { createRouter, createWebHashHistory } <span class="c-kw">from</span>
-<span class="c-str">'vue-router'</span>
+<span class="c-kw">import</span> { createRouter, createWebHashHistory } <span class="c-kw">from</span> <span class="c-str">'vue-router'</span>
 <span class="c-kw">const</span> routes = [
   { path: <span class="c-str">'/'</span>, redirect: <span class="c-str">'/home'</span> },        <span class="c-cm">// 重定向</span>
   { path: <span class="c-str">'/home'</span>, name: <span class="c-str">'Home'</span>, component: Home },
@@ -892,8 +1027,7 @@ router.<span class="c-fn">go</span>(<span class="c-num">-1</span>)              
 <div class="chapter-body open">
 <div class="kb-card">
 <h4>Axios <span class="tag">必考</span></h4>
-<div class="codebox"><div class="codebox-head"><span class="lang">vue</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> axios <span class="c-kw">from</span>
-<span class="c-str">'axios'</span>
+<div class="codebox"><div class="codebox-head"><span class="lang">vue</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> axios <span class="c-kw">from</span> <span class="c-str">'axios'</span>
 <span class="c-cm">// GET</span>
 <span class="c-kw">const</span> res = <span class="c-kw">await</span> axios.<span class="c-fn">get</span>(<span class="c-str">'/api/books'</span>)
 <span class="c-cm">// POST</span>
@@ -903,10 +1037,8 @@ router.<span class="c-fn">go</span>(<span class="c-num">-1</span>)              
 <h4>Vuex 核心概念</h4>
 <div class="diagram">Actions ──commit──→ Mutations ──→ State ──→ Getters
   (异步)              (同步修改)    (状态)     (计算属性)</div>
-<div class="codebox"><div class="codebox-head"><span class="lang">js - store</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { createStore } <span class="c-kw">from</span>
-<span class="c-str">'vuex'</span>
-<span class="c-kw">export default</span>
-<span class="c-fn">createStore</span>({
+<div class="codebox"><div class="codebox-head"><span class="lang">js - store</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { createStore } <span class="c-kw">from</span> <span class="c-str">'vuex'</span>
+<span class="c-kw">export default</span> <span class="c-fn">createStore</span>({
   <span class="c-at">state</span>:     { count: <span class="c-num">0</span> },
   <span class="c-at">mutations</span>: { <span class="c-fn">inc</span>(s) { s.count++ } },
   <span class="c-at">actions</span>:   { <span class="c-fn">asyncInc</span>({commit}) { setTimeout(() => commit(<span class="c-str">'inc'</span>), <span class="c-num">1000</span>) } },
@@ -922,15 +1054,12 @@ router.<span class="c-fn">go</span>(<span class="c-num">-1</span>)              
 <tr><td>模块化</td><td>嵌套modules</td><td>独立store文件</td></tr>
 <tr><td>体积</td><td>较大</td><td>更小</td></tr>
 </table>
-<div class="codebox"><div class="codebox-head"><span class="lang">js - store/counter.js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { defineStore } <span class="c-kw">from</span>
-<span class="c-str">'pinia'</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<div class="codebox"><div class="codebox-head"><span class="lang">js - store/counter.js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> { defineStore } <span class="c-kw">from</span> <span class="c-str">'pinia'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">export const</span> useCounter = <span class="c-fn">defineStore</span>(<span class="c-str">'counter'</span>, () => {
   <span class="c-kw">const</span> count = <span class="c-fn">ref</span>(<span class="c-num">0</span>)
   <span class="c-kw">const</span> double = <span class="c-fn">computed</span>(() => count.value * <span class="c-num">2</span>)
-  <span class="c-kw">const</span>
-<span class="c-fn">inc</span> = () => { count.value++ }
+  <span class="c-kw">const</span> <span class="c-fn">inc</span> = () => { count.value++ }
   <span class="c-kw">return</span> { count, double, inc }
 })</pre></div>
 <div class="codebox"><div class="codebox-head"><span class="lang">vue - 组件使用</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">const</span> counter = <span class="c-fn">useCounter</span>()
@@ -942,8 +1071,7 @@ counter.double         <span class="c-cm">// 访问getter</span></pre></div>
 <h4>Pinia 持久化存储</h4>
 <div class="codebox"><div class="codebox-head"><span class="lang">bash + js</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre>npm install pinia-plugin-persist
 <span class="c-cm">// main.js</span>
-<span class="c-kw">import</span> piniaPersist <span class="c-kw">from</span>
-<span class="c-str">'pinia-plugin-persist'</span>
+<span class="c-kw">import</span> piniaPersist <span class="c-kw">from</span> <span class="c-str">'pinia-plugin-persist'</span>
 pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-cm">// store中启用</span>
 <span class="c-kw">export const</span> useUser = <span class="c-fn">defineStore</span>(<span class="c-str">'user'</span>, () => { ... }, {
@@ -1028,8 +1156,7 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-tag">&lt;/div&gt;</span>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">const</span> students = <span class="c-fn">ref</span>([
   { name: <span class="c-str">'张三'</span>, age: <span class="c-num">20</span> },
   { name: <span class="c-str">'李四'</span>, age: <span class="c-num">21</span> },
@@ -1065,8 +1192,7 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-tag">&lt;/div&gt;</span>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">const</span> products = <span class="c-fn">ref</span>([
   { id: <span class="c-num">1</span>, name: <span class="c-str">'华为手机'</span>, price: <span class="c-num">3999</span>, stock: <span class="c-num">10</span> },
   { id: <span class="c-num">2</span>, name: <span class="c-str">'苹果耳机'</span>, price: <span class="c-num">1299</span>, stock: <span class="c-num">0</span> },
@@ -1076,13 +1202,20 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-tag">&lt;/script&gt;</span>
 <span class="c-tag">&lt;style scoped&gt;</span>
 .container { max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif; }
+
 .product-list { list-style: none; padding: 0; }
+
 .product-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #eee; }
 .product-item:hover { background: #f5f5f5; }
+
 .name { font-weight: bold; font-size: 16px; }
+
 .price { color: #e4393c; font-weight: bold; }
+
 .tag { font-size: 12px; padding: 2px 8px; border-radius: 4px; }
+
 .in-stock { background: #e8f5e9; color: #2e7d32; }
+
 .out-stock { background: #fbe9e7; color: #c62828; }
 <span class="c-tag">&lt;/style&gt;</span></pre></div>
 </div>
@@ -1145,8 +1278,7 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-tag">&lt;/div&gt;</span>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">let</span> nextId = <span class="c-num">4</span>
 <span class="c-kw">const</span> newTodo = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
 <span class="c-kw">const</span> searchQuery = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
@@ -1158,17 +1290,14 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 <span class="c-kw">const</span> filteredTodos = <span class="c-fn">computed</span>(() => {
   <span class="c-kw">return</span> todos.value.filter(t => t.text.includes(searchQuery.value))
 })
-<span class="c-kw">const</span>
-<span class="c-fn">addTodo</span> = () => {
+<span class="c-kw">const</span> <span class="c-fn">addTodo</span> = () => {
   <span class="c-kw">if</span> (newTodo.value.trim()) {
     todos.value.push({ id: nextId++, text: newTodo.value, done: <span class="c-kw">false</span>, editing: <span class="c-kw">false</span> })
     newTodo.value = <span class="c-str">''</span>
   }
 }
-<span class="c-kw">const</span>
-<span class="c-fn">editTodo</span> = (todo) => { todo.editing = !todo.editing }
-<span class="c-kw">const</span>
-<span class="c-fn">deleteTodo</span> = (id) => { todos.value = todos.value.filter(t => t.id !== id) }
+<span class="c-kw">const</span> <span class="c-fn">editTodo</span> = (todo) => { todo.editing = !todo.editing }
+<span class="c-kw">const</span> <span class="c-fn">deleteTodo</span> = (id) => { todos.value = todos.value.filter(t => t.id !== id) }
 <span class="c-tag">&lt;/script&gt;</span>
 <span class="c-tag">&lt;style scoped&gt;</span>
 .crud-app { max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif; }
@@ -1177,11 +1306,16 @@ pinia.<span class="c-fn">use</span>(piniaPersist)
 button { padding: 8px 16px; background: #42b883; color: white; border: none; border-radius: 4px; cursor: pointer; }
 button.delete { background: #e74c3c; }
 button:hover { opacity: 0.85; }
+
 .todo-list { list-style: none; padding: 0; }
+
 .todo-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #eee; gap: 8px; }
 .todo-item:hover { background: #f9f9f9; }
+
 .done { text-decoration: line-through; color: #999; }
+
 .edit-input { flex: 1; padding: 4px 8px; border: 1px solid #42b883; border-radius: 4px; }
+
 .actions { display: flex; gap: 6px; align-items: center; }
 <span class="c-tag">&lt;/style&gt;</span></pre></div>
 <div class="callout callout-key"><strong>CRUD四操作：</strong>增(addTodo)查(filteredTodos)改(editTodo/editing)删(deleteTodo)，computed 实现实时搜索过滤</div>
@@ -1241,8 +1375,7 @@ button:hover { opacity: 0.85; }
 <span class="c-tag">&lt;/div&gt;</span>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">reactive</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span>, <span class="c-fn">reactive</span>, <span class="c-fn">computed</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
 <span class="c-kw">let</span> nextId = <span class="c-num">3</span>
 <span class="c-kw">const</span> cart = <span class="c-fn">ref</span>([
   { id: <span class="c-num">1</span>, name: <span class="c-str">'Python编程书'</span>, price: <span class="c-num">59</span>, quantity: <span class="c-num">1</span> },
@@ -1251,33 +1384,35 @@ button:hover { opacity: 0.85; }
 <span class="c-kw">const</span> newItem = <span class="c-fn">reactive</span>({ name: <span class="c-str">''</span>, price: <span class="c-num">0</span> })
 <span class="c-kw">const</span> totalPrice = <span class="c-fn">computed</span>(() => cart.value.reduce((s, i) => s + i.price * i.quantity, <span class="c-num">0</span>))
 <span class="c-kw">const</span> totalCount = <span class="c-fn">computed</span>(() => cart.value.reduce((s, i) => s + i.quantity, <span class="c-num">0</span>))
-<span class="c-kw">const</span>
-<span class="c-fn">addToCart</span> = () => {
+<span class="c-kw">const</span> <span class="c-fn">addToCart</span> = () => {
   <span class="c-kw">if</span> (newItem.name && newItem.price >
 <span class="c-num">0</span>) {
     cart.value.push({ id: nextId++, name: newItem.name, price: newItem.price, quantity: <span class="c-num">1</span> })
     newItem.name = <span class="c-str">''</span>; newItem.price = <span class="c-num">0</span>
   }
 }
-<span class="c-kw">const</span>
-<span class="c-fn">changeQty</span> = (id, delta) => {
+<span class="c-kw">const</span> <span class="c-fn">changeQty</span> = (id, delta) => {
   <span class="c-kw">const</span> item = cart.value.find(i => i.id === id)
   <span class="c-kw">if</span> (item) { item.quantity = Math.max(<span class="c-num">1</span>, item.quantity + delta) }
 }
-<span class="c-kw">const</span>
-<span class="c-fn">removeItem</span> = (id) => { cart.value = cart.value.filter(i => i.id !== id) }
+<span class="c-kw">const</span> <span class="c-fn">removeItem</span> = (id) => { cart.value = cart.value.filter(i => i.id !== id) }
 <span class="c-tag">&lt;/script&gt;</span>
 <span class="c-tag">&lt;style scoped&gt;</span>
 .cart { max-width: 700px; margin: 20px auto; font-family: Arial, sans-serif; }
+
 .add-section { display: flex; gap: 8px; margin-bottom: 16px; }
 .add-section input { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
 .add-section button { padding: 8px 20px; background: #42b883; color: white; border: none; border-radius: 4px; cursor: pointer; }
+
 .cart-table { width: 100%; border-collapse: collapse; }
 .cart-table th, .cart-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #eee; }
 .cart-table th { background: #f8f8f8; font-weight: bold; }
+
 .del { background: #e74c3c; color: white; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; }
 .del:hover { opacity: 0.85; }
+
 .total { margin-top: 16px; padding: 12px; background: #f8f8f8; border-radius: 4px; font-size: 18px; text-align: right; }
+
 .count { font-size: 13px; color: #999; margin-left: 8px; }
 <span class="c-tag">&lt;/style&gt;</span></pre></div>
 </div>
@@ -1298,15 +1433,12 @@ button:hover { opacity: 0.85; }
 <span class="c-tag">&lt;/div&gt;</span>
 <span class="c-tag">&lt;/template&gt;</span>
 <span class="c-tag">&lt;script setup&gt;</span>
-<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span>
-<span class="c-str">'vue'</span>
-<span class="c-kw">import</span> Child <span class="c-kw">from</span>
-<span class="c-str">'./Child.vue'</span>
+<span class="c-kw">import</span> { <span class="c-fn">ref</span> } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+<span class="c-kw">import</span> Child <span class="c-kw">from</span> <span class="c-str">'./Child.vue'</span>
 <span class="c-kw">const</span> parentMessage = <span class="c-fn">ref</span>(<span class="c-str">'这是来自父组件的数据'</span>)
 <span class="c-kw">const</span> childMsg = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
 <span class="c-kw">const</span> items = <span class="c-fn">ref</span>([<span class="c-str">'Vue3基础'</span>, <span class="c-str">'组件通信'</span>, <span class="c-str">'路由配置'</span>])
-<span class="c-kw">const</span>
-<span class="c-fn">handleChildEvent</span> = (msg) => { childMsg.value = msg }
+<span class="c-kw">const</span> <span class="c-fn">handleChildEvent</span> = (msg) => { childMsg.value = msg }
 <span class="c-tag">&lt;/script&gt;</span>
 <span class="c-tag">&lt;style scoped&gt;</span>
 .parent { max-width: 600px; margin: 20px auto; padding: 20px; border: 2px solid #42b883; border-radius: 8px; background: #f0faf5; }
@@ -1331,8 +1463,7 @@ button:hover { opacity: 0.85; }
   <span class="c-at">list</span>: { type: Array, default: () => [] }
 })
 <span class="c-kw">const</span> emit = <span class="c-fn">defineEmits</span>([<span class="c-str">'child-event'</span>])
-<span class="c-kw">const</span>
-<span class="c-fn">sendToParent</span> = () => {
+<span class="c-kw">const</span> <span class="c-fn">sendToParent</span> = () => {
   emit(<span class="c-str">'child-event'</span>, <span class="c-str">'你好父组件，我是子组件！数据已收到 ✅'</span>)
 }
 <span class="c-tag">&lt;/script&gt;</span>
@@ -1567,21 +1698,16 @@ newman run collection.json -d data.json -r html
 <div class="kb-card">
 <h4>unittest核心结构 <span class="tag">必考</span></h4>
 <div class="codebox"><div class="codebox-head"><span class="lang">Python</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> unittest
-<span class="c-kw">class</span>
-<span class="c-fn">TestMath</span>(unittest.TestCase):
-    <span class="c-kw">def</span>
-<span class="c-fn">setUp</span>(<span class="c-at">self</span>):
+<span class="c-kw">class</span> <span class="c-fn">TestMath</span>(unittest.TestCase):
+    <span class="c-kw">def</span> <span class="c-fn">setUp</span>(<span class="c-at">self</span>):
         <span class="c-cm"># 每个测试方法执行前运行（初始化）</span>
         self.data = [1, 2, 3]
-    <span class="c-kw">def</span>
-<span class="c-fn">tearDown</span>(<span class="c-at">self</span>):
+    <span class="c-kw">def</span> <span class="c-fn">tearDown</span>(<span class="c-at">self</span>):
         <span class="c-cm"># 每个测试方法执行后运行（清理）</span>
         self.data = None
-    <span class="c-kw">def</span>
-<span class="c-fn">test_sum</span>(<span class="c-at">self</span>):
+    <span class="c-kw">def</span> <span class="c-fn">test_sum</span>(<span class="c-at">self</span>):
         self.assertEqual(sum(self.data), <span class="c-num">6</span>)
-    <span class="c-kw">def</span>
-<span class="c-fn">test_len</span>(<span class="c-at">self</span>):
+    <span class="c-kw">def</span> <span class="c-fn">test_len</span>(<span class="c-at">self</span>):
         self.assertEqual(len(self.data), <span class="c-num">3</span>)
 <span class="c-cm"># 执行测试</span>
 <span class="c-kw">if</span> __name__ == <span class="c-str">'__main__'</span>:
@@ -1603,8 +1729,7 @@ newman run collection.json -d data.json -r html
 <div class="kb-card">
 <h4>测试覆盖 <span class="tag">必考</span></h4>
 <p><strong>语句覆盖：</strong>设计测试用例使程序中每条可执行语句至少被执行一次。</p>
-<div class="codebox"><div class="codebox-head"><span class="lang">Python示例</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">def</span>
-<span class="c-fn">check_score</span>(score):
+<div class="codebox"><div class="codebox-head"><span class="lang">Python示例</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">def</span> <span class="c-fn">check_score</span>(score):
     <span class="c-kw">if</span> score >= <span class="c-num">60</span>:
         print(<span class="c-str">"及格"</span>)    <span class="c-cm"># 语句1</span>
 <span class="c-kw">else</span>:
@@ -2413,17 +2538,11 @@ echo <span class="c-str">"上条命令退出码: $?"</span></pre></div>
 <span class="c-fn">tizhong</span> = <span class="c-kw">float</span>(<span class="c-fn">input</span>(<span class="c-str">'体重(单位是公斤)'</span>))
 <span class="c-fn">mi</span> = <span class="c-fn">round</span>(<span class="c-fn">tizhong</span> / (<span class="c-fn">shenggao</span> ** <span class="c-num">2</span>), <span class="c-num">2</span>)
 <span class="c-fn">a</span> = <span class="c-str">''</span>
-<span class="c-kw">if</span>
-<span class="c-fn">mi</span>
-< <span class="c-num">18.5</span>:
+<span class="c-kw">if</span> <span class="c-fn">mi</span> < <span class="c-num">18.5</span>:
     <span class="c-fn">a</span> = <span class="c-str">'体重过轻'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">mi</span>
-< <span class="c-num">24</span>:
+<span class="c-kw">elif</span> <span class="c-fn">mi</span> < <span class="c-num">24</span>:
     <span class="c-fn">a</span> = <span class="c-str">'正常'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">mi</span>
-< <span class="c-num">28</span>:
+<span class="c-kw">elif</span> <span class="c-fn">mi</span> < <span class="c-num">28</span>:
     <span class="c-fn">a</span> = <span class="c-str">'体重过重'</span>
 <span class="c-kw">else</span>:
     <span class="c-fn">a</span> = <span class="c-str">'肥胖'</span>
@@ -2462,22 +2581,16 @@ echo <span class="c-str">"上条命令退出码: $?"</span></pre></div>
 </div>
 <div class="kb-card">
 <h4>💻 完整代码</h4>
-<div class="codebox"><div class="codebox-head"><span class="lang">python</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span>
-<span class="c-fn">random</span>
+<div class="codebox"><div class="codebox-head"><span class="lang">python</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">import</span> <span class="c-fn">random</span>
 <span class="c-fn">target</span> = <span class="c-fn">random</span>.<span class="c-fn">randint</span>(<span class="c-num">1</span>, <span class="c-num">100</span>)
 <span class="c-fn">count</span> = <span class="c-num">0</span>
 <span class="c-fn">print</span>(<span class="c-str">'🎮 欢迎来到猜数字游戏！范围 1~100'</span>)
-<span class="c-kw">while</span>
-<span class="c-num">True</span>:
+<span class="c-kw">while</span> <span class="c-num">True</span>:
     <span class="c-fn">guess</span> = <span class="c-kw">int</span>(<span class="c-fn">input</span>(<span class="c-str">'请输入你猜的数字: '</span>))
     <span class="c-fn">count</span> += <span class="c-num">1</span>
-<span class="c-kw">if</span>
-<span class="c-fn">guess</span>
-< <span class="c-fn">target</span>:
+<span class="c-kw">if</span> <span class="c-fn">guess</span> < <span class="c-fn">target</span>:
         <span class="c-fn">print</span>(<span class="c-str">'小了，再试试！'</span>)
-    <span class="c-kw">elif</span>
-<span class="c-fn">guess</span> >
-<span class="c-fn">target</span>:
+    <span class="c-kw">elif</span> <span class="c-fn">guess</span> > <span class="c-fn">target</span>:
         <span class="c-fn">print</span>(<span class="c-str">'大了，再试试！'</span>)
     <span class="c-kw">else</span>:
         <span class="c-fn">print</span>(<span class="c-str">f'🎉 恭喜你猜对了！答案就是 {target}'</span>)
@@ -2519,48 +2632,28 @@ echo <span class="c-str">"上条命令退出码: $?"</span></pre></div>
 </div>
 <div class="kb-card">
 <h4>💻 完整代码</h4>
-<div class="codebox"><div class="codebox-head"><span class="lang">python</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">class</span>
-<span class="c-fn">student</span>:
-    <span class="c-kw">def</span>
-<span class="c-fn">__init__</span>(<span class="c-fn">self</span>, <span class="c-fn">name</span>, <span class="c-fn">num</span>, <span class="c-fn">score</span>):
+<div class="codebox"><div class="codebox-head"><span class="lang">python</span><button class="copy-btn" onclick="copyCode(this)">复制</button></div><pre><span class="c-kw">class</span> <span class="c-fn">student</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(<span class="c-fn">self</span>, <span class="c-fn">name</span>, <span class="c-fn">num</span>, <span class="c-fn">score</span>):
         <span class="c-fn">self</span>.<span class="c-fn">name</span> = <span class="c-fn">name</span>
 <span class="c-fn">self</span>.<span class="c-fn">num</span> = <span class="c-fn">num</span>
 <span class="c-fn">self</span>.<span class="c-fn">score</span> = <span class="c-fn">score</span>
-<span class="c-kw">def</span>
-<span class="c-fn">level</span>(<span class="c-fn">self</span>):
-        <span class="c-kw">if</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span>
-< <span class="c-num">0</span>
-<span class="c-kw">or</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span> >
-<span class="c-num">100</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'成绩不合法'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">90</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'优秀'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">80</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'良好'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">70</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'中等'</span>
-<span class="c-kw">elif</span>
-<span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">60</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'合格'</span>
+<span class="c-kw">def</span> <span class="c-fn">level</span>(<span class="c-fn">self</span>):
+        <span class="c-kw">if</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> < <span class="c-num">0</span> <span class="c-kw">or</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> > <span class="c-num">100</span>:
+            <span class="c-kw">return</span> <span class="c-str">'成绩不合法'</span>
+<span class="c-kw">elif</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">90</span>:
+            <span class="c-kw">return</span> <span class="c-str">'优秀'</span>
+<span class="c-kw">elif</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">80</span>:
+            <span class="c-kw">return</span> <span class="c-str">'良好'</span>
+<span class="c-kw">elif</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">70</span>:
+            <span class="c-kw">return</span> <span class="c-str">'中等'</span>
+<span class="c-kw">elif</span> <span class="c-fn">self</span>.<span class="c-fn">score</span> >= <span class="c-num">60</span>:
+            <span class="c-kw">return</span> <span class="c-str">'合格'</span>
 <span class="c-kw">else</span>:
-            <span class="c-kw">return</span>
-<span class="c-str">'不及格'</span>
-<span class="c-kw">def</span>
-<span class="c-fn">info</span>(<span class="c-fn">self</span>):
+            <span class="c-kw">return</span> <span class="c-str">'不及格'</span>
+<span class="c-kw">def</span> <span class="c-fn">info</span>(<span class="c-fn">self</span>):
         <span class="c-fn">l</span> = <span class="c-fn">self</span>.<span class="c-fn">level</span>()
         <span class="c-fn">print</span>(<span class="c-str">f'我的姓名是{self.name}, 我的学号是{self.num}, 我的成绩等级是{l}'</span>)
-<span class="c-kw">if</span>
-<span class="c-fn">__name__</span> == <span class="c-str">'__main__'</span>:
+<span class="c-kw">if</span> <span class="c-fn">__name__</span> == <span class="c-str">'__main__'</span>:
     <span class="c-fn">s1</span> = <span class="c-fn">student</span>(<span class="c-str">'张三'</span>, <span class="c-str">'123456'</span>, <span class="c-num">100</span>)
     <span class="c-fn">s1</span>.<span class="c-fn">info</span>()</pre></div>
 </div>
@@ -3822,10 +3915,8 @@ module.exports = { formatPrice: formatPrice, formatDate: formatDate, limitText: 
       })
     },
     <span class="c-fn">formatTime</span>(<span class="c-fn">date</span>) {
-      <span class="c-kw">var</span>
-<span class="c-fn">h</span> = date.<span class="c-fn">getHours</span>().<span class="c-fn">toString</span>().<span class="c-fn">padStart</span>(<span class="c-num">2</span>, <span class="c-str">'0'</span>)
-      <span class="c-kw">var</span>
-<span class="c-fn">m</span> = date.<span class="c-fn">getMinutes</span>().<span class="c-fn">toString</span>().<span class="c-fn">padStart</span>(<span class="c-num">2</span>, <span class="c-str">'0'</span>)
+      <span class="c-kw">var</span> <span class="c-fn">h</span> = date.<span class="c-fn">getHours</span>().<span class="c-fn">toString</span>().<span class="c-fn">padStart</span>(<span class="c-num">2</span>, <span class="c-str">'0'</span>)
+      <span class="c-kw">var</span> <span class="c-fn">m</span> = date.<span class="c-fn">getMinutes</span>().<span class="c-fn">toString</span>().<span class="c-fn">padStart</span>(<span class="c-num">2</span>, <span class="c-str">'0'</span>)
       <span class="c-kw">return</span> h + <span class="c-str">':'</span> + m
     }
   }
