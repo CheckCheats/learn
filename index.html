@@ -85,7 +85,6 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 50%{transform:translateY(-6px)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-
 .hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
 .hero h1 .gradient{background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:clamp(1rem,2vw,1.25rem);color:var(--text-2);max-width:500px;margin:0 auto 12px}
@@ -112,8 +111,6 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 .subject-card h3{font-size:18px;font-weight:700;margin-bottom:6px}
 .subject-card p{font-size:13px;color:var(--text-2);margin-bottom:16px}
 .subject-card .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-
-
 
 .subject-card:hover .arrow{background:var(--accent);color:#fff;transform:translateX(4px)}
 .subject-card.locked{opacity:.6;cursor:default}
@@ -240,8 +237,6 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
 /* ═══════════════ SCROLL REVEAL ═══════════════ */
 .reveal{opacity:0;transform:translateY(24px);transition:all .6s var(--ease)}
 .reveal.visible{opacity:1;transform:none}
-
-
 
 /* ═══════════════ EXPORT ═══════════════ */
 .export-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -390,22 +385,12 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:1
   .cursor-glow{display:none}
   }
 
-/* ═══════════════ LOADING SCREEN ═══════════════ */
-#loader{position:fixed;inset:0;z-index:99999;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s,visibility .5s}
-#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-#loader .logo{font-size:clamp(2rem,5vw,3rem);font-weight:800;background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px;letter-spacing:-.02em}
-#loader .logo span{font-weight:400;font-size:clamp(.8rem,1.5vw,1rem);-webkit-text-fill-color:var(--text-3);margin-left:6px}
-#loader .bar-wrap{width:clamp(160px,20vw,260px);height:3px;background:var(--border);border-radius:3px;overflow:hidden}
-#loader .bar{height:100%;width:0;background:var(--gradient);border-radius:3px;animation:loadBar 1.2s ease-in-out forwards}
-#loader .status{font-size:12px;color:var(--text-3);margin-top:12px;letter-spacing:1px}
-@keyframes loadBar{0%{width:0}50%{width:70%}100%{width:100%}}
+50%{opacity:1}}
 
 </style>
 </head>
 <body>
-<!-- LOADER -->
-<div id="loader">
-<div class="logo">ExamVerse<span>期末复习宇宙</span></div>
+
 <div class="bar-wrap"><div class="bar"></div></div>
 <div class="status">加载中...</div>
 </div>
@@ -3953,6 +3938,9 @@ module.exports = { formatPrice: formatPrice, formatDate: formatDate, limitText: 
 <!-- BACK TO TOP -->
 <button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 <script>
+/* ═══════════ LOADER ═══════════ */
+(function(){var l=document.getElementById('loader');if(l){setTimeout(function(){l.classList.add('hide')},1200)}})();
+
 const html = document.documentElement;
 function toggleTheme(){
   const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -4194,14 +4182,6 @@ function exportWord() {
         '.tag{display:inline-block;padding:1px 6px;background:#eef2ff;color:#4f46e5;border-radius:8px;font-size:8.5pt}';
       var allHtml = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>期末复习知识点汇总</title><style>' + css + '
 /* ═══════════════ LOADING SCREEN ═══════════════ */
-#loader{position:fixed;inset:0;z-index:99999;background:var(--bg-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s,visibility .5s}
-#loader.hide{opacity:0;visibility:hidden;pointer-events:none}
-#loader .logo{font-size:clamp(2rem,5vw,3rem);font-weight:800;background:var(--gradient-text);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px;letter-spacing:-.02em}
-#loader .logo span{font-weight:400;font-size:clamp(.8rem,1.5vw,1rem);-webkit-text-fill-color:var(--text-3);margin-left:6px}
-#loader .bar-wrap{width:clamp(160px,20vw,260px);height:3px;background:var(--border);border-radius:3px;overflow:hidden}
-#loader .bar{height:100%;width:0;background:var(--gradient);border-radius:3px;animation:loadBar 1.2s ease-in-out forwards}
-#loader .status{font-size:12px;color:var(--text-3);margin-top:12px;letter-spacing:1px}
-@keyframes loadBar{0%{width:0}50%{width:70%}100%{width:100%}}
 
 </style></head><body>';
       allHtml += '<h1>📚 期末复习知识点汇总</h1><p style="text-align:center;color:#666;margin-bottom:30px">ExamVerse · 5大科目全部知识点</p>';
@@ -4273,9 +4253,6 @@ function exportWord() {
     }
   }, 200);
 }
-
-/* ═══════════ LOADER ═══════════ */
-window.addEventListener('load',function(){setTimeout(function(){document.getElementById('loader').classList.add('hide')},300)});
 
 </script>
 </body>
