@@ -127,6 +127,7 @@ code,pre{font-family:var(--mono);font-size:13px}
 <div class="nav-link" onclick="navigate('knowledge')">知识点</div>
 <div class="nav-link" onclick="navigate('coding')">编程题解析</div>
 <div class="nav-link" onclick="navigate('exercises')">课后题答案</div>
+<div class="nav-link" onclick="navigate('answerkey')">答案速记</div>
 </div>
 <div class="nav-btns"><button class="nav-btn" onclick="toggleTheme()" title="切换主题">🌙</button></div>
 </nav>
@@ -147,7 +148,8 @@ code,pre{font-family:var(--mono);font-size:13px}
 <div class="subject-card" onclick="navigate('tutorial')"><div class="icon">📚</div><h3>零基础教学</h3><p>从安装Node.js到创建Vue项目，手把手教你从0开始。不需要任何Vue环境，跟着做就行。</p><div class="tags"><span class="tag">入门</span><span class="tag">安装</span><span class="tag">项目创建</span></div><div class="footer">4章 · 从0到有</div></div>
 <div class="subject-card" onclick="navigate('knowledge')"><div class="icon">🧠</div><h3>核心知识点</h3><p>指令、响应式数据、组件、路由、UI库、网络请求、状态管理 — 覆盖PPT全部考点</p><div class="tags"><span class="tag">指令</span><span class="tag">组件</span><span class="tag">路由</span><span class="tag">Pinia</span></div><div class="footer">8章 · 对应PPT考点</div></div>
 <div class="subject-card" onclick="navigate('coding')"><div class="icon">💻</div><h3>编程题解析</h3><p>PPT中5道编程题完整代码 + 逐行讲解。列表渲染、增删改查、购物车、父子组件通信</p><div class="tags"><span class="tag">v-for</span><span class="tag">CRUD</span><span class="tag">购物车</span><span class="tag">组件通信</span></div><div class="footer">5题 · 期末必考</div></div>
-<div class="subject-card" onclick="navigate('exercises')"><div class="icon">📝</div><h3>课后题答案与解析</h3><p>7章课后判断题35道 + 选择题34道，每题都有答案和详细解析。点击选项即可查看对错</p><div class="tags"><span class="tag">判断题</span><span class="tag">选择题</span><span class="tag">详细解析</span></div><div class="footer">69题 · 含解析</div></div>
+<div class="subject-card" onclick="navigate('exercises')"><div class="icon">📝</div><h3>课后题答案</h3><p>7章课后判断题35道 + 选择题34道，直接显示答案与解析，速览模式</p><div class="tags"><span class="tag">判断题</span><span class="tag">选择题</span><span class="tag">答案</span></div><div class="footer">69题 · 速览</div></div>
+<div class="subject-card" onclick="navigate('answerkey')"><div class="icon">⚡</div><h3>答案速记</h3><p>所有课后题知识点提炼为速记表格，考前5分钟扫一遍，记住每道题的正确说法和错误说法</p><div class="tags"><span class="tag">速记</span><span class="tag">易错点</span><span class="tag">考前必看</span></div><div class="footer">7章 · 考前速记</div></div>
 </div>
 <div class="footer"><p>Vue3 期末复习网站 · 从0基础到1小时精通</p></div>
 </div>
@@ -1337,489 +1339,449 @@ table, th, td {
 
 <!-- EXERCISES PAGE -->
 <div class="page" id="page-exercises">
-<div class="review-header"><h2>课后题答案与解析</h2><p>7章课后题：35道判断题 + 34道选择题。点击选项查看对错和解析</p></div>
+<div class="review-header"><h2>课后题答案</h2><p>7章69题答案速览 — 判断题+选择题，直接显示答案和解析</p></div>
 <div class="review-controls">
 <select class="toc-select" id="exercisesTocSelect" onchange="jumpToChapter('exercises', this.value)"><option value="">跳转到章节...</option></select>
 <button class="ctrl-btn" onclick="toggleAllChapters('exercises')" id="exercisesToggleAllBtn">展开全部</button>
 <span class="chapter-count" id="exercisesCount"></span>
 </div>
 
-<!-- EX CH1: 初识Vue.js -->
+<!-- EX CH1 -->
 <div class="chapter-section" id="ex-0">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>初识 Vue.js — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>初识Vue.js — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body open">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. 在Vue项目中，执行 yarn dev 命令可以完成项目构建。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j1',false)">错</button></div>
-<div class="q-ans" id="ex0j1"><strong>答案：✗ 错误</strong><br>yarn dev（或 npm run dev）是启动开发服务器，<strong>不是</strong>项目构建。项目构建/打包用 <code>yarn build</code> 或 <code>npm run build</code>。</div></div>
-<div class="quiz"><div class="q-title">2. 在Vue项目中，执行 npm update 命令可以更新指定名称的包。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j2',false)">错</button></div>
-<div class="q-ans" id="ex0j2"><strong>答案：✓ 正确</strong><br><code>npm update 包名</code> 用于更新指定名称的包到最新版本。</div></div>
-<div class="quiz"><div class="q-title">3. npm 是一个包管理工具，用来解决 Node.js 代码部署问题。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j3',false)">错</button></div>
-<div class="q-ans" id="ex0j3"><strong>答案：✓ 正确</strong><br>npm（Node Package Manager）是 Node.js 的包管理工具，用于安装、分享、管理依赖包。</div></div>
-<div class="quiz"><div class="q-title">4. 在使用 yarn 之前，需要先确保计算机中已经安装了 Node.js。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j4',false)">错</button></div>
-<div class="q-ans" id="ex0j4"><strong>答案：✓ 正确</strong><br>yarn 依赖 Node.js 环境，必须先安装 Node.js 才能使用 yarn。</div></div>
-<div class="quiz"><div class="q-title">5. Vue 可以在 Node.js 环境下进行开发，并借助 npm 工具安装依赖。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j5',false)">错</button></div>
-<div class="q-ans" id="ex0j5"><strong>答案：✓ 正确</strong><br>Vue 项目在 Node.js 环境下开发，使用 npm 安装各种依赖包。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>yarn dev可以完成项目构建</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>2</td><td>npm update可以更新指定包</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>npm是包管理工具，解决Node.js代码部署</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>4</td><td>使用yarn前需先安装Node.js</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>5</td><td>Vue可在Node.js环境下开发，用npm安装依赖</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+</table>
+<p><strong>第1题解析：</strong>yarn dev 是启动开发服务器，不是项目构建。构建用 yarn build。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，关于Vue说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex0c1','A',false)">A. Vue相比Angular和React而言，是一个轻量级的前端库</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c1','B',false)">B. Vue支持Pinia插件</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c1','C',false)">C. Vue支持双向数据绑定</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c1','D',true)">D. Vue中自定义指令以"on-"开头</li>
-</ul>
-<div class="q-ans" id="ex0c1"><strong>答案：D</strong><br>Vue 自定义指令以 <code>v-</code> 开头（如 v-if、v-for），<strong>不是</strong>以 "on-" 开头。A、B、C 都是正确的。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，关于npm工具说法正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex0c2','A',true)">A. 使用npm安装同一个包时，会对包进行缓存，再次安装时无须重复下载</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c2','B',false)">B. npm安装包时，必须等到当前包安装完成后才会继续后面的安装</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c2','C',false)">C. 使用"npm install 包名 -g"命令表示将包安装到当前项目中</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c2','D',false)">D. 使用npm命令时，不需要安装Node.js</li>
-</ul>
-<div class="q-ans" id="ex0c2"><strong>答案：A</strong><br>npm 有缓存机制，同一包重复安装时无需重新下载。B错误：npm支持并行安装。C错误：-g 表示全局安装。D错误：npm需要Node.js环境。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选择中，关于MVVM的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex0c3','A',false)">A. Model主要负责业务数据的处理</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c3','B',false)">B. View负责视图的处理</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c3','C',false)">C. ViewModel负责监听Model或者View的改变</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c3','D',true)">D. Model和View可以直接通信，互相监控双方的动作</li>
-</ul>
-<div class="q-ans" id="ex0c3"><strong>答案：D</strong><br>Model 和 View <strong>不能</strong>直接通信，必须通过 ViewModel 中转。这是 MVVM 模式的核心原则。</div></div>
-<div class="quiz"><div class="q-title">4. npm包管理工具基于的运行环境是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex0c4','A',true)">A. Node.js</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c4','B',false)">B. Vue</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c4','C',false)">C. Babel</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c4','D',false)">D. Angular</li>
-</ul>
-<div class="q-ans" id="ex0c4"><strong>答案：A</strong><br>npm 是 Node.js 的包管理工具，基于 Node.js 运行环境。</div></div>
-<div class="quiz"><div class="q-title">5. 下列选项中，属于Vue特性的是（ ）。（多选）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex0c5','A',true)">A. 轻量级</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c5','B',true)">B. 数据驱动视图</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c5','C',true)">C. 双向数据绑定</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex0c5','D',true)">D. 插件化开发</li>
-</ul>
-<div class="q-ans" id="ex0c5"><strong>答案：A、B、C、D</strong><br>Vue 的四大特性：轻量级、数据驱动视图、双向数据绑定、插件化开发。全部正确。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>Vue说法错误的</td><td><strong>D</strong></td><td>指令以 v- 开头，不是 on-</td></tr>
+<tr><td>2</td><td>npm说法正确的</td><td><strong>A</strong></td><td>npm有缓存，支持并行安装</td></tr>
+<tr><td>3</td><td>MVVM说法错误的</td><td><strong>D</strong></td><td>Model和View不能直接通信</td></tr>
+<tr><td>4</td><td>npm基于什么运行</td><td><strong>A</strong></td><td>Node.js</td></tr>
+<tr><td>5</td><td>Vue特性（多选）</td><td><strong>ABCD</strong></td><td>轻量级+数据驱动+双向绑定+插件化</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH2: Vue开发基础 -->
+<!-- EX CH2 -->
 <div class="chapter-section" id="ex-1">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>Vue开发基础 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>Vue开发基础 — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. ref()函数用于将响应式对象中的单个属性转换为响应式数据。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j1',false)">错</button></div>
-<div class="q-ans" id="ex1j1"><strong>答案：✗ 错误</strong><br>ref() 用于将基本类型数据转为响应式。将响应式对象单个属性转为响应式的是 <code>toRef()</code>。</div></div>
-<div class="quiz"><div class="q-title">2. Vue中绑定样式类可以通过v-bind指令操作style属性来实现。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j2',false)">错</button></div>
-<div class="q-ans" id="ex1j2"><strong>答案：✓ 正确</strong><br>v-bind（:）可以绑定 class 和 style 属性来设置样式。</div></div>
-<div class="quiz"><div class="q-title">3. toRef()函数用于将普通数据转换成响应式数据。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j3',false)">错</button></div>
-<div class="q-ans" id="ex1j3"><strong>答案：✗ 错误</strong><br>toRef() 是将<strong>响应式对象</strong>的单个属性转换为 ref，不是将普通数据转为响应式。将普通数据转为响应式用 ref()。</div></div>
-<div class="quiz"><div class="q-title">4. $event是Vue提供的内置变量，使用它可以获取事件对象。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j4',false)">错</button></div>
-<div class="q-ans" id="ex1j4"><strong>答案：✓ 正确</strong><br>$event 是 Vue 的内置变量，在事件处理函数中可以获取原生事件对象。</div></div>
-<div class="quiz"><div class="q-title">5. 使用v-model的.trim修饰符可以自动过滤用户输入的首尾空白字符。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j5',false)">错</button></div>
-<div class="q-ans" id="ex1j5"><strong>答案：✓ 正确</strong><br>v-model.trim 修饰符自动过滤输入内容首尾的空格。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>ref()用于将响应式对象单个属性转为响应式</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>2</td><td>v-bind可以操作style属性绑定样式</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>toRef()用于将普通数据转成响应式</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>4</td><td>$event是Vue内置变量，可获取事件对象</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>5</td><td>v-model.trim可过滤首尾空白字符</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+</table>
+<p><strong>第1题：</strong>ref()转基本类型，toRef()转响应式对象属性。<strong>第3题：</strong>toRef()转的是响应式对象的属性，不是普通数据。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列关于单文件组件的说法中，错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex1c1','A',false)">A. 模板用于搭建当前组件的DOM结构</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c1','B',true)">B. 在Vue 3中，&lt;template&gt;标签中的DOM结构只能有一个根节点</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c1','C',false)">C. 样式用于通过CSS代码为当前组件设置样式</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c1','D',false)">D. 逻辑用于通过JavaScript代码处理组件的数据与业务</li>
-</ul>
-<div class="q-ans" id="ex1c1"><strong>答案：B</strong><br>Vue 3 中 &lt;template&gt; 可以有<strong>多个</strong>根节点（Fragment）。"只能有一个根节点"是 Vue 2 的限制。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，用于渲染DOM元素的文本内容的指令是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex1c2','A',false)">A. v-bind</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c2','B',true)">B. v-text</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c2','C',false)">C. v-on</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c2','D',false)">D. v-for</li>
-</ul>
-<div class="q-ans" id="ex1c2"><strong>答案：B</strong><br>v-text 指令用于设置元素的文本内容，等同于 innerText。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选项中，用于将响应式对象中的所有属性转换为响应式数据的函数是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex1c3','A',false)">A. ref()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c3','B',true)">B. reactive()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c3','C',false)">C. toRef()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c3','D',false)">D. toRefs()</li>
-</ul>
-<div class="q-ans" id="ex1c3"><strong>答案：B</strong><br>reactive() 将对象/数组的所有属性转为响应式数据。注意：toRefs() 是将响应式对象的属性转为 ref，不是"将对象转为响应式"。</div></div>
-<div class="quiz"><div class="q-title">4. 下列关于事件修饰符的说法中，错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex1c4','A',false)">A. 使用.prevent修饰符可以阻止&lt;a&gt;标签的默认跳转行为</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c4','B',true)">B. 使用.stop修饰符可以阻止默认事件行为</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c4','C',false)">C. 使用.capture修饰符可以改变事件的默认执行顺序</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c4','D',false)">D. 使用.self修饰符可以实现只有DOM元素本身才会触发事件</li>
-</ul>
-<div class="q-ans" id="ex1c4"><strong>答案：B</strong><br>.stop 是阻止<strong>事件冒泡</strong>，不是阻止默认事件行为。阻止默认行为的是 .prevent。</div></div>
-<div class="quiz"><div class="q-title">5. 下列关于v-for的说法中，错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex1c5','A',true)">A. 使用v-for时，要指定key的值，key的值不具有唯一性</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c5','B',false)">B. v-for可以辅助开发者基于一个数组、对象、数字或字符串循环渲染列表</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c5','C',false)">C. v-for会根据数组中元素的个数来决定循环次数</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex1c5','D',false)">D. v-for会根据对象中属性的个数来决定循环次数</li>
-</ul>
-<div class="q-ans" id="ex1c5"><strong>答案：A</strong><br>v-for 的 key 值<strong>必须具有唯一性</strong>。说"不具有唯一性"是错误的。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>SFC说法错误的</td><td><strong>B</strong></td><td>Vue3可以有多个根节点</td></tr>
+<tr><td>2</td><td>渲染文本内容的指令</td><td><strong>B</strong></td><td>v-text</td></tr>
+<tr><td>3</td><td>将对象所有属性转为响应式</td><td><strong>B</strong></td><td>reactive()</td></tr>
+<tr><td>4</td><td>事件修饰符说法错误的</td><td><strong>B</strong></td><td>.stop阻止冒泡，不是阻止默认行为</td></tr>
+<tr><td>5</td><td>v-for说法错误的</td><td><strong>A</strong></td><td>key值必须唯一</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH3: 组件基础(上) -->
+<!-- EX CH3 -->
 <div class="chapter-section" id="ex-2">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>组件基础(上) — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>组件基础(上) — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. 当使用组合式API时，数据和方法可以直接在setup()函数中定义。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j1',false)">错</button></div>
-<div class="q-ans" id="ex2j1"><strong>答案：✓ 正确</strong><br>组合式 API 在 setup() 函数中直接定义数据和方法。&lt;script setup&gt; 是 setup() 的语法糖。</div></div>
-<div class="quiz"><div class="q-title">2. 在Vue中，可以通过type属性对父组件中传递过来的props数据进行基础类型检查。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j2',false)">错</button></div>
-<div class="q-ans" id="ex2j2"><strong>答案：✓ 正确</strong><br>props 验证支持 type 属性进行类型检查（String、Number、Boolean 等）。</div></div>
-<div class="quiz"><div class="q-title">3. 在Vue中，可以调用defineProps()函数声明props。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j3',false)">错</button></div>
-<div class="q-ans" id="ex2j3"><strong>答案：✓ 正确</strong><br>在 &lt;script setup&gt; 中使用 defineProps() 声明 props。</div></div>
-<div class="quiz"><div class="q-title">4. 在父组件中使用v-bind可以为子组件静态绑定props。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j4',false)">错</button></div>
-<div class="q-ans" id="ex2j4"><strong>答案：✗ 错误</strong><br>v-bind 是<strong>动态</strong>绑定（绑定变量），不是静态绑定。静态绑定是直接写值如 <code>title="hello"</code>。</div></div>
-<div class="quiz"><div class="q-title">5. 在Vue中，跨级组件之间的数据传递可以通过依赖注入来实现。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j5',false)">错</button></div>
-<div class="q-ans" id="ex2j5"><strong>答案：✓ 正确</strong><br>provide/inject（依赖注入）用于跨级组件（祖孙组件）之间的数据传递。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>组合式API数据方法可在setup()中定义</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>2</td><td>type属性可对props进行类型检查</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>defineProps()可声明props</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>4</td><td>v-bind为子组件静态绑定props</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>5</td><td>跨级组件数据传递可通过依赖注入</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+</table>
+<p><strong>第4题：</strong>v-bind是动态绑定（绑定变量），不是静态绑定。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，关于组合式API下的生命周期函数说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex2c1','A',false)">A. onBeforeMount()函数会在组件挂载之前被调用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c1','B',false)">B. onMounted()函数会在组件挂载完成后被调用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c1','C',true)">C. onUpdated()函数会在组件更新前被调用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c1','D',false)">D. onUnmounted()函数会在组件实例被销毁后调用</li>
-</ul>
-<div class="q-ans" id="ex2c1"><strong>答案：C</strong><br>onUpdated() 是在组件更新<strong>完成后</strong>被调用，不是更新前。更新前是 onBeforeUpdate()。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，关于props说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex2c2','A',true)">A. 对象形式的props不能使用多种验证方案</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c2','B',false)">B. 在声明props时通过添加default属性设置默认值</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c2','C',false)">C. 在声明props时通过添加required属性设置必填项</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c2','D',false)">D. 所有的props都遵循单项数据流原则</li>
-</ul>
-<div class="q-ans" id="ex2c2"><strong>答案：A</strong><br>对象形式的 props <strong>可以</strong>使用多种验证方案（type、default、required、validator等）。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选项中，关于跨组件之间数据传递说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex2c3','A',false)">A. 跨组件之间的数据共享可以通过依赖注入的方式来实现</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c3','B',false)">B. provide()函数可以提供一个值，可以被后代组件所注入</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c3','C',false)">C. 对子组件而言，如果想要注入上层组件提供的数据，则需要使用到inject()函数</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c3','D',true)">D. provide()函数可以接收2个参数，第1个参数是要注入的值，第2个参数是注入名</li>
-</ul>
-<div class="q-ans" id="ex2c3"><strong>答案：D</strong><br>provide() 接收2个参数：第1个是<strong>注入名(key)</strong>，第2个是<strong>要注入的值(value)</strong>。顺序说反了。</div></div>
-<div class="quiz"><div class="q-title">4. 下列选项中，关于在使用setup语法糖时声明自定义事件的方式正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex2c4','A',false)">A. emit()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c4','B',false)">B. defineProps()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c4','C',true)">C. defineEmits()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c4','D',false)">D. props属性</li>
-</ul>
-<div class="q-ans" id="ex2c4"><strong>答案：C</strong><br>在 &lt;script setup&gt; 中使用 defineEmits() 声明自定义事件。emit() 是触发事件，不是声明事件。</div></div>
-<div class="quiz"><div class="q-title">5. 下列选项中，关于在使用组件时监听自定义事件的指令说法正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex2c5','A',true)">A. v-on</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c5','B',false)">B. v-bind</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c5','C',false)">C. v-model</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex2c5','D',false)">D. v-for</li>
-</ul>
-<div class="q-ans" id="ex2c5"><strong>答案：A</strong><br>使用 v-on（简写 @）监听自定义事件，如 <code>@demo="handleDemo"</code>。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>生命周期函数说法错误的</td><td><strong>C</strong></td><td>onUpdated()是更新完成后，不是更新前</td></tr>
+<tr><td>2</td><td>props说法错误的</td><td><strong>A</strong></td><td>对象props可以使用多种验证方案</td></tr>
+<tr><td>3</td><td>跨组件数据传递错误的</td><td><strong>D</strong></td><td>provide()第1个参数是key，第2个是value</td></tr>
+<tr><td>4</td><td>setup语法糖声明自定义事件</td><td><strong>C</strong></td><td>defineEmits()</td></tr>
+<tr><td>5</td><td>监听自定义事件的指令</td><td><strong>A</strong></td><td>v-on（即@）</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH4: 组件基础(下) -->
+<!-- EX CH4 -->
 <div class="chapter-section" id="ex-3">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>组件基础(下) — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>组件基础(下) — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. 使用动态组件实现组件之间的按需切换时，隐藏的组件会被销毁，展示出来的组件会被重新创建。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j1',false)">错</button></div>
-<div class="q-ans" id="ex3j1"><strong>答案：✓ 正确</strong><br>动态组件切换时，隐藏的组件被销毁，展示的组件被重新创建（除非用 KeepAlive 缓存）。</div></div>
-<div class="quiz"><div class="q-title">2. 组件缓存可以使组件创建一次后，不会被销毁。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j2',false)">错</button></div>
-<div class="q-ans" id="ex3j2"><strong>答案：✓ 正确</strong><br>使用 &lt;KeepAlive&gt; 包裹组件后，组件不会被销毁，状态得以保留。</div></div>
-<div class="quiz"><div class="q-title">3. 作用域插槽是带有数据的插槽，父组件提供一部分数据给插槽。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j3',false)">错</button></div>
-<div class="q-ans" id="ex3j3"><strong>答案：✗ 错误</strong><br>作用域插槽是<strong>子组件</strong>提供数据给插槽，父组件接收数据。说"父组件提供"是错误的。</div></div>
-<div class="quiz"><div class="q-title">4. 如果一个组件没有预留任何插槽，则组件的使用者提供的任何插槽内容同样会起作用。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j4',false)">错</button></div>
-<div class="q-ans" id="ex3j4"><strong>答案：✗ 错误</strong><br>如果组件没有预留插槽，使用者提供的内容<strong>不会起作用</strong>（会被丢弃）。</div></div>
-<div class="quiz"><div class="q-title">5. 添加name属性的&lt;slot&gt;标签用来定义具名插槽。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j5',false)">错</button></div>
-<div class="q-ans" id="ex3j5"><strong>答案：✓ 正确</strong><br>&lt;slot name="header"&gt; 就是具名插槽，通过 name 属性区分不同插槽。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>动态组件切换时隐藏的组件会被销毁</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>2</td><td>组件缓存可使组件不被销毁</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>作用域插槽是父组件提供数据给插槽</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>4</td><td>无插槽时使用者提供的内容同样起作用</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>5</td><td>添加name属性的slot定义具名插槽</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+</table>
+<p><strong>第3题：</strong>作用域插槽是子组件提供数据。<strong>第4题：</strong>无插槽时内容不起作用（被丢弃）。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，当组件缓存时会触发的生命周期函数是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex3c1','A',true)">A. onActivated()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c1','B',false)">B. onDeactivated()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c1','C',false)">C. mounted()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c1','D',false)">D. updated()</li>
-</ul>
-<div class="q-ans" id="ex3c1"><strong>答案：A</strong><br>组件被缓存（激活）时触发 onActivated()，停用时触发 onDeactivated()。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，关于插槽说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex3c2','A',false)">A. 插槽是组件封装期间为组件的使用者预留的占位符</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c2','B',false)">B. 在定义插槽时，直接写一个&lt;slot&gt;标签，它属于默认插槽</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c2','C',false)">C. 当需要使用多个插槽时，则需要为每个&lt;slot&gt;插槽指定具体的name属性</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c2','D',true)">D. 如果组件的使用者为插槽提供内容，则默认内容生效</li>
-</ul>
-<div class="q-ans" id="ex3c2"><strong>答案：D</strong><br>如果使用者提供了内容，则<strong>使用者提供的内容生效</strong>，默认内容不生效。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选项中，关于自定义指令说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex3c3','A',false)">A. 全局自定义指令可以在全局进行使用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c3','B',false)">B. 私有自定义指令只能在声明该指令的组件中使用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c3','C',false)">C. 在Vue中，可以通过app.directive()函数声明全局自定义指令</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c3','D',true)">D. 在Vue中，不能为自定义指令绑定参数</li>
-</ul>
-<div class="q-ans" id="ex3c3"><strong>答案：D</strong><br>自定义指令<strong>可以</strong>绑定参数，如 <code>v-focus:foo</code> 中的 foo 就是参数。</div></div>
-<div class="quiz"><div class="q-title">4. 下列选项中，关于自定义指令常用生命周期函数及传入参数说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex3c4','A',false)">A. mounted()函数在绑定元素的父组件及自身的所有子节点都挂载完成后调用</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c4','B',false)">B. value为参数binding中的属性，表示传递给指令的值</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c4','C',false)">C. el参数表示当前指令所绑定到的元素</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c4','D',true)">D. beforeUpdate()函数在绑定的父组件卸载前调用</li>
-</ul>
-<div class="q-ans" id="ex3c4"><strong>答案：D</strong><br>beforeUpdate() 是在绑定元素的父组件<strong>更新前</strong>调用，不是卸载前。卸载前是 beforeUnmount()。</div></div>
-<div class="quiz"><div class="q-title">5. 下列选项中，关于KeepAlive组件说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex3c5','A',false)">A. KeepAlive组件通过&lt;KeepAlive&gt;标签来定义</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c5','B',true)">B. 若只想要对应组件名的组件被缓存，则需要通过&lt;KeepAlive&gt;标签的exclude属性来实现</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c5','C',false)">C. 在&lt;KeepAlive&gt;标签上添加max属性来设置最多可以缓存的组件实例个数</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex3c5','D',false)">D. 只要是被&lt;KeepAlive&gt;标签包裹的组件就不会销毁</li>
-</ul>
-<div class="q-ans" id="ex3c5"><strong>答案：B</strong><br>想要对应组件被缓存，应使用 <code>include</code> 属性（不是 exclude）。exclude 是排除不缓存的组件。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>组件缓存触发的生命周期</td><td><strong>A</strong></td><td>onActivated()</td></tr>
+<tr><td>2</td><td>插槽说法错误的</td><td><strong>D</strong></td><td>使用者提供内容则默认内容不生效</td></tr>
+<tr><td>3</td><td>自定义指令说法错误的</td><td><strong>D</strong></td><td>可以为自定义指令绑定参数</td></tr>
+<tr><td>4</td><td>自定义指令生命周期错误的</td><td><strong>D</strong></td><td>beforeUpdate()是更新前，不是卸载前</td></tr>
+<tr><td>5</td><td>KeepAlive说法错误的</td><td><strong>B</strong></td><td>缓存指定组件用include，不是exclude</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH5: 路由 -->
+<!-- EX CH5 -->
 <div class="chapter-section" id="ex-4">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>路由 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>路由 — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. Vue Router中提供了默认的router-link-active类名为激活的路由链接设置高亮的样式。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j1',false)">错</button></div>
-<div class="q-ans" id="ex4j1"><strong>答案：✓ 正确</strong><br>Vue Router 默认为激活的路由链接添加 router-link-active 类名。</div></div>
-<div class="quiz"><div class="q-title">2. Vue Router提供的导航守卫可以控制路由的访问权限。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j2',false)">错</button></div>
-<div class="q-ans" id="ex4j2"><strong>答案：✓ 正确</strong><br>导航守卫（如 beforeEach）可以在路由跳转前进行权限检查。</div></div>
-<div class="quiz"><div class="q-title">3. Vue Router中可以在路由匹配规则中使用redirect属性设置路由重定向。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j3',false)">错</button></div>
-<div class="q-ans" id="ex4j3"><strong>答案：✓ 正确</strong><br>在路由规则中设置 <code>redirect: '/target'</code> 实现路由重定向。</div></div>
-<div class="quiz"><div class="q-title">4. 在Vue中，页面有两种导航方式，分别是声明式导航和嵌套式导航。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j4',false)">错</button></div>
-<div class="q-ans" id="ex4j4"><strong>答案：✗ 错误</strong><br>两种导航方式是声明式导航和<strong>编程式</strong>导航（不是嵌套式导航）。</div></div>
-<div class="quiz"><div class="q-title">5. 在Vue中，路由视图使用&lt;router-link&gt;标签定义。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j5',false)">错</button></div>
-<div class="q-ans" id="ex4j5"><strong>答案：✗ 错误</strong><br>路由视图使用 <code>&lt;router-view&gt;</code> 标签定义。<code>&lt;router-link&gt;</code> 是声明式导航链接。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>router-link-active为激活路由设置高亮</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>2</td><td>导航守卫可控制路由访问权限</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>redirect属性设置路由重定向</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>4</td><td>两种导航：声明式和嵌套式</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>5</td><td>路由视图使用router-link标签</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+</table>
+<p><strong>第4题：</strong>是声明式和编程式导航。<strong>第5题：</strong>路由视图用 router-view，router-link是导航链接。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，关于Vue Router全局前置守卫beforeEach()方法的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex4c1','A',false)">A. beforeEach()方法中接收to、from、next形参</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c1','B',false)">B. beforeEach()方法中to参数表示目标路由对象</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c1','C',false)">C. beforeEach()方法中from参数表示当前导航正要离开的路由对象</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c1','D',true)">D. beforeEach()方法中若省略next参数，则不允许用户访问任何一个路由</li>
-</ul>
-<div class="q-ans" id="ex4c1"><strong>答案：D</strong><br>在 Vue Router 4 中，若省略 next 参数（回调只接收 to 和 from），则<strong>允许</strong>访问路由。不是"不允许访问"。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，vue-router的安装命令正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex4c2','A',false)">A. yarn add vue-router@4</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c2','B',false)">B. node install vue-router@4</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c2','C',false)">C. npm Install vueRouter@4</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c2','D',true)">D. npm install vue-router@4</li>
-</ul>
-<div class="q-ans" id="ex4c2"><strong>答案：D</strong><br>正确命令：npm install vue-router@4 或 yarn add vue-router@4。A 也正确，但题目要求选一个最佳答案。B错误（没有node install），C错误（大小写和写法不对）。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选项中，关于前、后端路由的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex4c3','A',false)">A. 前端路由的整个过程发生在浏览器端</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c3','B',false)">B. 后端路由的整个过程发生在服务器端</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c3','C',false)">C. Node.js环境中的Express框架中的路由属于后端路由</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c3','D',true)">D. Vue中的路由属于后端路由</li>
-</ul>
-<div class="q-ans" id="ex4c3"><strong>答案：D</strong><br>Vue 中的路由属于<strong>前端路由</strong>，发生在浏览器端。</div></div>
-<div class="quiz"><div class="q-title">4. 下列选项中，关于编程式导航的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex4c4','A',false)">A. router.go()方法的参数是一个整数，表示历史记录中向前或后退的步数</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c4','B',false)">B. router.go()类似于window.history.go()</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c4','C',false)">C. router.go(1)表示向前移动一条记录</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c4','D',true)">D. router.go(-1)表示向后移动两条记录</li>
-</ul>
-<div class="q-ans" id="ex4c4"><strong>答案：D</strong><br>router.go(-1) 表示向后移动<strong>1条</strong>记录，不是2条。</div></div>
-<div class="quiz"><div class="q-title">5. 下列选项中，关于命名路由的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex4c5','A',false)">A. 命名路由通过name属性定义路由规则的名称</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c5','B',true)">B. 命名路由的name属性值可以重复</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c5','C',false)">C. &lt;router-link&gt;标签的to属性用于跳转到指定目标地址</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex4c5','D',false)">D. 在声明式导航中使用命名路由时，对象中可以使用params属性指定跳转时携带的路由参数</li>
-</ul>
-<div class="q-ans" id="ex4c5"><strong>答案：B</strong><br>命名路由的 name 属性值<strong>不能重复</strong>，必须唯一。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>beforeEach说法错误的</td><td><strong>D</strong></td><td>省略next则允许访问路由</td></tr>
+<tr><td>2</td><td>vue-router安装命令</td><td><strong>D</strong></td><td>npm install vue-router@4</td></tr>
+<tr><td>3</td><td>前后端路由说法错误的</td><td><strong>D</strong></td><td>Vue路由是前端路由</td></tr>
+<tr><td>4</td><td>编程式导航说法错误的</td><td><strong>D</strong></td><td>router.go(-1)后退1条，不是2条</td></tr>
+<tr><td>5</td><td>命名路由说法错误的</td><td><strong>B</strong></td><td>name属性值不能重复</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH6: UI组件库 -->
+<!-- EX CH6 -->
 <div class="chapter-section" id="ex-5">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">6</div><h3>常用UI组件库 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">6</div><h3>常用UI组件库 — 判断5+选择5</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. Element Plus不支持IE 11及更低的IE版本。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j1',false)">错</button></div>
-<div class="q-ans" id="ex5j1"><strong>答案：✓ 正确</strong><br>Element Plus 只支持现代浏览器，不支持 IE 11 及更低版本。</div></div>
-<div class="quiz"><div class="q-title">2. Ant Design Vue组件库的Layout组件采用Flex布局。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j2',false)">错</button></div>
-<div class="q-ans" id="ex5j2"><strong>答案：✓ 正确</strong><br>Ant Design Vue 的 Layout 组件使用 Flex 布局。</div></div>
-<div class="quiz"><div class="q-title">3. 使用use()方法可以挂载ElementPlus模块。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j3',false)">错</button></div>
-<div class="q-ans" id="ex5j3"><strong>答案：✓ 正确</strong><br>通过 app.use(ElementPlus) 挂载 ElementPlus 模块。</div></div>
-<div class="quiz"><div class="q-title">4. &lt;van-field&gt;标签内可以通过rule属性定义校验规则。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j4',false)">错</button></div>
-<div class="q-ans" id="ex5j4"><strong>答案：✓ 正确</strong><br>Vant 的 van-field 组件通过 rules 属性定义校验规则。</div></div>
-<div class="quiz"><div class="q-title">5. Element Plus中的Menu组件使用&lt;el-menu&gt;标签定义，菜单默认为水平模式。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j5',false)">错</button></div>
-<div class="q-ans" id="ex5j5"><strong>答案：✗ 错误</strong><br>el-menu 默认为<strong>垂直</strong>模式。需要设置 <code>mode="horizontal"</code> 才是水平模式。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>Element Plus不支持IE11及更低版本</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>2</td><td>Ant Design Vue Layout采用Flex布局</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>use()方法可挂载ElementPlus模块</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>4</td><td>van-field可通过rule属性定义校验规则</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>5</td><td>el-menu默认为水平模式</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+</table>
+<p><strong>第5题：</strong>el-menu默认为垂直模式，需设置 mode="horizontal" 才是水平。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，使用包管理工具安装Element Plus组件库的命令正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex5c1','A',true)">A. npm install element-plus</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c1','B',false)">B. yarn install element-plus</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c1','C',false)">C. npm add element-plus</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c1','D',false)">D. npm Install element-plus</li>
-</ul>
-<div class="q-ans" id="ex5c1"><strong>答案：A</strong><br>正确命令是 npm install element-plus。B错误（yarn用add不是install），C错误（npm用install不是add），D错误（Install大小写不对）。</div></div>
-<div class="quiz"><div class="q-title">2. 在Element Plus组件库中，关于&lt;el-button&gt;标签中type属性的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex5c2','A',false)">A. type属性设置为danger，表示危险按钮</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c2','B',true)">B. type属性设置为info，表示主要按钮</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c2','C',false)">C. type属性设置为warning，表示警告按钮</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c2','D',false)">D. type属性设置为success，表示成功按钮</li>
-</ul>
-<div class="q-ans" id="ex5c2"><strong>答案：B</strong><br>type="info" 表示<strong>信息</strong>按钮，不是主要按钮。主要按钮是 type="primary"。</div></div>
-<div class="quiz"><div class="q-title">3. 在Vant组件库中，关于&lt;van-swipe&gt;标签的属性说法正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex5c3','A',false)">A. autoplay属性用于设置轮播图片的自动轮播间隔，单位为s</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c3','B',false)">B. indicator-color属性用于设置指示器颜色，默认值为#1998fa</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c3','C',false)">C. vertical属性用于设置轮播图片为纵向滚动，默认设置为纵向滚动</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c3','D',true)">D. loop属性用于设置轮播图片循环播放，默认值为true</li>
-</ul>
-<div class="q-ans" id="ex5c3"><strong>答案：D</strong><br>loop 默认值为 true（循环播放）。A错误：autoplay 单位是毫秒(ms)。B错误：默认值是 #1989fa。C错误：vertical 默认为横向。</div></div>
-<div class="quiz"><div class="q-title">4. 在Vant组件库中，关于&lt;van-grid-item&gt;标签的属性说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex5c4','A',false)">A. icon属性用于设置图标名称或图片链接</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c4','B',false)">B. text属性用于设置图标的文字内容</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c4','C',false)">C. dot属性用于设置图标右上角小黑点</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c4','D',true)">D. badge属性用于设置图标右上角徽标的内容</li>
-</ul>
-<div class="q-ans" id="ex5c4"><strong>答案：D</strong><br>仔细看题：badge 属性确实用于设置徽标内容，这个说法是<strong>正确的</strong>。但题目要求选"错误的"。实际上 A、B、C、D 中最难判断的是 C — dot 是设置小黑点显示。如果题目说 dot 属性"用于设置图标右上角小黑点"是对的，那么 D 也是对的。但根据考试出题意图，答案选 D。</div></div>
-<div class="quiz"><div class="q-title">5. 下列选项中，使用包管理工具安装Vant组件库的命令正确的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex5c5','A',false)">A. npm add vant</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c5','B',false)">B. yarn install vant</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c5','C',false)">C. npm Install vant</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex5c5','D',true)">D. yarn add vant</li>
-</ul>
-<div class="q-ans" id="ex5c5"><strong>答案：D</strong><br>正确命令：yarn add vant 或 npm install vant。A错误（npm用install），B错误（yarn用add），C错误（Install大小写）。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>安装Element Plus命令</td><td><strong>A</strong></td><td>npm install element-plus</td></tr>
+<tr><td>2</td><td>el-button type属性错误的</td><td><strong>B</strong></td><td>info是信息按钮，primary才是主要按钮</td></tr>
+<tr><td>3</td><td>van-swipe属性正确的</td><td><strong>D</strong></td><td>loop默认true。autoplay单位是毫秒</td></tr>
+<tr><td>4</td><td>van-grid-item属性错误的</td><td><strong>D</strong></td><td>badge设置徽标内容（易混淆）</td></tr>
+<tr><td>5</td><td>安装Vant命令</td><td><strong>D</strong></td><td>yarn add vant 或 npm install vant</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<!-- EX CH7: 网络请求和状态管理 -->
+<!-- EX CH7 -->
 <div class="chapter-section" id="ex-6">
-<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">7</div><h3>网络请求和状态管理 — 判断题5道 + 选择题4道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">7</div><h3>网络请求和状态管理 — 判断5+选择4</h3><span class="chapter-toggle">▼</span></div>
 <div class="chapter-body">
 <div class="kb-card">
-<h4>判断题</h4>
-<div class="quiz"><div class="q-title">1. Axios可以作用于Node.js和浏览器中。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j1',false)">错</button></div>
-<div class="q-ans" id="ex6j1"><strong>答案：✓ 正确</strong><br>Axios 是同构的，在浏览器端使用 XMLHttpRequest，在 Node.js 端使用 http 模块。</div></div>
-<div class="quiz"><div class="q-title">2. Axios支持拦截请求和响应。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j2',false)">错</button></div>
-<div class="q-ans" id="ex6j2"><strong>答案：✓ 正确</strong><br>Axios 支持 interceptors.request 和 interceptors.response 拦截器。</div></div>
-<div class="quiz"><div class="q-title">3. Vuex是专为Vue.js应用程序开发的状态管理库。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j3',false)">错</button></div>
-<div class="q-ans" id="ex6j3"><strong>答案：✓ 正确</strong><br>Vuex 是 Vue.js 的官方状态管理库。</div></div>
-<div class="quiz"><div class="q-title">4. Pinia支持Vue 3，不支持Vue 2，支持组合式API。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j4',false)">错</button></div>
-<div class="q-ans" id="ex6j4"><strong>答案：✗ 错误</strong><br>Pinia <strong>支持 Vue 2</strong>（也支持 Vue 3）。说"不支持Vue2"是错误的。</div></div>
-<div class="quiz"><div class="q-title">5. 在Pinia中可以通过paths实现部分数据持久化存储。（  ）</div>
-<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j5',false)">错</button></div>
-<div class="q-ans" id="ex6j5"><strong>答案：✓ 正确</strong><br>Pinia 持久化插件中通过 paths 属性指定需要持久化的数据路径。</div></div>
+<h4>判断题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>题目</th><th>答案</th></tr>
+<tr><td>1</td><td>Axios可作用于Node.js和浏览器</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>2</td><td>Axios支持拦截请求和响应</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>3</td><td>Vuex是专为Vue的状态管理库</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+<tr><td>4</td><td>Pinia支持Vue3不支持Vue2</td><td><strong style="color:var(--red)">✗ 错</strong></td></tr>
+<tr><td>5</td><td>Pinia可通过paths实现部分持久化</td><td><strong style="color:var(--green)">✓ 对</strong></td></tr>
+</table>
+<p><strong>第4题：</strong>Pinia支持Vue 2也支持Vue 3。</p>
 </div>
 <div class="kb-card">
-<h4>选择题</h4>
-<div class="quiz"><div class="q-title">1. 下列选项中，关于Axios特性的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex6c1','A',false)">A. 支持拦截请求和响应</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c1','B',false)">B. 可以转换请求数据和响应数据</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c1','C',true)">C. 安全性高，客户端支持防御CSRF</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c1','D',false)">D. 支持大多数的API</li>
-</ul>
-<div class="q-ans" id="ex6c1"><strong>答案：C</strong><br>Axios 客户端支持防御 <strong>XSRF</strong>（不是 CSRF）。虽然两者相关，但官方文档说的是 XSRF。</div></div>
-<div class="quiz"><div class="q-title">2. 下列选项中，关于Vuex中state、mutations、actions和modules的说法正确的是（ ）。（多选）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex6c2','A',true)">A. state用于管理数据，且数据是响应式的</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c2','B',true)">B. mutations用于更新数据，state中的数据只能使用mutations改变</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c2','C',false)">C. actions可以直接修改state</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c2','D',true)">D. modules用于定义模块对象</li>
-</ul>
-<div class="q-ans" id="ex6c2"><strong>答案：A、B、D</strong><br>C错误：actions <strong>不能直接修改 state</strong>，必须通过提交 mutations 来修改。</div></div>
-<div class="quiz"><div class="q-title">3. 下列选项中，关于Pinia的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex6c3','A',false)">A. Pinia提供了完整的TypeScript支持</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c3','B',true)">B. Pinia使用modules划分模块，代码更加简洁</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c3','C',false)">C. Pinia支持Devtools调试工具</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c3','D',false)">D. Pinia支持服务端渲染</li>
-</ul>
-<div class="q-ans" id="ex6c3"><strong>答案：B</strong><br>Pinia <strong>不使用 modules</strong>，每个 store 独立存在，这正是它比 Vuex 简洁的原因。</div></div>
-<div class="quiz"><div class="q-title">4. 下列选项中，关于Axios的说法错误的是（ ）</div>
-<ul class="q-opts">
-<li class="q-opt" onclick="selectAnswer(this,'ex6c4','A',false)">A. Axios是基于Promise的HTTP库</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c4','B',false)">B. Axios在浏览器中使用XMLHttpRequest接口发送请求</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c4','C',false)">C. Axios在Node环境中使用HTTP对象发送请求</li>
-<li class="q-opt" onclick="selectAnswer(this,'ex6c4','D',true)">D. Axios不支持post请求</li>
-</ul>
-<div class="q-ans" id="ex6c4"><strong>答案：D</strong><br>Axios <strong>支持</strong> post 请求（axios.post()），也支持 get、put、delete 等所有常用 HTTP 方法。</div></div>
+<h4>选择题答案</h4>
+<table class="tbl"><tr><th>题号</th><th>考点</th><th>答案</th><th>关键</th></tr>
+<tr><td>1</td><td>Axios特性错误的</td><td><strong>C</strong></td><td>防御XSRF，不是CSRF</td></tr>
+<tr><td>2</td><td>Vuex说法正确（多选）</td><td><strong>ABD</strong></td><td>actions不能直接修改state</td></tr>
+<tr><td>3</td><td>Pinia说法错误的</td><td><strong>B</strong></td><td>Pinia不使用modules</td></tr>
+<tr><td>4</td><td>Axios说法错误的</td><td><strong>D</strong></td><td>Axios支持post请求</td></tr>
+</table>
 </div>
 </div>
 </div>
 
-<div class="footer"><p>课后题答案与解析 · 69题全解析</p></div>
+<div class="footer"><p>课后题答案 · 69题速览</p></div>
 </div>
 
+
+
+<!-- ANSWERKEY PAGE -->
+<div class="page" id="page-answerkey">
+<div class="review-header"><h2>答案速记</h2><p>7章所有知识点提炼为速记表 — 考前5分钟扫一遍，记住正确说法，排除错误说法</p></div>
+<div class="review-controls">
+<select class="toc-select" id="answerkeyTocSelect" onchange="jumpToChapter('answerkey', this.value)"><option value="">跳转到章节...</option></select>
+<button class="ctrl-btn" onclick="toggleAllChapters('answerkey')" id="answerkeyToggleAllBtn">展开全部</button>
+<span class="chapter-count" id="answerkeyCount"></span>
+</div>
+
+<!-- AK CH1 -->
+<div class="chapter-section" id="ak-0">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>初识Vue.js — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body open">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>Vue指令前缀：</strong>v-（如 v-if, v-for, v-bind）— 不是 on-</li>
+<li><strong>MVVM：</strong>Model(数据) ↔ ViewModel(Vue) ↔ View(页面)。Model和View不能直接通信</li>
+<li><strong>npm：</strong>基于 Node.js 运行。有缓存、支持并行安装。-g 是全局安装</li>
+<li><strong>yarn dev / npm run dev：</strong>启动开发服务器，不是项目构建。构建用 build</li>
+<li><strong>Vue四大特性：</strong>轻量级、数据驱动视图、双向数据绑定、插件化开发</li>
+<li><strong>使用yarn/npm前：</strong>必须先安装 Node.js</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记（考试选这些就错）</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>Vue指令以 on- 开头</td><td>以 v- 开头</td></tr>
+<tr><td>Model和View可以直接通信</td><td>不能直接通信，需ViewModel中转</td></tr>
+<tr><td>npm必须等当前包装完才继续</td><td>npm支持并行安装</td></tr>
+<tr><td>yarn dev 完成项目构建</td><td>yarn dev 启动开发服务器</td></tr>
+<tr><td>npm install -g 安装到当前项目</td><td>-g 是全局安装</td></tr>
+<tr><td>使用npm不需要Node.js</td><td>必须先装Node.js</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH2 -->
+<div class="chapter-section" id="ak-1">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>Vue开发基础 — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>ref()：</strong>基本类型（字符串/数字/布尔）→ 响应式。JS中用 .value</li>
+<li><strong>reactive()：</strong>对象/数组的所有属性 → 响应式</li>
+<li><strong>toRef()：</strong>响应式对象的<strong>单个</strong>属性 → ref</li>
+<li><strong>toRefs()：</strong>响应式对象<strong>所有</strong>属性 → ref</li>
+<li><strong>v-text：</strong>渲染文本内容。v-html：渲染HTML</li>
+<li><strong>v-bind(:)：</strong>动态绑定属性。v-on(@)：绑定事件</li>
+<li><strong>$event：</strong>Vue内置变量，获取事件对象</li>
+<li><strong>.stop：</strong>阻止冒泡。.prevent：阻止默认行为。.capture：改捕获。.self：自身触发。.once：只触发一次</li>
+<li><strong>v-model修饰符：</strong>.lazy（change时同步）、.number（转数字）、.trim（去首尾空格）</li>
+<li><strong>v-for：</strong>key必须唯一。遍历数组按元素个数循环，遍历对象按属性个数循环</li>
+<li><strong>Vue3 template：</strong>可以有多个根节点（Vue2只能一个）</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>ref()将响应式对象单个属性转为响应式</td><td>那是toRef()。ref()转基本类型</td></tr>
+<tr><td>toRef()将普通数据转成响应式</td><td>toRef()转响应式对象的属性</td></tr>
+<tr><td>template只能有一个根节点</td><td>Vue3可以多个根节点</td></tr>
+<tr><td>.stop阻止默认事件行为</td><td>.stop阻止冒泡，.prevent才阻止默认行为</td></tr>
+<tr><td>v-for的key不具有唯一性</td><td>key必须唯一</td></tr>
+<tr><td>渲染文本用v-bind/v-on/v-for</td><td>用 v-text</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH3 -->
+<div class="chapter-section" id="ak-2">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>组件基础(上) — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>组合式API：</strong>数据和方法在 setup() 中定义。&lt;script setup&gt; 是语法糖</li>
+<li><strong>生命周期：</strong>onBeforeMount→onMounted→onBeforeUpdate→onUpdated→onBeforeUnmount→onUnmounted</li>
+<li><strong>onUpdated()：</strong>组件更新<strong>完成后</strong>调用（不是更新前）</li>
+<li><strong>Props：</strong>父传子。用 defineProps() 声明。支持 type/default/required/validator 验证</li>
+<li><strong>Props单向数据流：</strong>子组件不能直接修改父组件传来的props</li>
+<li><strong>v-bind传props：</strong>动态绑定（不是静态）</li>
+<li><strong>依赖注入：</strong>跨级组件通信。provide(key, value) 提供数据，inject(key) 注入数据</li>
+<li><strong>provide()参数：</strong>第1个=注入名(key)，第2个=值(value)</li>
+<li><strong>自定义事件：</strong>子传父。defineEmits() 声明，emit() 触发，v-on(@) 监听</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>onUpdated()在组件更新前被调用</td><td>更新完成后调用</td></tr>
+<tr><td>对象props不能使用多种验证方案</td><td>可以用type/default/required/validator</td></tr>
+<tr><td>provide()第1个参数是要注入的值</td><td>第1个是key(注入名)，第2个是value</td></tr>
+<tr><td>v-bind为子组件静态绑定props</td><td>v-bind是动态绑定</td></tr>
+<tr><td>用emit()声明自定义事件</td><td>用defineEmits()声明，emit()是触发</td></tr>
+<tr><td>监听自定义事件用v-bind/v-model</td><td>用 v-on（即@）</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH4 -->
+<div class="chapter-section" id="ak-3">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>组件基础(下) — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>动态组件：</strong>&lt;component :is="组件名"&gt;。切换时隐藏的销毁，展示的重新创建</li>
+<li><strong>KeepAlive：</strong>包裹组件使其不被销毁。include=缓存指定组件，exclude=排除，max=最多缓存数</li>
+<li><strong>缓存生命周期：</strong>onActivated()（激活时）、onDeactivated()（停用时）</li>
+<li><strong>插槽：</strong>默认插槽(无name)、具名插槽(有name)、作用域插槽(子组件提供数据)</li>
+<li><strong>插槽规则：</strong>使用者提供内容→默认内容不生效。无插槽→内容不起作用</li>
+<li><strong>作用域插槽数据来源：</strong>子组件提供（不是父组件）</li>
+<li><strong>自定义指令：</strong>全局用 app.directive()，私有用 directives 选项。可以绑定参数</li>
+<li><strong>指令生命周期：</strong>mounted(挂载后)、beforeUpdate(更新前)、updated(更新后)</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>作用域插槽是父组件提供数据</td><td>是子组件提供数据</td></tr>
+<tr><td>无插槽时使用者内容同样起作用</td><td>不起作用，会被丢弃</td></tr>
+<tr><td>使用者提供内容时默认内容生效</td><td>使用者内容生效，默认不生效</td></tr>
+<tr><td>不能为自定义指令绑定参数</td><td>可以绑定参数（如 v-focus:foo）</td></tr>
+<tr><td>beforeUpdate()在卸载前调用</td><td>在更新前调用</td></tr>
+<tr><td>KeepAlive用exclude指定缓存组件</td><td>用include指定缓存，exclude是排除</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH5 -->
+<div class="chapter-section" id="ak-4">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>路由 — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>Vue Router安装：</strong>npm install vue-router@4 或 yarn add vue-router@4</li>
+<li><strong>Vue路由是前端路由</strong>（不是后端路由），发生在浏览器端</li>
+<li><strong>router-link：</strong>声明式导航链接。router-view：路由视图出口（渲染匹配组件）</li>
+<li><strong>router-link-active：</strong>默认激活路由高亮类名</li>
+<li><strong>redirect：</strong>路由重定向属性</li>
+<li><strong>导航方式：</strong>声明式导航 + 编程式导航（不是嵌套式）</li>
+<li><strong>编程式导航：</strong>router.push() 跳转，router.go(n) 前进/后退n条记录</li>
+<li><strong>router.go(-1)：</strong>后退<strong>1条</strong>记录（不是2条）</li>
+<li><strong>命名路由：</strong>name属性命名，name值不能重复</li>
+<li><strong>导航守卫：</strong>beforeEach(to, from, next)。省略next则允许访问</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>路由视图使用router-link定义</td><td>用 router-view 定义</td></tr>
+<tr><td>两种导航：声明式和嵌套式</td><td>声明式和编程式</td></tr>
+<tr><td>Vue路由属于后端路由</td><td>属于前端路由</td></tr>
+<tr><td>router.go(-1)后退2条记录</td><td>后退1条记录</td></tr>
+<tr><td>命名路由name属性值可以重复</td><td>不能重复</td></tr>
+<tr><td>省略next参数不允许访问任何路由</td><td>省略next则允许访问</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH6 -->
+<div class="chapter-section" id="ak-5">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">6</div><h3>常用UI组件库 — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>Element Plus：</strong>不支持IE11及更低。安装 npm install element-plus。app.use() 挂载</li>
+<li><strong>el-menu：</strong>默认<strong>垂直</strong>模式（不是水平）</li>
+<li><strong>el-button type：</strong>primary=主要、success=成功、info=信息、warning=警告、danger=危险</li>
+<li><strong>Ant Design Vue：</strong>Layout组件采用 Flex 布局</li>
+<li><strong>Vant：</strong>移动端组件库。安装 yarn add vant 或 npm install vant</li>
+<li><strong>van-swipe：</strong>autoplay单位=毫秒(ms)。indicator-color默认#1989fa。vertical默认横向。loop默认true</li>
+<li><strong>van-field：</strong>通过 rules 属性定义校验规则</li>
+<li><strong>van-grid-item：</strong>icon=图标、text=文字、dot=小黑点、badge=徽标内容</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>el-menu默认为水平模式</td><td>默认为垂直模式</td></tr>
+<tr><td>type="info"表示主要按钮</td><td>info=信息按钮，primary=主要按钮</td></tr>
+<tr><td>van-swipe autoplay单位是秒</td><td>单位是毫秒(ms)</td></tr>
+<tr><td>van-swipe vertical默认纵向</td><td>默认横向</td></tr>
+<tr><td>van-swipe indicator-color默认#1998fa</td><td>默认 #1989fa</td></tr>
+<tr><td>安装用npm add / yarn install</td><td>npm用install，yarn用add</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- AK CH7 -->
+<div class="chapter-section" id="ak-6">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">7</div><h3>网络请求和状态管理 — 速记</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>核心知识点</h4>
+<ul>
+<li><strong>Axios：</strong>基于Promise的HTTP库。浏览器用XMLHttpRequest，Node用http模块</li>
+<li><strong>Axios支持：</strong>拦截请求/响应、转换数据、Promise API、post请求、大多数API</li>
+<li><strong>Axios安全：</strong>客户端防御 <strong>XSRF</strong>（不是CSRF）</li>
+<li><strong>Vuex核心：</strong>state(数据,响应式)、mutations(更新数据)、actions(提交mutations)、modules(模块)</li>
+<li><strong>Vuex关键规则：</strong>state只能通过mutations改变。actions<strong>不能</strong>直接修改state</li>
+<li><strong>Pinia：</strong>新一代状态管理。完整TypeScript支持。支持Devtools。支持SSR。支持Vue2和Vue3</li>
+<li><strong>Pinia不使用 modules</strong>（每个store独立存在，这是它比Vuex简洁的原因）</li>
+<li><strong>Pinia持久化：</strong>通过 paths 实现部分数据持久化</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>错误说法速记</h4>
+<table class="tbl"><tr><th>错误说法</th><th>正确说法</th></tr>
+<tr><td>Axios不支持post请求</td><td>支持post（支持所有常用HTTP方法）</td></tr>
+<tr><td>Axios防御CSRF</td><td>防御 XSRF</td></tr>
+<tr><td>Vuex actions可以直接修改state</td><td>不能直接改，必须通过mutations</td></tr>
+<tr><td>Pinia使用modules划分模块</td><td>Pinia不使用modules</td></tr>
+<tr><td>Pinia不支持Vue2</td><td>支持Vue2和Vue3</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<div class="footer"><p>答案速记 · 考前5分钟必看</p></div>
+</div>
 
 <script>
 // === Navigation ===
-const pages = ['home','tutorial','knowledge','coding','exercises'];
-const pageNames = {home:'首页',tutorial:'零基础教学',knowledge:'知识点',coding:'编程题解析',exercises:'课后题答案'};
+const pages = ['home','tutorial','knowledge','coding','exercises','answerkey'];
+const pageNames = {home:'首页',tutorial:'零基础教学',knowledge:'知识点',coding:'编程题解析',exercises:'课后题答案',answerkey:'答案速记'};
 
 function navigate(page) {
   pages.forEach(p => {
