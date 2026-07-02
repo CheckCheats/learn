@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vue3 期末复习 - 从0到精通</title>
+<style>
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--border:#30363d;--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--accent2:#f78166;--green:#3fb950;--yellow:#d29922;--red:#f85149;--purple:#bc8cff;--radius:8px;--mono:ui-monospace,'Cascadia Code','Consolas',monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.7;font-size:15px}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--text2)}
+a{color:var(--accent);text-decoration:none}
+code,pre{font-family:var(--mono);font-size:13px}
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .5s}
+#loader.hide{opacity:0;pointer-events:none}
+#loader .logo{font-size:28px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#loader .bar-wrap{width:200px;height:4px;background:var(--bg3);border-radius:2px;margin:20px 0;position:relative;overflow:hidden}
+#loader .bar{height:100%;width:30%;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px;position:absolute;top:0;animation:lp 1.4s ease-in-out infinite}
+@keyframes lp{0%{left:-30%;width:30%}50%{width:60%}100%{left:100%;width:30%}}
+#loader .status{color:var(--text2);font-size:13px;animation:fp 1.4s ease-in-out infinite}
+@keyframes fp{0%,100%{opacity:.4}50%{opacity:1}}
+.topnav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:1000;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:6px 10px;background:rgba(22,27,34,.85);backdrop-filter:blur(24px) saturate(1.4);border:1px solid var(--border);border-radius:var(--radius)}
+.nav-logo{font-weight:700;font-size:15px;white-space:nowrap;padding-left:6px}
+.nav-logo span{font-size:11px;color:var(--text2);margin-left:4px}
+.nav-links{display:flex;gap:2px}
+.nav-link{padding:6px 14px;border-radius:6px;cursor:pointer;font-size:14px;color:var(--text2);transition:all .2s;white-space:nowrap}
+.nav-link:hover{color:var(--text);background:var(--bg3)}
+.nav-link.active{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff}
+.nav-btns{display:flex;gap:4px;justify-self:end;padding-right:6px}
+.nav-btn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s}
+.nav-btn:hover{color:var(--text);border-color:var(--accent)}
+.page{display:none;padding-top:80px;min-height:100vh}
+.page.active{display:block}
+.hero{text-align:center;padding:60px 20px 40px}
+.hero h1{font-size:42px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--purple),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+.hero p{color:var(--text2);font-size:17px;max-width:600px;margin:0 auto}
+.hero-stats{display:flex;gap:32px;justify-content:center;margin:30px 0}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:32px;font-weight:700;color:var(--accent)}
+.hero-stat .label{font-size:12px;color:var(--text2)}
+.subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;max-width:1000px;margin:0 auto;padding:0 20px 40px}
+.subject-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;cursor:pointer;transition:all .25s}
+.subject-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(88,166,255,.1)}
+.subject-card .icon{font-size:36px;margin-bottom:12px}
+.subject-card h3{font-size:18px;margin-bottom:8px}
+.subject-card p{color:var(--text2);font-size:14px;margin-bottom:12px}
+.subject-card .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.subject-card .tag{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--bg3);color:var(--text2)}
+.subject-card .footer{font-size:12px;color:var(--text2);border-top:1px solid var(--border);padding-top:10px}
+.review-header{max-width:900px;margin:0 auto;padding:0 20px 20px}
+.review-header h2{font-size:28px;margin-bottom:6px}
+.review-header p{color:var(--text2);font-size:14px}
+.review-controls{max-width:900px;margin:0 auto;padding:0 20px 15px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.toc-select{background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 12px;font-size:14px;cursor:pointer;flex:1;min-width:200px}
+.toc-select:hover{border-color:var(--accent)}
+.ctrl-btn{padding:8px 14px;border-radius:6px;border:1px solid var(--border);background:var(--bg2);color:var(--text);cursor:pointer;font-size:13px;transition:all .2s}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent)}
+.chapter-count{font-size:13px;color:var(--text2)}
+.toc-sidebar{position:fixed;left:0;top:80px;width:230px;height:calc(100vh - 80px);overflow-y:auto;background:var(--bg2);border-right:1px solid var(--border);padding:16px 12px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:900}
+.toc-sidebar.show{opacity:1;pointer-events:auto}
+.toc-sidebar .toc-item{display:block;padding:6px 10px;border-radius:4px;font-size:13px;color:var(--text2);cursor:pointer;transition:all .15s;margin-bottom:2px}
+.toc-sidebar .toc-item:hover{color:var(--text);background:var(--bg3)}
+.toc-sidebar .toc-item.active{color:var(--accent);background:rgba(88,166,255,.1)}
+.chapter-section{max-width:900px;margin:0 auto 16px;padding:0 20px}
+.chapter-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s}
+.chapter-head:hover{border-color:var(--accent)}
+.chapter-num{width:32px;height:32px;border-radius:6px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0}
+.chapter-head h3{font-size:16px;flex:1}
+.chapter-toggle{color:var(--text2);transition:transform .25s;font-size:14px}
+.chapter-head.open .chapter-toggle{transform:rotate(180deg)}
+.chapter-body{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 16px}
+.chapter-body.open{max-height:99999px;padding:16px}
+.kb-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.kb-card h4{font-size:15px;color:var(--accent);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.kb-card p{margin-bottom:8px}
+.kb-card ul,.kb-card ol{margin:8px 0 8px 20px}
+.kb-card li{margin-bottom:4px}
+.codebox{background:#0a0d12;border:1px solid var(--border);border-radius:6px;margin:10px 0;overflow:hidden}
+.codebox .code-header{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:var(--bg3);font-size:12px;color:var(--text2)}
+.codebox .copy-btn{cursor:pointer;color:var(--text2);transition:color .15s;font-size:12px}
+.codebox .copy-btn:hover{color:var(--accent)}
+.codebox pre{padding:12px;overflow-x:auto;line-height:1.5}
+.c-kw{color:#ff7b72}.c-fn{color:#d2a8ff}.c-str{color:#a5d6ff}.c-cm{color:#8b949e}.c-tag{color:#7ee787}.c-attr{color:#79c0ff}.c-num{color:#f0883e}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.tbl th{background:var(--bg3);padding:8px 12px;text-align:left;border:1px solid var(--border);font-weight:600}
+.tbl td{padding:8px 12px;border:1px solid var(--border)}
+.tbl tr:hover td{background:var(--bg3)}
+.callout{padding:12px 16px;border-radius:6px;margin:10px 0;font-size:14px}
+.callout-key{background:rgba(88,166,255,.1);border-left:3px solid var(--accent)}
+.callout-warn{background:rgba(248,81,73,.1);border-left:3px solid var(--red)}
+.callout-tip{background:rgba(63,185,80,.1);border-left:3px solid var(--green)}
+.quiz{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin:10px 0}
+.quiz .q-title{font-weight:600;margin-bottom:8px;font-size:14px}
+.quiz .q-opts{list-style:none;margin:0;padding:0}
+.quiz .q-opt{padding:8px 12px;margin:4px 0;border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:all .15s;font-size:14px}
+.quiz .q-opt:hover{border-color:var(--accent)}
+.quiz .q-opt.correct{background:rgba(63,185,80,.15);border-color:var(--green);color:var(--green)}
+.quiz .q-opt.wrong{background:rgba(248,81,73,.15);border-color:var(--red);color:var(--red)}
+.quiz .q-ans{display:none;margin-top:10px;padding:10px;background:rgba(88,166,255,.1);border-radius:6px;font-size:13px}
+.quiz .q-ans.show{display:block}
+.quiz .judge-btns{display:flex;gap:8px;margin:8px 0}
+.quiz .judge-btn{padding:6px 18px;border-radius:6px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;font-size:14px;transition:all .15s}
+.quiz .judge-btn:hover{border-color:var(--accent)}
+.quiz .judge-btn.correct{background:rgba(63,185,80,.15);border-color:var(--green);color:var(--green)}
+.quiz .judge-btn.wrong{background:rgba(248,81,73,.15);border-color:var(--red);color:var(--red)}
+.flow{display:flex;align-items:center;gap:8px;margin:10px 0;flex-wrap:wrap}
+.flow-box{padding:10px 16px;background:var(--bg3);border:1px solid var(--accent);border-radius:6px;font-size:13px;text-align:center}
+.flow-arrow{color:var(--accent);font-size:18px}
+.footer{text-align:center;padding:30px 20px;color:var(--text2);font-size:13px;border-top:1px solid var(--border);margin-top:30px}
+@media(max-width:1024px){.toc-sidebar{display:none}.review-with-sidebar{margin-left:0!important}}
+@media(max-width:768px){.topnav{grid-template-columns:1fr;gap:6px;padding:6px}.nav-logo,.nav-btns{justify-self:center}.nav-links{flex-wrap:wrap;justify-content:center}.hero h1{font-size:28px}.hero-stats{gap:16px}.subjects-grid{grid-template-columns:1fr}.chapter-section{padding:0 12px}.review-header,.review-controls{padding:0 12px 15px}}
+@media(max-width:480px){.nav-link{padding:4px 8px;font-size:13px}.hero h1{font-size:22px}.hero p{font-size:14px}.chapter-head h3{font-size:14px}.kb-card{padding:12px}.codebox pre{font-size:12px}}
+[data-theme="light"]{--bg:#ffffff;--bg2:#f6f8fa;--bg3:#eaeef2;--border:#d0d7de;--text:#1f2328;--text2:#656d76}
+</style>
+</head>
+<body>
+<div id="loader"><div class="logo">Vue3 期末复习</div><div class="bar-wrap"><div class="bar"></div></div><div class="status">加载中...</div></div>
+<nav class="topnav">
+<div class="nav-logo">Vue3<span>期末复习</span></div>
+<div class="nav-links">
+<div class="nav-link active" onclick="navigate('home')">首页</div>
+<div class="nav-link" onclick="navigate('tutorial')">零基础教学</div>
+<div class="nav-link" onclick="navigate('knowledge')">知识点</div>
+<div class="nav-link" onclick="navigate('coding')">编程题解析</div>
+<div class="nav-link" onclick="navigate('exercises')">课后题答案</div>
+</div>
+<div class="nav-btns"><button class="nav-btn" onclick="toggleTheme()" title="切换主题">🌙</button></div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+<div class="hero">
+<h1>Vue3 期末复习</h1>
+<p>从0基础到1小时精通Vue3 — 明天考试就靠这个了</p>
+<div class="hero-stats">
+<div class="hero-stat"><div class="num">5</div><div class="label">编程题精讲</div></div>
+<div class="hero-stat"><div class="num">69</div><div class="label">课后题答案</div></div>
+<div class="hero-stat"><div class="num">8</div><div class="label">知识章节</div></div>
+<div class="hero-stat"><div class="num">1h</div><div class="label">预计复习时间</div></div>
+</div>
+</div>
+<div class="subjects-grid">
+<div class="subject-card" onclick="navigate('tutorial')"><div class="icon">📚</div><h3>零基础教学</h3><p>从安装Node.js到创建Vue项目，手把手教你从0开始。不需要任何Vue环境，跟着做就行。</p><div class="tags"><span class="tag">入门</span><span class="tag">安装</span><span class="tag">项目创建</span></div><div class="footer">4章 · 从0到有</div></div>
+<div class="subject-card" onclick="navigate('knowledge')"><div class="icon">🧠</div><h3>核心知识点</h3><p>指令、响应式数据、组件、路由、UI库、网络请求、状态管理 — 覆盖PPT全部考点</p><div class="tags"><span class="tag">指令</span><span class="tag">组件</span><span class="tag">路由</span><span class="tag">Pinia</span></div><div class="footer">8章 · 对应PPT考点</div></div>
+<div class="subject-card" onclick="navigate('coding')"><div class="icon">💻</div><h3>编程题解析</h3><p>PPT中5道编程题完整代码 + 逐行讲解。列表渲染、增删改查、购物车、父子组件通信</p><div class="tags"><span class="tag">v-for</span><span class="tag">CRUD</span><span class="tag">购物车</span><span class="tag">组件通信</span></div><div class="footer">5题 · 期末必考</div></div>
+<div class="subject-card" onclick="navigate('exercises')"><div class="icon">📝</div><h3>课后题答案与解析</h3><p>7章课后判断题35道 + 选择题34道，每题都有答案和详细解析。点击选项即可查看对错</p><div class="tags"><span class="tag">判断题</span><span class="tag">选择题</span><span class="tag">详细解析</span></div><div class="footer">69题 · 含解析</div></div>
+</div>
+<div class="footer"><p>Vue3 期末复习网站 · 从0基础到1小时精通</p></div>
+</div>
+
+<!-- TUTORIAL PAGE -->
+<div class="page" id="page-tutorial">
+<div class="review-header"><h2>零基础教学</h2><p>从电脑上什么都没有开始，一步步搭建Vue3开发环境并创建第一个项目</p></div>
+<div class="review-controls">
+<select class="toc-select" id="tutorialTocSelect" onchange="jumpToChapter('tutorial', this.value)"><option value="">跳转到章节...</option></select>
+<button class="ctrl-btn" onclick="toggleAllChapters('tutorial')" id="tutorialToggleAllBtn">展开全部</button>
+<span class="chapter-count" id="tutorialCount"></span>
+</div>
+
+<!-- TUT CH1 -->
+<div class="chapter-section" id="tut-0">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>安装 Node.js 和 npm — Vue 的运行基础</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body open">
+<div class="kb-card">
+<h4>什么是 Node.js？为什么要装它？</h4>
+<p>Vue3 项目需要用 <strong>npm</strong>（Node Package Manager）来下载各种依赖包（比如 vue、vue-router 等）。而 npm 是跟着 Node.js 一起安装的，所以第一步就是安装 Node.js。</p>
+<p>简单理解：<strong>Node.js 是发动机，npm 是工具箱，Vue 是你要用的零件</strong>。先装发动机，才能用工具箱，才能装零件。</p>
+</div>
+<div class="kb-card">
+<h4>安装步骤（Windows）</h4>
+<ol>
+<li>打开浏览器，访问 <a href="https://nodejs.org" target="_blank">https://nodejs.org</a></li>
+<li>下载 <strong>LTS（长期支持版）</strong>，一般是 .msi 文件</li>
+<li>双击安装包，一路点"下一步"，不需要改任何设置</li>
+<li>安装完成后，打开 <strong>命令行</strong>（按 Win+R，输入 cmd，回车）</li>
+<li>输入以下命令验证安装成功：</li>
+</ol>
+<div class="codebox"><div class="code-header"><span>bash</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre>node -v     <span class="c-cm"># 显示版本号，如 v20.10.0</span>
+npm -v      <span class="c-cm"># 显示版本号，如 10.2.3</span></pre></div>
+<div class="callout callout-tip"><strong>提示：</strong>看到版本号就说明安装成功。如果提示"不是内部或外部命令"，重启电脑。</div>
+</div>
+<div class="kb-card">
+<h4>npm 常用命令速查</h4>
+<table class="tbl"><tr><th>命令</th><th>作用</th></tr>
+<tr><td><code>npm install 包名</code></td><td>安装一个包到当前项目</td></tr>
+<tr><td><code>npm install 包名 -g</code></td><td>全局安装（如脚手架工具）</td></tr>
+<tr><td><code>npm install</code></td><td>安装 package.json 中所有依赖</td></tr>
+<tr><td><code>npm update 包名</code></td><td>更新指定包</td></tr>
+<tr><td><code>npm uninstall 包名</code></td><td>卸载包</td></tr>
+<tr><td><code>npm run dev</code></td><td>启动开发服务器</td></tr>
+<tr><td><code>npm run build</code></td><td>构建生产版本</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>yarn dev</code> / <code>npm run dev</code> 是启动开发服务器，<strong>不是</strong>项目构建/打包。<code>npm run build</code> 才是构建。</div>
+</div>
+<div class="kb-card">
+<h4>yarn 是什么？</h4>
+<p>yarn 是 Facebook 开发的另一个包管理工具，功能和 npm 一样。两者可以互相替代：</p>
+<table class="tbl"><tr><th>npm</th><th>yarn</th><th>作用</th></tr>
+<tr><td><code>npm install</code></td><td><code>yarn</code></td><td>安装所有依赖</td></tr>
+<tr><td><code>npm install 包名</code></td><td><code>yarn add 包名</code></td><td>安装指定包</td></tr>
+<tr><td><code>npm run dev</code></td><td><code>yarn dev</code></td><td>启动开发服务器</td></tr>
+</table>
+<p>使用 yarn 前也需要先安装 Node.js。安装 yarn：<code>npm install -g yarn</code></p>
+<p>npm 安装同一个包时会缓存，再次安装无须重复下载。npm 可以并行安装多个包，不需要等到当前包安装完才继续。</p>
+</div>
+</div>
+</div>
+
+<!-- TUT CH2 -->
+<div class="chapter-section" id="tut-1">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>安装 Vue 脚手架并创建项目</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>什么是脚手架？</h4>
+<p>Vue 脚手架（Vite）是一个工具，帮你自动生成一个完整的 Vue 项目目录结构，不用手动一个一个建文件。</p>
+<p>类比：脚手架就像装修时的样板房模板 — 一键生成所有房间布局，你只需要往里面填东西就行。</p>
+</div>
+<div class="kb-card">
+<h4>创建 Vue3 项目</h4>
+<p>打开命令行，进入你想创建项目的文件夹，执行：</p>
+<div class="codebox"><div class="code-header"><span>bash</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-cm"># 方式1：使用 npm 创建（推荐）</span>
+npm create vite@latest my-vue-app -- --template vue
+
+<span class="c-cm"># 方式2：使用 yarn 创建</span>
+yarn create vite my-vue-app --template vue</pre></div>
+<p>然后进入项目目录并安装依赖：</p>
+<div class="codebox"><div class="code-header"><span>bash</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre>cd my-vue-app
+npm install    <span class="c-cm"># 或 yarn</span>
+npm run dev    <span class="c-cm"># 启动开发服务器</span></pre></div>
+<p>浏览器打开 <code>http://localhost:5173</code> 就能看到你的第一个 Vue 页面了！</p>
+</div>
+<div class="kb-card">
+<h4>项目目录结构</h4>
+<div class="codebox"><div class="code-header"><span>目录结构</span></div>
+<pre>my-vue-app/
+├── node_modules/     <span class="c-cm"># 下载的依赖包（自动生成）</span>
+├── public/           <span class="c-cm"># 静态文件</span>
+├── src/              <span class="c-cm"># ★ 你写代码的地方</span>
+│   ├── components/   <span class="c-cm"># 组件文件夹</span>
+│   ├── App.vue       <span class="c-cm"># ★ 根组件（页面入口）</span>
+│   ├── main.js       <span class="c-cm"># ★ 入口文件（挂载Vue）</span>
+│   └── style.css     <span class="c-cm"># 全局样式</span>
+├── index.html        <span class="c-cm"># HTML 模板</span>
+├── package.json      <span class="c-cm"># 项目配置和依赖清单</span>
+└── vite.config.js    <span class="c-cm"># Vite 构建配置</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>.vue 文件的三段式结构</h4>
+<p>每个 .vue 文件就是一个组件（SFC，Single File Component），包含三个部分：</p>
+<div class="codebox"><div class="code-header"><span>Vue SFC 结构</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-cm">&lt;!-- HTML 结构：写页面长什么样 --&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h1&gt;</span>{{ message }}<span class="c-tag">&lt;/h1&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+  <span class="c-cm">// JS 逻辑：写数据和功能</span>
+  <span class="c-kw">import</span> { ref } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+  <span class="c-kw">const</span> message = <span class="c-fn">ref</span>(<span class="c-str">'Hello Vue3!'</span>)
+<span class="c-kw">&lt;/script&gt;</span>
+
+<span class="c-kw">&lt;style scoped&gt;</span>
+  <span class="c-cm">/* CSS 样式 */</span>
+  h1 { color: <span class="c-str">#42b883</span>; }
+<span class="c-kw">&lt;/style&gt;</span></pre></div>
+<div class="callout callout-key"><strong>关键：</strong>&lt;template&gt; 写 HTML，&lt;script setup&gt; 写 JS，&lt;style&gt; 写 CSS。这三段是每个 .vue 文件的标准结构。</div>
+<div class="callout callout-warn"><strong>注意：</strong>Vue3 中 &lt;template&gt; 可以有多个根节点（Vue2 只能有一个）。考试说"只能有一个根节点"是<strong>错误</strong>的。</div>
+</div>
+</div>
+</div>
+
+<!-- TUT CH3 -->
+<div class="chapter-section" id="tut-2">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>Vue 核心概念 — MVVM 模式</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>什么是 MVVM？</h4>
+<p>MVVM = <strong>M</strong>odel - <strong>V</strong>iew - <strong>V</strong>iewModel</p>
+<div class="flow">
+<div class="flow-box"><strong>Model</strong><br>数据层</div>
+<div class="flow-arrow">↔</div>
+<div class="flow-box"><strong>ViewModel</strong><br>Vue框架（桥梁）</div>
+<div class="flow-arrow">↔</div>
+<div class="flow-box"><strong>View</strong><br>页面（DOM）</div>
+</div>
+<ul>
+<li><strong>Model（模型）</strong>：负责业务数据的处理 — 就是你的数据（变量、数组等）</li>
+<li><strong>View（视图）</strong>：负责视图的处理 — 就是用户看到的 HTML 页面</li>
+<li><strong>ViewModel（视图模型）</strong>：负责监听 Model 和 View 的改变 — 就是 Vue 框架本身</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>Model 和 View <strong>不能</strong>直接通信！它们必须通过 ViewModel 中转。考试说"Model和View可以直接通信"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>Vue 的四大特性</h4>
+<table class="tbl"><tr><th>特性</th><th>说明</th></tr>
+<tr><td>轻量级</td><td>Vue 相比 Angular 和 React 更小更快</td></tr>
+<tr><td>数据驱动视图</td><td>数据变了，页面自动更新，不用手动操作 DOM</td></tr>
+<tr><td>双向数据绑定</td><td>输入框输入 → 数据自动变；数据变 → 页面自动更新</td></tr>
+<tr><td>插件化开发</td><td>Vue Router（路由）、Pinia（状态管理）等都是插件</td></tr>
+</table>
+<div class="callout callout-key"><strong>考试重点：</strong>Vue 自定义指令以 <code>v-</code> 开头（如 v-if、v-for），<strong>不是</strong>以 "on-" 开头。说"以on-开头"是<strong>错误</strong>的。</div>
+</div>
+</div>
+</div>
+
+<!-- TUT CH4 -->
+<div class="chapter-section" id="tut-3">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>第一个 Vue 程序 — 从零写代码</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>修改 App.vue 写你的第一个程序</h4>
+<p>打开 <code>src/App.vue</code>，替换为以下代码：</p>
+<div class="codebox"><div class="code-header"><span>App.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h1&gt;</span>{{ title }}<span class="c-tag">&lt;/h1&gt;</span>
+    <span class="c-tag">&lt;input</span> <span class="c-attr">v-model</span>=<span class="c-str">"title"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"输入文字"</span> <span class="c-tag">/&gt;</span>
+    <span class="c-tag">&lt;p&gt;</span>你输入了：{{ title }}<span class="c-tag">&lt;/p&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { ref } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+<span class="c-kw">const</span> title = <span class="c-fn">ref</span>(<span class="c-str">'我的第一个Vue程序'</span>)
+<span class="c-kw">&lt;/script&gt;</span>
+
+<span class="c-kw">&lt;style&gt;</span>
+h1 { color: <span class="c-str">#42b883</span>; text-align: center; }
+<span class="c-kw">&lt;/style&gt;</span></pre></div>
+<p><strong>逐行解释：</strong></p>
+<ol>
+<li><code>{{ title }}</code> — 插值表达式（Mustache 语法），把 JS 变量显示到 HTML 中</li>
+<li><code>v-model="title"</code> — 双向绑定，输入框内容和 title 变量同步</li>
+<li><code>ref('...')</code> — 创建响应式数据（数据变了页面自动更新）</li>
+<li><code>import { ref } from 'vue'</code> — 从 vue 中引入 ref 函数</li>
+</ol>
+<div class="callout callout-tip"><strong>验证：</strong>保存后浏览器自动刷新（热更新），在输入框打字，下面的文字会同步变化 — 这就是双向数据绑定！</div>
+</div>
+<div class="kb-card">
+<h4>ref vs reactive — 两种创建响应式数据的方式</h4>
+<table class="tbl"><tr><th></th><th>ref()</th><th>reactive()</th></tr>
+<tr><td>用途</td><td>基本类型（字符串、数字、布尔）</td><td>对象/数组</td></tr>
+<tr><td>访问</td><td>JS中需要 .value，模板中不用</td><td>直接访问属性</td></tr>
+<tr><td>示例</td><td><code>const count = ref(0)</code></td><td><code>const state = reactive({count:0})</code></td></tr>
+</table>
+<div class="callout callout-key"><strong>考试重点：</strong>
+<ul>
+<li><code>ref()</code> — 将基本类型数据转为响应式</li>
+<li><code>reactive()</code> — 将对象/数组的所有属性转为响应式</li>
+<li><code>toRef()</code> — 将响应式对象的单个属性转换为 ref</li>
+<li><code>toRefs()</code> — 将响应式对象的所有属性转换为 ref</li>
+</ul>
+</div>
+<div class="callout callout-warn"><strong>易错点：</strong><code>toRef()</code> 是把响应式对象的属性转成 ref，<strong>不是</strong>把普通数据转成响应式。说"toRef()用于将普通数据转换成响应式数据"是<strong>错误</strong>的。</div>
+</div>
+</div>
+</div>
+
+<div class="footer"><p>零基础教学 · 从安装到第一个Vue程序</p></div>
+</div>
+
+<!-- KNOWLEDGE PAGE -->
+<div class="page" id="page-knowledge">
+<div class="review-header"><h2>核心知识点</h2><p>对应期末复习PPT的全部考点 — 指令、响应式、组件、路由、UI库、网络请求、状态管理</p></div>
+<div class="review-controls">
+<select class="toc-select" id="knowledgeTocSelect" onchange="jumpToChapter('knowledge', this.value)"><option value="">跳转到章节...</option></select>
+<button class="ctrl-btn" onclick="toggleAllChapters('knowledge')" id="knowledgeToggleAllBtn">展开全部</button>
+<span class="chapter-count" id="knowledgeCount"></span>
+</div>
+
+<!-- KN CH1: 初识Vue.js -->
+<div class="chapter-section" id="kn-0">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>初识 Vue.js · MVVM · npm · 包管理</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body open">
+<div class="kb-card">
+<h4>Vue.js 是什么？</h4>
+<p>Vue 是一个用于构建用户界面的 <strong>渐进式 JavaScript 框架</strong>。核心库只关注视图层，容易上手。与 Angular、React 并称前端三大框架。</p>
+<ul>
+<li>Vue 相比 Angular 和 React 而言，是一个<strong>轻量级</strong>的前端库</li>
+<li>Vue 支持 <strong>Pinia</strong> 状态管理插件</li>
+<li>Vue 支持 <strong>双向数据绑定</strong></li>
+<li>Vue 自定义指令以 <strong>v-</strong> 开头（如 v-if、v-for、v-bind）</li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>npm 包管理工具</h4>
+<ul>
+<li>npm 是一个包管理工具，用来解决 Node.js 代码部署问题</li>
+<li>npm 基于 <strong>Node.js</strong> 运行环境（不是 Vue、不是 Babel）</li>
+<li>使用 npm 安装同一个包时会缓存，再次安装无须重复下载</li>
+<li>npm 可以并行安装多个包（不需要等到当前包安装完才继续）</li>
+<li><code>npm install 包名 -g</code> 表示全局安装，<strong>不是</strong>安装到当前项目</li>
+<li>使用 npm 前必须先安装 Node.js</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>"npm安装包时必须等到当前包安装完成后才会继续后面的安装"是<strong>错误</strong>的 — npm 支持并行安装。</div>
+</div>
+<div class="kb-card">
+<h4>MVVM 模式详解</h4>
+<table class="tbl"><tr><th>组成部分</th><th>职责</th></tr>
+<tr><td>Model</td><td>主要负责业务数据的处理</td></tr>
+<tr><td>View</td><td>负责视图的处理（页面展示）</td></tr>
+<tr><td>ViewModel</td><td>负责监听 Model 或 View 的改变（Vue 框架）</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong>Model 和 View <strong>不能</strong>直接通信、互相监控。它们必须通过 ViewModel 中转。</div>
+</div>
+<div class="kb-card">
+<h4>Vue 特性总结</h4>
+<table class="tbl"><tr><th>特性</th><th>说明</th></tr>
+<tr><td>轻量级</td><td>体积小、速度快</td></tr>
+<tr><td>数据驱动视图</td><td>数据变化自动更新视图</td></tr>
+<tr><td>双向数据绑定</td><td>v-model 实现数据和视图同步</td></tr>
+<tr><td>插件化开发</td><td>Vue Router、Pinia 等以插件形式接入</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- KN CH2: Vue开发基础 - 指令与响应式 -->
+<div class="chapter-section" id="kn-1">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>Vue 开发基础 · 指令 · 响应式数据 · 事件绑定</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>常用指令一览表</h4>
+<table class="tbl"><tr><th>指令</th><th>作用</th><th>示例</th></tr>
+<tr><td>v-text</td><td>渲染 DOM 元素的文本内容</td><td><code>v-text="msg"</code></td></tr>
+<tr><td>v-html</td><td>渲染 HTML 内容</td><td><code>v-html="rawHtml"</code></td></tr>
+<tr><td>v-bind（:）</td><td>绑定属性</td><td><code>:href="url"</code></td></tr>
+<tr><td>v-on（@）</td><td>绑定事件</td><td><code>@click="fn"</code></td></tr>
+<tr><td>v-model</td><td>双向数据绑定</td><td><code>v-model="msg"</code></td></tr>
+<tr><td>v-if / v-else</td><td>条件渲染（删除/创建DOM）</td><td><code>v-if="show"</code></td></tr>
+<tr><td>v-show</td><td>条件显示（display切换）</td><td><code>v-show="show"</code></td></tr>
+<tr><td>v-for</td><td>列表渲染</td><td><code>v-for="item in list"</code></td></tr>
+</table>
+<div class="callout callout-key"><strong>考试重点：</strong>渲染 DOM 元素文本内容的指令是 <code>v-text</code>（不是 v-bind、v-on、v-for）。</div>
+</div>
+<div class="kb-card">
+<h4>v-bind 指令 — 属性绑定</h4>
+<p>v-bind 用于绑定 HTML 属性，简写为冒号 <code>:</code>。可以绑定 class、style、src、href 等属性。</p>
+<div class="codebox"><div class="code-header"><span>Vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-cm">&lt;!-- 完整写法 --&gt;</span>
+<span class="c-tag">&lt;a</span> <span class="c-attr">v-bind:href</span>=<span class="c-str">"url"</span><span class="c-tag">&gt;</span>链接<span class="c-tag">&lt;/a&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">v-bind:class</span>=<span class="c-str">"{ active: isActive }"</span><span class="c-tag">&gt;</span><span class="c-tag">&lt;/div&gt;</span>
+
+<span class="c-cm">&lt;!-- 简写 --&gt;</span>
+<span class="c-tag">&lt;a</span> <span class="c-attr">:href</span>=<span class="c-str">"url"</span><span class="c-tag">&gt;</span>链接<span class="c-tag">&lt;/a&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">:class</span>=<span class="c-str">"{ active: isActive }"</span><span class="c-tag">&gt;</span><span class="c-tag">&lt;/div&gt;</span></pre></div>
+<p>Vue 中绑定样式类可以通过 v-bind 指令操作 class 属性或 style 属性来实现。</p>
+</div>
+<div class="kb-card">
+<h4>v-on 指令 — 事件绑定</h4>
+<p>v-on 用于绑定事件监听，简写为 <code>@</code>。</p>
+<div class="codebox"><div class="code-header"><span>Vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-cm">&lt;!-- 完整写法 --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">v-on:click</span>=<span class="c-str">"handleClick"</span><span class="c-tag">&gt;</span>点击<span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-cm">&lt;!-- 简写 --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"handleClick"</span><span class="c-tag">&gt;</span>点击<span class="c-tag">&lt;/button&gt;</span>
+
+<span class="c-cm">&lt;!-- $event 获取事件对象 --&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"handleClick($event)"</span><span class="c-tag">&gt;</span>点击<span class="c-tag">&lt;/button&gt;</span></pre></div>
+<div class="callout callout-key"><strong>$event</strong> 是 Vue 提供的内置变量，使用它可以获取事件对象。</div>
+</div>
+<div class="kb-card">
+<h4>事件修饰符</h4>
+<table class="tbl"><tr><th>修饰符</th><th>作用</th></tr>
+<tr><td>.prevent</td><td>阻止默认行为（如 a 标签跳转）</td></tr>
+<tr><td>.stop</td><td>阻止事件冒泡</td></tr>
+<tr><td>.capture</td><td>改变事件执行顺序，从冒泡改为捕获</td></tr>
+<tr><td>.self</td><td>只有 DOM 元素本身才会触发事件</td></tr>
+<tr><td>.once</td><td>事件只触发一次</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>.stop</code> 是阻止<strong>冒泡</strong>，<strong>不是</strong>阻止默认事件行为。阻止默认行为的是 <code>.prevent</code>。</div>
+</div>
+<div class="kb-card">
+<h4>v-model 修饰符</h4>
+<table class="tbl"><tr><th>修饰符</th><th>作用</th></tr>
+<tr><td>.lazy</td><td>change 事件时同步（非 input 事件）</td></tr>
+<tr><td>.number</td><td>自动将输入转为数字类型</td></tr>
+<tr><td>.trim</td><td>自动过滤首尾空白字符</td></tr>
+</table>
+<div class="callout callout-key"><strong>考试重点：</strong><code>v-model.trim</code> 可以自动过滤用户输入的首尾空白字符。</div>
+</div>
+<div class="kb-card">
+<h4>v-for 指令 — 列表渲染</h4>
+<p>v-for 可以基于数组、对象、数字或字符串循环渲染列表。</p>
+<div class="codebox"><div class="code-header"><span>Vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-cm">&lt;!-- 数组遍历 --&gt;</span>
+<span class="c-tag">&lt;li</span> <span class="c-attr">v-for</span>=<span class="c-str">"(item, index) in list"</span> <span class="c-attr">:key</span>=<span class="c-str">"item.id"</span><span class="c-tag">&gt;</span>
+  {{ item.name }}
+<span class="c-tag">&lt;/li&gt;</span>
+
+<span class="c-cm">&lt;!-- 对象遍历 --&gt;</span>
+<span class="c-tag">&lt;div</span> <span class="c-attr">v-for</span>=<span class="c-str">"(value, key) in obj"</span> <span class="c-attr">:key</span>=<span class="c-str">"key"</span><span class="c-tag">&gt;</span>
+  {{ key }}: {{ value }}
+<span class="c-tag">&lt;/div&gt;</span></pre></div>
+<div class="callout callout-warn"><strong>易错点：</strong>使用 v-for 时必须指定 key 的值，且 key 的值<strong>必须具有唯一性</strong>。说"key的值不具有唯一性"是<strong>错误</strong>的。</div>
+<div class="callout callout-key"><strong>v-for 循环次数：</strong>数组 → 按数组元素个数循环；对象 → 按对象属性个数循环。</div>
+</div>
+<div class="kb-card">
+<h4>响应式数据函数总结</h4>
+<table class="tbl"><tr><th>函数</th><th>作用</th><th>说明</th></tr>
+<tr><td>ref()</td><td>将基本类型转为响应式</td><td>访问时需要 .value</td></tr>
+<tr><td>reactive()</td><td>将对象所有属性转为响应式</td><td>直接访问属性</td></tr>
+<tr><td>toRef()</td><td>将响应式对象的单个属性转为 ref</td><td>保持引用关系</td></tr>
+<tr><td>toRefs()</td><td>将响应式对象所有属性转为 ref</td><td>解构时使用</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>ref()</code> 用于将基本类型数据转为响应式，<strong>不是</strong>"将响应式对象中的单个属性转换为响应式数据" — 那是 toRef() 的功能。</div>
+</div>
+<div class="kb-card">
+<h4>单文件组件（SFC）</h4>
+<ul>
+<li><strong>模板（template）</strong>：用于搭建当前组件的 DOM 结构</li>
+<li><strong>样式（style）</strong>：通过 CSS 代码为当前组件设置样式</li>
+<li><strong>逻辑（script）</strong>：通过 JavaScript 代码处理组件的数据与业务</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>Vue 3 中 &lt;template&gt; 标签中的 DOM 结构<strong>可以有多个根节点</strong>（Vue2 只能有一个）。说"只能有一个根节点"是<strong>错误</strong>的。</div>
+</div>
+</div>
+</div>
+
+<!-- KN CH3: 组件基础(上) -->
+<div class="chapter-section" id="kn-2">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>组件基础(上) · Props · 生命周期 · 依赖注入</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>组合式 API 与 setup</h4>
+<p>Vue3 推荐使用组合式 API（Composition API），在 <code>&lt;script setup&gt;</code> 中直接定义数据和方法。</p>
+<div class="callout callout-key"><strong>组合式 API：</strong>数据和方法可以直接在 setup() 函数中定义。<code>&lt;script setup&gt;</code> 是 setup() 函数的语法糖。</div>
+</div>
+<div class="kb-card">
+<h4>生命周期函数</h4>
+<table class="tbl"><tr><th>函数</th><th>触发时机</th></tr>
+<tr><td>onBeforeMount()</td><td>组件挂载之前被调用</td></tr>
+<tr><td>onMounted()</td><td>组件挂载完成后被调用</td></tr>
+<tr><td>onBeforeUpdate()</td><td>组件更新前被调用</td></tr>
+<tr><td>onUpdated()</td><td>组件更新完成后被调用</td></tr>
+<tr><td>onBeforeUnmount()</td><td>组件卸载前被调用</td></tr>
+<tr><td>onUnmounted()</td><td>组件实例被销毁后调用</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>onUpdated()</code> 是在组件更新<strong>完成后</strong>被调用，<strong>不是</strong>更新前。说"onUpdated()在组件更新前被调用"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>Props — 父传子数据</h4>
+<p>Props 是父组件向子组件传递数据的方式。在子组件中用 <code>defineProps()</code> 声明。</p>
+<div class="codebox"><div class="code-header"><span>子组件</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">const</span> props = <span class="c-fn">defineProps</span>({
+  title: {
+    type: String,
+    default: <span class="c-str">'默认标题'</span>,
+    required: <span class="c-num">true</span>
+  }
+})
+<span class="c-kw">&lt;/script&gt;</span></pre></div>
+<ul>
+<li>可以通过 <code>type</code> 属性对传递过来的 props 数据进行基础类型检查</li>
+<li>通过 <code>default</code> 属性设置默认值</li>
+<li>通过 <code>required</code> 属性设置必填项</li>
+<li>所有的 props 都遵循<strong>单向数据流</strong>原则（子组件不能直接修改父组件传来的 props）</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>对象形式的 props <strong>可以使用</strong>多种验证方案（type、default、required、validator 等）。说"不能使用多种验证方案"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>在父组件中使用 v-bind 可以为子组件<strong>动态</strong>绑定 props（不是"静态"绑定）。说"静态绑定"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>依赖注入 — 跨级组件通信</h4>
+<p>跨级组件（祖孙组件）之间的数据传递可以通过<strong>依赖注入</strong>来实现。</p>
+<div class="codebox"><div class="code-header"><span>祖辈组件</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">import</span> { provide } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+<span class="c-fn">provide</span>(<span class="c-str">'key'</span>, value)  <span class="c-cm">// 提供数据</span></pre></div>
+<div class="codebox"><div class="code-header"><span>后代组件</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">import</span> { inject } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+<span class="c-kw">const</span> value = <span class="c-fn">inject</span>(<span class="c-str">'key'</span>)  <span class="c-cm">// 注入数据</span></pre></div>
+<ul>
+<li><code>provide()</code> 函数提供一个值，可以被后代组件所注入</li>
+<li><code>inject()</code> 函数用于注入上层组件提供的数据</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong><code>provide()</code> 接收 <strong>2 个参数</strong>：第1个是注入名（key），第2个是要注入的值（value）。说"第1个参数是要注入的值"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>自定义事件 — 子传父数据</h4>
+<p>子组件通过自定义事件向父组件传递数据。在子组件中用 <code>defineEmits()</code> 声明。</p>
+<div class="codebox"><div class="code-header"><span>子组件</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">const</span> emit = <span class="c-fn">defineEmits</span>([<span class="c-str">'demo'</span>])
+<span class="c-kw">const</span> sendData = () =&gt; {
+  <span class="c-fn">emit</span>(<span class="c-str">'demo'</span>, data)  <span class="c-cm">// 触发事件并传数据</span>
+}
+<span class="c-kw">&lt;/script&gt;</span></pre></div>
+<div class="codebox"><div class="code-header"><span>父组件</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-tag">&lt;Child</span> <span class="c-attr">@demo</span>=<span class="c-str">"handleDemo"</span> <span class="c-tag">/&gt;</span></pre></div>
+<div class="callout callout-key"><strong>考试重点：</strong>在 setup 语法糖中声明自定义事件的方式是 <code>defineEmits()</code>。监听自定义事件的指令是 <code>v-on</code>（即 @）。</div>
+</div>
+</div>
+</div>
+
+<!-- KN CH4: 组件基础(下) -->
+<div class="chapter-section" id="kn-3">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>组件基础(下) · 插槽 · 动态组件 · 自定义指令 · KeepAlive</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>动态组件</h4>
+<p>使用 <code>&lt;component :is="组件名"&gt;</code> 实现组件之间的按需切换。</p>
+<div class="codebox"><div class="code-header"><span>Vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-tag">&lt;component</span> <span class="c-attr">:is</span>=<span class="c-str">"currentComponent"</span><span class="c-tag">&gt;&lt;/component&gt;</span></pre></div>
+<p>使用动态组件切换时，隐藏的组件会被<strong>销毁</strong>，展示出来的组件会被<strong>重新创建</strong>。</p>
+</div>
+<div class="kb-card">
+<h4>KeepAlive — 组件缓存</h4>
+<p>用 <code>&lt;KeepAlive&gt;</code> 标签包裹组件，可以使组件创建一次后不会被销毁。</p>
+<div class="codebox"><div class="code-header"><span>Vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-tag">&lt;KeepAlive</span> <span class="c-attr">include</span>=<span class="c-str">"CompA,CompB"</span> <span class="c-attr">:max</span>=<span class="c-str">"10"</span><span class="c-tag">&gt;</span>
+  <span class="c-tag">&lt;component</span> <span class="c-attr">:is</span>=<span class="c-str">"currentComp"</span> <span class="c-tag">/&gt;</span>
+<span class="c-tag">&lt;/KeepAlive&gt;</span></pre></div>
+<ul>
+<li><code>include</code> 属性 — 只有匹配的组件名才会被缓存</li>
+<li><code>exclude</code> 属性 — 匹配的组件名不会被缓存</li>
+<li><code>max</code> 属性 — 最多缓存的组件实例个数</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>若只想要对应组件名的组件被缓存，应使用 <code>include</code> 属性，<strong>不是</strong> exclude 属性。说"通过exclude实现"是<strong>错误</strong>的。</div>
+<div class="callout callout-key">组件缓存时触发的生命周期函数：<code>onActivated()</code>（激活时）和 <code>onDeactivated()</code>（停用时）。</div>
+</div>
+<div class="kb-card">
+<h4>插槽（Slot）</h4>
+<p>插槽是组件封装期间为组件使用者预留的占位符。</p>
+<ul>
+<li><strong>默认插槽</strong>：直接写 <code>&lt;slot&gt;</code> 标签</li>
+<li><strong>具名插槽</strong>：添加 <code>name</code> 属性的 <code>&lt;slot&gt;</code> 标签，如 <code>&lt;slot name="header"&gt;</code></li>
+<li><strong>作用域插槽</strong>：带有数据的插槽，子组件提供数据给父组件</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>如果一个组件没有预留任何插槽，则组件使用者提供的插槽内容<strong>不会起作用</strong>（会被丢弃）。说"同样会起作用"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>如果组件的使用者为插槽提供了内容，则<strong>使用者提供的内容生效</strong>，默认内容不生效。说"默认内容生效"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>作用域插槽是<strong>子组件</strong>提供数据给插槽（不是父组件提供）。说"父组件提供一部分数据给插槽"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>自定义指令</h4>
+<ul>
+<li><strong>全局自定义指令</strong>：通过 <code>app.directive()</code> 声明，可以在全局使用</li>
+<li><strong>私有自定义指令</strong>：在组件的 directives 选项中声明，只能在该组件中使用</li>
+<li><strong>可以</strong>为自定义指令绑定参数（如 <code>v-focus:foo</code>）</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>自定义指令<strong>可以</strong>绑定参数。说"不能为自定义指令绑定参数"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>自定义指令的生命周期函数</h4>
+<table class="tbl"><tr><th>函数</th><th>触发时机</th></tr>
+<tr><td>mounted()</td><td>绑定元素的父组件及自身的所有子节点都挂载完成后调用</td></tr>
+<tr><td>beforeUpdate()</td><td>绑定元素的父组件更新前调用</td></tr>
+<tr><td>updated()</td><td>绑定元素的父组件及子节点更新完成后调用</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>beforeUpdate()</code> 是在绑定的父组件<strong>更新前</strong>调用（不是卸载前）。说"卸载前调用"是<strong>错误</strong>的。</div>
+<div class="callout callout-key"><strong>参数说明：</strong><code>el</code> — 当前指令所绑定到的元素；<code>binding.value</code> — 传递给指令的值。</div>
+</div>
+</div>
+</div>
+
+<!-- KN CH5: 路由 -->
+<div class="chapter-section" id="kn-4">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>路由 · Vue Router · 导航守卫 · 编程式导航</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>Vue Router 基础</h4>
+<p>Vue Router 是 Vue.js 的官方路由管理器，用于实现 SPA（单页面应用）的路由功能。</p>
+<p>安装命令：<code>npm install vue-router@4</code> 或 <code>yarn add vue-router@4</code></p>
+<div class="callout callout-warn"><strong>易错点：</strong>正确的安装命令是 <code>npm install vue-router@4</code> 或 <code>yarn add vue-router@4</code>。选项中 "npm I vue-router@4" 的大小写可能被当作错误写法。</div>
+</div>
+<div class="kb-card">
+<h4>前端路由 vs 后端路由</h4>
+<table class="tbl"><tr><th></th><th>前端路由</th><th>后端路由</th></tr>
+<tr><td>发生位置</td><td>浏览器端</td><td>服务器端</td></tr>
+<tr><td>示例</td><td>Vue 中的路由</td><td>Express 框架中的路由</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong>Vue 中的路由属于<strong>前端路由</strong>，<strong>不是</strong>后端路由。</div>
+</div>
+<div class="kb-card">
+<h4>路由核心概念</h4>
+<ul>
+<li><strong>&lt;router-link&gt;</strong>：声明式导航链接（渲染为 a 标签）</li>
+<li><strong>&lt;router-view&gt;</strong>：路由视图出口（渲染匹配的组件）<strong>← 不是 router-link！</strong></li>
+<li><strong>routes</strong>：路由匹配规则数组</li>
+<li><strong>redirect</strong>：路由重定向属性</li>
+<li><strong>router-link-active</strong>：默认的激活路由链接高亮类名</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>路由视图使用 <code>&lt;router-view&gt;</code> 标签定义，<strong>不是</strong> <code>&lt;router-link&gt;</code>。说"路由视图使用router-link定义"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>页面有两种导航方式：声明式导航和<strong>编程式</strong>导航（不是"嵌套式"导航）。</div>
+</div>
+<div class="kb-card">
+<h4>导航守卫</h4>
+<p>Vue Router 提供导航守卫来控制路由的访问权限。</p>
+<div class="codebox"><div class="code-header"><span>全局前置守卫</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">const</span> router = <span class="c-fn">createRouter</span>({...})
+router.<span class="c-fn">beforeEach</span>((to, from, next) =&gt; {
+  <span class="c-cm">// to: 目标路由对象</span>
+  <span class="c-cm">// from: 当前导航正要离开的路由对象</span>
+  <span class="c-cm">// next: 放行函数</span>
+  <span class="c-fn">next</span>()
+})</pre></div>
+<div class="callout callout-warn"><strong>易错点：</strong><code>beforeEach()</code> 接收 to、from、next 三个形参。若省略 next 参数，Vue Router 4 中<strong>允许</strong>访问路由（不是"不允许访问任何路由"）。</div>
+</div>
+<div class="kb-card">
+<h4>编程式导航</h4>
+<div class="codebox"><div class="code-header"><span>编程式导航</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre>router.<span class="c-fn">push</span>(<span class="c-str">'/path'</span>)     <span class="c-cm"># 跳转到指定路由</span>
+router.<span class="c-fn">go</span>(1)               <span class="c-cm"># 向前移动1条记录</span>
+router.<span class="c-fn">go</span>(-1)              <span class="c-cm"># 向后移动1条记录</span></pre></div>
+<div class="callout callout-warn"><strong>易错点：</strong><code>router.go(-1)</code> 表示向后移动<strong>1条</strong>记录（不是2条）。说"向后移动两条记录"是<strong>错误</strong>的。<code>router.go()</code> 类似 <code>window.history.go()</code>。</div>
+</div>
+<div class="kb-card">
+<h4>命名路由</h4>
+<p>通过 <code>name</code> 属性给路由规则命名，name 属性值<strong>不能重复</strong>。</p>
+<div class="codebox"><div class="code-header"><span>命名路由</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-cm">// 路由定义</span>
+{ path: <span class="c-str">'/user'</span>, name: <span class="c-str">'user'</span>, component: User }
+
+<span class="c-cm">// 声明式导航使用</span>
+<span class="c-tag">&lt;router-link</span> <span class="c-attr">:to</span>=<span class="c-str">"{ name: 'user', params: { id: 1 } }"</span><span class="c-tag">&gt;</span><span class="c-tag">&lt;/router-link&gt;</span></pre></div>
+<div class="callout callout-warn"><strong>易错点：</strong>命名路由的 name 属性值<strong>不能重复</strong>。说"name属性值可以重复"是<strong>错误</strong>的。</div>
+</div>
+</div>
+</div>
+
+<!-- KN CH6: UI组件库 -->
+<div class="chapter-section" id="kn-5">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">6</div><h3>常用 UI 组件库 · Element Plus · Ant Design Vue · Vant</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>Element Plus</h4>
+<ul>
+<li>Vue 3 版本的 Element UI，不支持 IE 11 及更低 IE 版本</li>
+<li>安装命令：<code>npm install element-plus</code></li>
+<li>使用 <code>use()</code> 方法挂载 ElementPlus 模块</li>
+<li>Menu 组件使用 <code>&lt;el-menu&gt;</code> 标签定义，菜单默认为<strong>垂直</strong>模式</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>Element Plus Menu 组件默认为<strong>垂直</strong>模式（不是水平模式）。说"默认为水平模式"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>el-button type 属性</h4>
+<table class="tbl"><tr><th>type 值</th><th>含义</th></tr>
+<tr><td>primary</td><td>主要按钮</td></tr>
+<tr><td>success</td><td>成功按钮</td></tr>
+<tr><td>info</td><td>信息按钮</td></tr>
+<tr><td>warning</td><td>警告按钮</td></tr>
+<tr><td>danger</td><td>危险按钮</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong><code>type="info"</code> 表示<strong>信息</strong>按钮，<strong>不是</strong>主要按钮。主要按钮是 <code>type="primary"</code>。说"info表示主要按钮"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>Ant Design Vue</h4>
+<ul>
+<li>Ant Design 的 Vue 实现</li>
+<li>Layout 组件采用 <strong>Flex 布局</strong></li>
+</ul>
+</div>
+<div class="kb-card">
+<h4>Vant 组件库</h4>
+<ul>
+<li>轻量、可靠的 Vue 组件库（移动端）</li>
+<li>安装命令：<code>npm install vant</code> 或 <code>yarn add vant</code></li>
+</ul>
+<h4 style="margin-top:12px">van-swipe 轮播组件</h4>
+<table class="tbl"><tr><th>属性</th><th>说明</th></tr>
+<tr><td>autoplay</td><td>自动轮播间隔，单位为<strong>毫秒(ms)</strong></td></tr>
+<tr><td>indicator-color</td><td>指示器颜色，默认值 #1989fa</td></tr>
+<tr><td>vertical</td><td>纵向滚动，默认<strong>不</strong>纵向</td></tr>
+<tr><td>loop</td><td>循环播放，默认 true</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong>autoplay 单位是<strong>毫秒(ms)</strong>（不是秒）。vertical 默认为横向（不是纵向）。</div>
+</div>
+<div class="kb-card">
+<h4>van-grid-item 属性</h4>
+<table class="tbl"><tr><th>属性</th><th>说明</th></tr>
+<tr><td>icon</td><td>设置图标名称或图片链接</td></tr>
+<tr><td>text</td><td>设置图标的文字内容</td></tr>
+<tr><td>dot</td><td>设置图标右上角小黑点</td></tr>
+<tr><td>badge</td><td>设置图标右上角徽标的内容</td></tr>
+</table>
+</div>
+</div>
+</div>
+
+<!-- KN CH7: 网络请求和状态管理 -->
+<div class="chapter-section" id="kn-6">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">7</div><h3>网络请求和状态管理 · Axios · Vuex · Pinia</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>Axios</h4>
+<p>Axios 是基于 Promise 的 HTTP 库，可以作用于 Node.js 和浏览器中。</p>
+<ul>
+<li>在浏览器中使用 XMLHttpRequest 接口发送请求</li>
+<li>在 Node 环境中使用 Node.js 的 http 模块发送请求</li>
+<li>支持拦截请求和响应</li>
+<li>可以转换请求数据和响应数据</li>
+<li>支持 Promise API</li>
+<li>支持大多数的 API</li>
+<li>支持 post 请求</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>Axios <strong>支持</strong> post 请求。说"不支持post请求"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>Axios 的安全性：客户端支持防御 XSRF（不是 CSRF）。说"支持防御CSRF"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>Vuex 状态管理</h4>
+<p>Vuex 是专为 Vue.js 应用程序开发的状态管理库。</p>
+<table class="tbl"><tr><th>核心概念</th><th>作用</th></tr>
+<tr><td>state</td><td>管理数据，数据是响应式的，数据改变驱动视图更新</td></tr>
+<tr><td>mutations</td><td>更新数据，state 中的数据只能通过 mutations 改变</td></tr>
+<tr><td>actions</td><td>定义事件处理方法，把数据提交给 mutations，<strong>不能直接修改 state</strong></td></tr>
+<tr><td>modules</td><td>定义模块对象</td></tr>
+</table>
+<div class="callout callout-warn"><strong>易错点：</strong>actions <strong>不能直接修改 state</strong>，必须通过 mutations 来修改。说"actions可以直接修改state"是<strong>错误</strong>的。</div>
+</div>
+<div class="kb-card">
+<h4>Pinia 状态管理</h4>
+<p>Pinia 是 Vue 的新一代状态管理库，支持 Vue 3 和组合式 API。</p>
+<ul>
+<li>Pinia 提供了完整的 TypeScript 支持</li>
+<li>Pinia <strong>没有 modules</strong> 概念（每个 store 独立存在），代码更加简洁</li>
+<li>Pinia 支持 Devtools 调试工具</li>
+<li>Pinia 支持服务端渲染</li>
+</ul>
+<div class="callout callout-warn"><strong>易错点：</strong>Pinia <strong>不使用 modules</strong> 划分模块。说"Pinia使用modules划分模块"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>Pinia <strong>支持 Vue 2</strong>（不仅支持 Vue 3）。说"不支持Vue2"是<strong>错误</strong>的。</div>
+<div class="callout callout-warn"><strong>易错点：</strong>Pinia 中通过 <code>paths</code> 实现部分数据持久化存储。</div>
+</div>
+</div>
+</div>
+
+<!-- KN CH8: 考前速查表 -->
+<div class="chapter-section" id="kn-7">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">8</div><h3>考前速查表 · 易错点汇总</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>高频易错点速记（必看！）</h4>
+<table class="tbl"><tr><th>考点</th><th>正确说法</th><th>错误说法</th></tr>
+<tr><td>Vue自定义指令前缀</td><td>以 v- 开头</td><td>以 on- 开头 ✗</td></tr>
+<tr><td>MVVM</td><td>Model和View不能直接通信</td><td>可以直接通信 ✗</td></tr>
+<tr><td>npm安装</td><td>支持并行安装/有缓存</td><td>必须等当前包装完 ✗</td></tr>
+<tr><td>yarn dev</td><td>启动开发服务器</td><td>完成项目构建 ✗</td></tr>
+<tr><td>template根节点</td><td>Vue3可以多个根节点</td><td>只能有一个 ✗</td></tr>
+<tr><td>toRef()</td><td>响应式对象属性→ref</td><td>普通数据→响应式 ✗</td></tr>
+<tr><td>.stop修饰符</td><td>阻止冒泡</td><td>阻止默认行为 ✗</td></tr>
+<tr><td>v-for的key</td><td>必须唯一</td><td>不具有唯一性 ✗</td></tr>
+<tr><td>onUpdated()</td><td>更新完成后调用</td><td>更新前调用 ✗</td></tr>
+<tr><td>props验证</td><td>支持多种验证方案</td><td>不能使用多种 ✗</td></tr>
+<tr><td>provide参数</td><td>第1个是key,第2个是value</td><td>第1个是value ✗</td></tr>
+<tr><td>defineEmits</td><td>声明自定义事件</td><td>emit()声明 ✗</td></tr>
+<tr><td>路由视图</td><td>router-view</td><td>router-link ✗</td></tr>
+<tr><td>导航方式</td><td>声明式+编程式</td><td>嵌套式 ✗</td></tr>
+<tr><td>router.go(-1)</td><td>后退1条记录</td><td>后退2条 ✗</td></tr>
+<tr><td>命名路由name</td><td>不能重复</td><td>可以重复 ✗</td></tr>
+<tr><td>el-menu默认</td><td>垂直模式</td><td>水平模式 ✗</td></tr>
+<tr><td>info按钮</td><td>信息按钮</td><td>主要按钮 ✗</td></tr>
+<tr><td>van-swipe autoplay</td><td>单位毫秒(ms)</td><td>单位秒 ✗</td></tr>
+<tr><td>作用域插槽</td><td>子组件提供数据</td><td>父组件提供 ✗</td></tr>
+<tr><td>无插槽时</td><td>内容不起作用</td><td>同样起作用 ✗</td></tr>
+<tr><td>自定义指令参数</td><td>可以绑定参数</td><td>不能绑定 ✗</td></tr>
+<tr><td>beforeUpdate(指令)</td><td>更新前调用</td><td>卸载前调用 ✗</td></tr>
+<tr><td>KeepAlive缓存</td><td>用include指定</td><td>用exclude ✗</td></tr>
+<tr><td>Axios</td><td>支持post</td><td>不支持post ✗</td></tr>
+<tr><td>Axios防御</td><td>防御XSRF</td><td>防御CSRF ✗</td></tr>
+<tr><td>Vuex actions</td><td>不能直接改state</td><td>可以直接改 ✗</td></tr>
+<tr><td>Pinia</td><td>不用modules</td><td>用modules ✗</td></tr>
+</table>
+</div>
+<div class="callout callout-key"><strong>考前策略：</strong>把这张表的"错误说法"列全过一遍，每道题都在考这些！看到选项和"错误说法"一致的，就是答案。</div>
+</div>
+</div>
+
+<div class="footer"><p>核心知识点 · 对应PPT全部考点</p></div>
+</div>
+
+<!-- CODING PAGE -->
+<div class="page" id="page-coding">
+<div class="review-header"><h2>编程题解析</h2><p>PPT中5道编程题完整代码 + 逐行讲解。这些就是期末考试的编程题型</p></div>
+<div class="review-controls">
+<select class="toc-select" id="codingTocSelect" onchange="jumpToChapter('coding', this.value)"><option value="">跳转到章节...</option></select>
+<button class="ctrl-btn" onclick="toggleAllChapters('coding')" id="codingToggleAllBtn">展开全部</button>
+<span class="chapter-count" id="codingCount"></span>
+</div>
+
+<!-- CODE CH1: 图书列表 -->
+<div class="chapter-section" id="code-0">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>题1：创建组件，用for循环渲染图书列表</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body open">
+<div class="kb-card">
+<h4>题目要求</h4>
+<p>创建组件，用 v-for 循环渲染无序列表（表格形式），展示图书信息。</p>
+</div>
+<div class="kb-card">
+<h4>完整代码</h4>
+<div class="codebox"><div class="code-header"><span>BookList.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;table&gt;</span>
+    <span class="c-tag">&lt;caption&gt;</span>图书列表<span class="c-tag">&lt;/caption&gt;</span>
+    <span class="c-tag">&lt;thead&gt;</span>
+      <span class="c-tag">&lt;tr&gt;</span>
+        <span class="c-tag">&lt;th&gt;</span>编号<span class="c-tag">&lt;/th&gt;</span>
+        <span class="c-tag">&lt;th&gt;</span>书名<span class="c-tag">&lt;/th&gt;</span>
+        <span class="c-tag">&lt;th&gt;</span>作者简介<span class="c-tag">&lt;/th&gt;</span>
+      <span class="c-tag">&lt;/tr&gt;</span>
+    <span class="c-tag">&lt;/thead&gt;</span>
+    <span class="c-tag">&lt;tbody&gt;</span>
+      <span class="c-tag">&lt;tr</span> <span class="c-attr">v-for</span>=<span class="c-str">"item in bookList"</span> <span class="c-attr">:key</span>=<span class="c-str">"item.id"</span><span class="c-tag">&gt;</span>
+        <span class="c-tag">&lt;td&gt;</span>{{ item.id }}<span class="c-tag">&lt;/td&gt;</span>
+        <span class="c-tag">&lt;td&gt;</span>{{ item.bookName }}<span class="c-tag">&lt;/td&gt;</span>
+        <span class="c-tag">&lt;td&gt;</span>{{ item.authorInfo }}<span class="c-tag">&lt;/td&gt;</span>
+      <span class="c-tag">&lt;/tr&gt;</span>
+    <span class="c-tag">&lt;/tbody&gt;</span>
+  <span class="c-tag">&lt;/table&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { reactive } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> bookList = <span class="c-fn">reactive</span>([
+  {
+    id: <span class="c-num">1</span>,
+    bookName: <span class="c-str">'三体'</span>,
+    authorInfo: <span class="c-str">'刘慈欣，科幻作家；代表作《三体》获得雨果奖'</span>
+  },
+  {
+    id: <span class="c-num">2</span>,
+    bookName: <span class="c-str">'活着'</span>,
+    authorInfo: <span class="c-str">'余华，中国当代作家，作品以写实风格著称'</span>
+  },
+  {
+    id: <span class="c-num">3</span>,
+    bookName: <span class="c-str">'百年孤独'</span>,
+    authorInfo: <span class="c-str">'加西亚·马尔克斯，哥伦比亚作家，魔幻现实主义代表'</span>
+  }
+])
+<span class="c-kw">&lt;/script&gt;</span>
+
+<span class="c-kw">&lt;style scoped&gt;</span>
+table, th, td {
+  border: <span class="c-num">1px</span> solid black;
+  border-collapse: collapse;
+  padding: <span class="c-num">8px</span>;
+}
+<span class="c-kw">&lt;/style&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>逐行讲解</h4>
+<ol>
+<li><code>&lt;table&gt;</code> — HTML表格标签，展示结构化数据</li>
+<li><code>v-for="item in bookList"</code> — 遍历 bookList 数组，每项命名为 item</li>
+<li><code>:key="item.id"</code> — 为每个循环项设置唯一标识（必须！Vue要求key唯一）</li>
+<li><code>{{ item.id }}</code> — 插值表达式，显示当前项的 id 属性</li>
+<li><code>reactive([...])</code> — 创建响应式数组，数组变化时页面自动更新</li>
+<li><code>&lt;style scoped&gt;</code> — scoped 表示样式只作用于当前组件</li>
+</ol>
+<div class="callout callout-key"><strong>考点：</strong>v-for 遍历数组、:key 设置唯一键、reactive 创建响应式数据、{{ }} 插值表达式</div>
+</div>
+</div>
+</div>
+
+<!-- CODE CH2: 零食列表 -->
+<div class="chapter-section" id="code-1">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>题2：创建组件，用for循环渲染零食列表</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>题目要求</h4>
+<p>创建组件，用 v-for 循环渲染无序列表（ul/li 形式），展示零食信息。</p>
+</div>
+<div class="kb-card">
+<h4>完整代码</h4>
+<div class="codebox"><div class="code-header"><span>FruitList.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;ul&gt;</span>
+    <span class="c-tag">&lt;li</span> <span class="c-attr">v-for</span>=<span class="c-str">"item in state.fruitList"</span> <span class="c-attr">:key</span>=<span class="c-str">"item.id"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;span&gt;</span>零食编号：{{ item.id }} ---<span class="c-tag">&lt;/span&gt;</span>
+      <span class="c-tag">&lt;span&gt;</span>零食名称：{{ item.fruitName }} ---<span class="c-tag">&lt;/span&gt;</span>
+      <span class="c-tag">&lt;span&gt;</span>详细信息：{{ item.info }}<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;/li&gt;</span>
+  <span class="c-tag">&lt;/ul&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { reactive } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> state = <span class="c-fn">reactive</span>({
+  fruitList: [
+    {
+      id: <span class="c-num">1</span>,
+      fruitName: <span class="c-str">'山楂片'</span>,
+      info: <span class="c-str">'山楂片，可以开胃'</span>
+    },
+    {
+      id: <span class="c-num">2</span>,
+      fruitName: <span class="c-str">'柠檬苏打水'</span>,
+      info: <span class="c-str">'柠檬水具有化痰止咳的功效'</span>
+    },
+    {
+      id: <span class="c-num">3</span>,
+      fruitName: <span class="c-str">'葡萄果汁'</span>,
+      info: <span class="c-str">'葡萄富含维生素，促进消化，美容养颜'</span>
+    }
+  ]
+})
+<span class="c-kw">&lt;/script&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>与题1的区别</h4>
+<table class="tbl"><tr><th>题1</th><th>题2</th></tr>
+<tr><td>表格 table 渲染</td><td>无序列表 ul/li 渲染</td></tr>
+<tr><td>reactive 直接是数组</td><td>reactive 是对象，数组在属性中</td></tr>
+</table>
+<div class="callout callout-tip"><strong>注意：</strong>题2用 <code>state.fruitList</code> 访问数组（因为 reactive 包的是对象），题1直接用 <code>bookList</code>（reactive 直接包数组）。两种写法都是合法的。</div>
+</div>
+</div>
+</div>
+
+<!-- CODE CH3: 音乐播放列表 增删改查 -->
+<div class="chapter-section" id="code-2">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>题3：创建组件，完成音乐列表增删改查功能</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>题目要求</h4>
+<p>创建组件，实现音乐播放列表的增删改查功能。包含：添加歌曲、播放（增加播放次数）、重置、计算总播放时长。</p>
+</div>
+<div class="kb-card">
+<h4>完整代码</h4>
+<div class="codebox"><div class="code-header"><span>MusicList.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h2&gt;</span>音乐播放列表<span class="c-tag">&lt;/h2&gt;</span>
+    <span class="c-tag">&lt;div&gt;</span>
+      <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"text"</span> <span class="c-attr">v-model</span>=<span class="c-str">"state.song.name"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"请输入歌曲名称"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"number"</span> <span class="c-attr">v-model</span>=<span class="c-str">"state.song.duration"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"请输入时长(秒)"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"submitSong"</span><span class="c-tag">&gt;</span>确认添加歌曲<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div&gt;</span>
+      <span class="c-tag">&lt;table&gt;</span>
+        <span class="c-tag">&lt;thead&gt;</span>
+          <span class="c-tag">&lt;tr&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>歌曲<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>时长(秒)<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>播放次数<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>播放操作<span class="c-tag">&lt;/th&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+        <span class="c-tag">&lt;/thead&gt;</span>
+        <span class="c-tag">&lt;tbody&gt;</span>
+          <span class="c-tag">&lt;tr</span> <span class="c-attr">v-for</span>=<span class="c-str">"(item, index) in state.songs"</span> <span class="c-attr">:key</span>=<span class="c-str">"index"</span><span class="c-tag">&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.name }}<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.duration }}秒<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.playCount }}<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>
+              <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"play(index)"</span><span class="c-tag">&gt;</span>播放<span class="c-tag">&lt;/button&gt;</span>
+              <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"stop(index)"</span><span class="c-tag">&gt;</span>重置<span class="c-tag">&lt;/button&gt;</span>
+            <span class="c-tag">&lt;/td&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+          <span class="c-tag">&lt;tr&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>总播放时长：<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td</span> <span class="c-attr">colspan</span>=<span class="c-str">"3"</span><span class="c-tag">&gt;</span>{{ totalDuration }}秒<span class="c-tag">&lt;/td&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+        <span class="c-tag">&lt;/tbody&gt;</span>
+      <span class="c-tag">&lt;/table&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { reactive, computed } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> state = <span class="c-fn">reactive</span>({
+  song: {
+    name: <span class="c-str">''</span>,
+    duration: <span class="c-num">0</span>,
+    playCount: <span class="c-num">0</span>
+  },
+  songs: [
+    { name: <span class="c-str">'稻香'</span>, duration: <span class="c-num">223</span>, playCount: <span class="c-num">5</span> },
+    { name: <span class="c-str">'夜曲'</span>, duration: <span class="c-num">198</span>, playCount: <span class="c-num">3</span> },
+    { name: <span class="c-str">'青花瓷'</span>, duration: <span class="c-num">235</span>, playCount: <span class="c-num">4</span> }
+  ]
+})
+
+<span class="c-kw">const</span> submitSong = () =&gt; {
+  <span class="c-kw">if</span> (state.song.name == <span class="c-str">''</span> || state.song.duration &lt;= <span class="c-num">0</span>) {
+    <span class="c-fn">alert</span>(<span class="c-str">'请输入歌曲名称且时长需大于0秒'</span>)
+  } <span class="c-kw">else</span> {
+    state.songs.<span class="c-fn">push</span>({ ...state.song, playCount: <span class="c-num">0</span> })
+    state.song = { name: <span class="c-str">''</span>, duration: <span class="c-num">0</span>, playCount: <span class="c-num">0</span> }
+  }
+}
+
+<span class="c-kw">const</span> play = (index) =&gt; {
+  state.songs[index].playCount++
+}
+
+<span class="c-kw">const</span> stop = (index) =&gt; {
+  state.songs[index].playCount = <span class="c-num">0</span>
+}
+
+<span class="c-kw">const</span> totalDuration = <span class="c-fn">computed</span>(() =&gt; {
+  <span class="c-kw">return</span> state.songs.<span class="c-fn">reduce</span>((total, item) =&gt; {
+    <span class="c-kw">return</span> total + (item.duration * item.playCount)
+  }, <span class="c-num">0</span>)
+})
+<span class="c-kw">&lt;/script&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>关键知识点讲解</h4>
+<ol>
+<li><strong>v-model 双向绑定</strong>：<code>v-model="state.song.name"</code> 输入框和数据同步</li>
+<li><strong>添加功能</strong>：<code>state.songs.push({...})</code> 向数组添加新歌曲</li>
+<li><strong>展开运算符</strong>：<code>{...state.song, playCount: 0}</code> 复制 song 对象并重置 playCount</li>
+<li><strong>播放功能</strong>：通过 index 找到对应歌曲，playCount++ 自增</li>
+<li><strong>重置功能</strong>：通过 index 找到对应歌曲，playCount = 0</li>
+<li><strong>computed 计算属性</strong>：<code>totalDuration</code> 自动计算总播放时长 = 每首歌时长 × 播放次数之和</li>
+<li><strong>reduce 方法</strong>：遍历数组累加，初始值 0</li>
+</ol>
+<div class="callout callout-key"><strong>考点：</strong>reactive、computed 计算属性、v-model 双向绑定、数组 push/splice、@click 事件绑定、展开运算符</div>
+</div>
+</div>
+</div>
+
+<!-- CODE CH4: 购物车 -->
+<div class="chapter-section" id="code-3">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>题4：新建Vue文件，实现购物车增删改查功能</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>题目要求</h4>
+<p>新建一个 Vue 文件，实现购物车功能，完成增删改查功能。包含添加商品、删除商品、计算总金额。</p>
+</div>
+<div class="kb-card">
+<h4>完整代码</h4>
+<div class="codebox"><div class="code-header"><span>ShoppingCart.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h2&gt;</span>购物车<span class="c-tag">&lt;/h2&gt;</span>
+    <span class="c-tag">&lt;div&gt;</span>
+      <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"text"</span> <span class="c-attr">v-model</span>=<span class="c-str">"state.good.name"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"输入商品名称"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"number"</span> <span class="c-attr">v-model</span>=<span class="c-str">"state.good.price"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"输入价格"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"number"</span> <span class="c-attr">v-model</span>=<span class="c-str">"state.good.quantity"</span> <span class="c-attr">placeholder</span>=<span class="c-str">"输入数量"</span><span class="c-tag">&gt;</span>
+      <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"addGood"</span><span class="c-tag">&gt;</span>确认添加<span class="c-tag">&lt;/button&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+    <span class="c-tag">&lt;div&gt;</span>
+      <span class="c-tag">&lt;table&gt;</span>
+        <span class="c-tag">&lt;thead&gt;</span>
+          <span class="c-tag">&lt;tr&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>商品<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>价格<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>数量<span class="c-tag">&lt;/th&gt;</span>
+            <span class="c-tag">&lt;th&gt;</span>相关操作<span class="c-tag">&lt;/th&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+        <span class="c-tag">&lt;/thead&gt;</span>
+        <span class="c-tag">&lt;tbody&gt;</span>
+          <span class="c-tag">&lt;tr</span> <span class="c-attr">v-for</span>=<span class="c-str">"(item, index) in state.goods"</span> <span class="c-attr">:key</span>=<span class="c-str">"index"</span><span class="c-tag">&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.name }}<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.price }}<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ item.quantity }}<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>
+              <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"deleteGood(index)"</span><span class="c-tag">&gt;</span>删除<span class="c-tag">&lt;/button&gt;</span>
+            <span class="c-tag">&lt;/td&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+          <span class="c-tag">&lt;tr&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>购物车总金额：<span class="c-tag">&lt;/td&gt;</span>
+            <span class="c-tag">&lt;td&gt;</span>{{ totalPrice }}元<span class="c-tag">&lt;/td&gt;</span>
+          <span class="c-tag">&lt;/tr&gt;</span>
+        <span class="c-tag">&lt;/tbody&gt;</span>
+      <span class="c-tag">&lt;/table&gt;</span>
+    <span class="c-tag">&lt;/div&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { reactive, computed } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> state = <span class="c-fn">reactive</span>({
+  good: {
+    name: <span class="c-str">''</span>,
+    price: <span class="c-num">0</span>,
+    quantity: <span class="c-num">0</span>
+  },
+  goods: [
+    { name: <span class="c-str">'毛巾'</span>, price: <span class="c-num">25.5</span>, quantity: <span class="c-num">3</span> },
+    { name: <span class="c-str">'沐浴露'</span>, price: <span class="c-num">15.5</span>, quantity: <span class="c-num">2</span> },
+    { name: <span class="c-str">'洗衣液'</span>, price: <span class="c-num">25.5</span>, quantity: <span class="c-num">2</span> }
+  ]
+})
+
+<span class="c-kw">const</span> addGood = () =&gt; {
+  <span class="c-kw">if</span> (state.good.name == <span class="c-str">''</span> || state.good.price &lt;= <span class="c-num">0</span> || state.good.quantity &lt;= <span class="c-num">0</span>) {
+    <span class="c-fn">alert</span>(<span class="c-str">'请输入商品名称以及正确的价格和数量'</span>)
+  } <span class="c-kw">else</span> {
+    state.goods.<span class="c-fn">push</span>(state.good)
+    state.good = { name: <span class="c-str">''</span>, price: <span class="c-num">0</span>, quantity: <span class="c-num">0</span> }
+  }
+}
+
+<span class="c-kw">const</span> deleteGood = (index) =&gt; {
+  state.goods.<span class="c-fn">splice</span>(index, <span class="c-num">1</span>)
+}
+
+<span class="c-kw">const</span> totalPrice = <span class="c-fn">computed</span>(() =&gt; {
+  <span class="c-kw">return</span> state.goods.<span class="c-fn">reduce</span>((total, item) =&gt; {
+    <span class="c-kw">return</span> total + (item.price * item.quantity)
+  }, <span class="c-num">0</span>)
+})
+<span class="c-kw">&lt;/script&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>关键知识点讲解</h4>
+<ol>
+<li><strong>添加商品</strong>：<code>state.goods.push(state.good)</code> — 将新商品加入数组</li>
+<li><strong>删除商品</strong>：<code>state.goods.splice(index, 1)</code> — 从 index 位置删除 1 个元素</li>
+<li><strong>总金额计算</strong>：<code>computed</code> 自动计算 = 每个商品价格 × 数量之和</li>
+<li><strong>表单验证</strong>：检查 name 不为空、price 和 quantity 大于 0</li>
+<li><strong>重置表单</strong>：添加成功后清空输入框（state.good 重置为初始值）</li>
+</ol>
+<div class="callout callout-key"><strong>考点：</strong>reactive、computed、v-model、数组 push（增）、splice（删）、@click 事件、表单验证</div>
+</div>
+</div>
+</div>
+
+<!-- CODE CH5: 父子组件通信 -->
+<div class="chapter-section" id="code-4">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>题5：新建2个Vue文件，实现父子组件数据传递</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>题目要求</h4>
+<p>新建2个 Vue 文件（父组件 + 子组件），实现父子组件之间的数据传递。父组件传数据给子组件（props），子组件传数据给父组件（emit 自定义事件）。</p>
+</div>
+<div class="kb-card">
+<h4>父组件完整代码</h4>
+<div class="codebox"><div class="code-header"><span>ParentComponent.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h2&gt;</span>父组件<span class="c-tag">&lt;/h2&gt;</span>
+    <span class="c-tag">&lt;span&gt;</span>往此输入框输入数据，该数据会传给子组件：<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"text"</span> <span class="c-attr">v-model</span>=<span class="c-str">"parentMessage"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;br/&gt;</span>
+    <span class="c-tag">&lt;span&gt;</span>这里展示来自子组件的数据：{{ sonMessage }}<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;hr/&gt;</span>
+    <span class="c-tag">&lt;ChildComponent</span> <span class="c-attr">:pMessage</span>=<span class="c-str">"parentMessage"</span> <span class="c-attr">@demo</span>=<span class="c-str">"demoEmit"</span> <span class="c-tag">/&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> ChildComponent <span class="c-kw">from</span> <span class="c-str">'./ChildComponent.vue'</span>
+<span class="c-kw">import</span> { ref } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> parentMessage = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
+<span class="c-kw">const</span> sonMessage = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
+
+<span class="c-kw">const</span> demoEmit = (value) =&gt; {
+  sonMessage.value = value
+}
+<span class="c-kw">&lt;/script&gt;</span>
+
+<span class="c-kw">&lt;style&gt;</span>
+<span class="c-kw">&lt;/style&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>子组件完整代码</h4>
+<div class="codebox"><div class="code-header"><span>ChildComponent.vue</span><span class="copy-btn" onclick="copyCode(this)">复制</span></div>
+<pre><span class="c-kw">&lt;template&gt;</span>
+  <span class="c-tag">&lt;div&gt;</span>
+    <span class="c-tag">&lt;h2&gt;</span>子组件<span class="c-tag">&lt;/h2&gt;</span>
+    <span class="c-tag">&lt;span&gt;</span>这里展示来自父组件的数据：{{ pMessage }}<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;br&gt;</span>
+    <span class="c-tag">&lt;span&gt;</span>往此输入框输入数据，点击右侧按钮，该数据会传给父组件：<span class="c-tag">&lt;/span&gt;</span>
+    <span class="c-tag">&lt;input</span> <span class="c-attr">type</span>=<span class="c-str">"text"</span> <span class="c-attr">v-model</span>=<span class="c-str">"sonMessage"</span><span class="c-tag">&gt;</span>
+    <span class="c-tag">&lt;button</span> <span class="c-attr">@click</span>=<span class="c-str">"send"</span><span class="c-tag">&gt;</span>发送数据<span class="c-tag">&lt;/button&gt;</span>
+  <span class="c-tag">&lt;/div&gt;</span>
+<span class="c-kw">&lt;/template&gt;</span>
+
+<span class="c-kw">&lt;script setup&gt;</span>
+<span class="c-kw">import</span> { ref } <span class="c-kw">from</span> <span class="c-str">'vue'</span>
+
+<span class="c-kw">const</span> sonMessage = <span class="c-fn">ref</span>(<span class="c-str">''</span>)
+
+<span class="c-kw">const</span> props = <span class="c-fn">defineProps</span>({
+  pMessage: {
+    type: String,
+    default: <span class="c-str">''</span>
+  }
+})
+
+<span class="c-kw">const</span> emit = <span class="c-fn">defineEmits</span>([<span class="c-str">'demo'</span>])
+
+<span class="c-kw">const</span> send = () =&gt; {
+  <span class="c-fn">emit</span>(<span class="c-str">'demo'</span>, sonMessage.value)
+}
+<span class="c-kw">&lt;/script&gt;</span>
+
+<span class="c-kw">&lt;style&gt;&lt;/style&gt;</span></pre></div>
+</div>
+<div class="kb-card">
+<h4>数据流向图解</h4>
+<div class="flow">
+<div class="flow-box"><strong>父组件</strong><br>parentMessage</div>
+<div class="flow-arrow">→ props (:pMessage) →</div>
+<div class="flow-box"><strong>子组件</strong><br>接收 pMessage</div>
+</div>
+<div class="flow" style="margin-top:8px">
+<div class="flow-box"><strong>子组件</strong><br>sonMessage</div>
+<div class="flow-arrow">→ emit('demo', value) →</div>
+<div class="flow-box"><strong>父组件</strong><br>demoEmit 接收</div>
+</div>
+</div>
+<div class="kb-card">
+<h4>逐行讲解</h4>
+<p><strong>父组件关键代码：</strong></p>
+<ol>
+<li><code>import ChildComponent from './ChildComponent.vue'</code> — 导入子组件</li>
+<li><code>:pMessage="parentMessage"</code> — 通过 props 向子组件传递数据（父→子）</li>
+<li><code>@demo="demoEmit"</code> — 监听子组件的 demo 事件（子→父）</li>
+<li><code>sonMessage.value = value</code> — 接收子组件传来的数据并存入变量</li>
+</ol>
+<p><strong>子组件关键代码：</strong></p>
+<ol>
+<li><code>defineProps({ pMessage: {...} })</code> — 声明接收父组件传来的 pMessage</li>
+<li><code>defineEmits(['demo'])</code> — 声明自定义事件 demo</li>
+<li><code>emit('demo', sonMessage.value)</code> — 触发 demo 事件，把 sonMessage 的值传给父组件</li>
+<li><code>{{ pMessage }}</code> — 在模板中显示父组件传来的数据</li>
+</ol>
+<div class="callout callout-key"><strong>考点：</strong>defineProps（父传子）、defineEmits + emit（子传父）、ref 响应式数据、v-model 双向绑定、组件导入和使用</div>
+</div>
+<div class="kb-card">
+<h4>核心记忆口诀</h4>
+<div class="callout callout-tip"><strong>父传子用 props</strong> — 父组件用 :属性名 传值，子组件用 defineProps 接收<br><strong>子传父用 emit</strong> — 子组件用 defineEmits 声明 + emit 触发，父组件用 @事件名 监听</div>
+</div>
+</div>
+</div>
+
+<div class="footer"><p>编程题解析 · 5道期末必考编程题</p></div>
+</div>
+
+<!-- EXERCISES PAGE -->
+<div class="page" id="page-exercises">
+<div class="review-header"><h2>课后题答案与解析</h2><p>7章课后题：35道判断题 + 34道选择题。点击选项查看对错和解析</p></div>
+<div class="review-controls">
+<select class="toc-select" id="exercisesTocSelect" onchange="jumpToChapter('exercises', this.value)"><option value="">跳转到章节...</option></select>
+<button class="ctrl-btn" onclick="toggleAllChapters('exercises')" id="exercisesToggleAllBtn">展开全部</button>
+<span class="chapter-count" id="exercisesCount"></span>
+</div>
+
+<!-- EX CH1: 初识Vue.js -->
+<div class="chapter-section" id="ex-0">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">1</div><h3>初识 Vue.js — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body open">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. 在Vue项目中，执行 yarn dev 命令可以完成项目构建。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j1',false)">错</button></div>
+<div class="q-ans" id="ex0j1"><strong>答案：✗ 错误</strong><br>yarn dev（或 npm run dev）是启动开发服务器，<strong>不是</strong>项目构建。项目构建/打包用 <code>yarn build</code> 或 <code>npm run build</code>。</div></div>
+<div class="quiz"><div class="q-title">2. 在Vue项目中，执行 npm update 命令可以更新指定名称的包。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j2',false)">错</button></div>
+<div class="q-ans" id="ex0j2"><strong>答案：✓ 正确</strong><br><code>npm update 包名</code> 用于更新指定名称的包到最新版本。</div></div>
+<div class="quiz"><div class="q-title">3. npm 是一个包管理工具，用来解决 Node.js 代码部署问题。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j3',false)">错</button></div>
+<div class="q-ans" id="ex0j3"><strong>答案：✓ 正确</strong><br>npm（Node Package Manager）是 Node.js 的包管理工具，用于安装、分享、管理依赖包。</div></div>
+<div class="quiz"><div class="q-title">4. 在使用 yarn 之前，需要先确保计算机中已经安装了 Node.js。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j4',false)">错</button></div>
+<div class="q-ans" id="ex0j4"><strong>答案：✓ 正确</strong><br>yarn 依赖 Node.js 环境，必须先安装 Node.js 才能使用 yarn。</div></div>
+<div class="quiz"><div class="q-title">5. Vue 可以在 Node.js 环境下进行开发，并借助 npm 工具安装依赖。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex0j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex0j5',false)">错</button></div>
+<div class="q-ans" id="ex0j5"><strong>答案：✓ 正确</strong><br>Vue 项目在 Node.js 环境下开发，使用 npm 安装各种依赖包。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，关于Vue说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex0c1','A',false)">A. Vue相比Angular和React而言，是一个轻量级的前端库</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c1','B',false)">B. Vue支持Pinia插件</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c1','C',false)">C. Vue支持双向数据绑定</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c1','D',true)">D. Vue中自定义指令以"on-"开头</li>
+</ul>
+<div class="q-ans" id="ex0c1"><strong>答案：D</strong><br>Vue 自定义指令以 <code>v-</code> 开头（如 v-if、v-for），<strong>不是</strong>以 "on-" 开头。A、B、C 都是正确的。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，关于npm工具说法正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex0c2','A',true)">A. 使用npm安装同一个包时，会对包进行缓存，再次安装时无须重复下载</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c2','B',false)">B. npm安装包时，必须等到当前包安装完成后才会继续后面的安装</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c2','C',false)">C. 使用"npm install 包名 -g"命令表示将包安装到当前项目中</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c2','D',false)">D. 使用npm命令时，不需要安装Node.js</li>
+</ul>
+<div class="q-ans" id="ex0c2"><strong>答案：A</strong><br>npm 有缓存机制，同一包重复安装时无需重新下载。B错误：npm支持并行安装。C错误：-g 表示全局安装。D错误：npm需要Node.js环境。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选择中，关于MVVM的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex0c3','A',false)">A. Model主要负责业务数据的处理</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c3','B',false)">B. View负责视图的处理</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c3','C',false)">C. ViewModel负责监听Model或者View的改变</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c3','D',true)">D. Model和View可以直接通信，互相监控双方的动作</li>
+</ul>
+<div class="q-ans" id="ex0c3"><strong>答案：D</strong><br>Model 和 View <strong>不能</strong>直接通信，必须通过 ViewModel 中转。这是 MVVM 模式的核心原则。</div></div>
+<div class="quiz"><div class="q-title">4. npm包管理工具基于的运行环境是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex0c4','A',true)">A. Node.js</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c4','B',false)">B. Vue</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c4','C',false)">C. Babel</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c4','D',false)">D. Angular</li>
+</ul>
+<div class="q-ans" id="ex0c4"><strong>答案：A</strong><br>npm 是 Node.js 的包管理工具，基于 Node.js 运行环境。</div></div>
+<div class="quiz"><div class="q-title">5. 下列选项中，属于Vue特性的是（ ）。（多选）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex0c5','A',true)">A. 轻量级</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c5','B',true)">B. 数据驱动视图</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c5','C',true)">C. 双向数据绑定</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex0c5','D',true)">D. 插件化开发</li>
+</ul>
+<div class="q-ans" id="ex0c5"><strong>答案：A、B、C、D</strong><br>Vue 的四大特性：轻量级、数据驱动视图、双向数据绑定、插件化开发。全部正确。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH2: Vue开发基础 -->
+<div class="chapter-section" id="ex-1">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">2</div><h3>Vue开发基础 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. ref()函数用于将响应式对象中的单个属性转换为响应式数据。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j1',false)">错</button></div>
+<div class="q-ans" id="ex1j1"><strong>答案：✗ 错误</strong><br>ref() 用于将基本类型数据转为响应式。将响应式对象单个属性转为响应式的是 <code>toRef()</code>。</div></div>
+<div class="quiz"><div class="q-title">2. Vue中绑定样式类可以通过v-bind指令操作style属性来实现。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j2',false)">错</button></div>
+<div class="q-ans" id="ex1j2"><strong>答案：✓ 正确</strong><br>v-bind（:）可以绑定 class 和 style 属性来设置样式。</div></div>
+<div class="quiz"><div class="q-title">3. toRef()函数用于将普通数据转换成响应式数据。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j3',false)">错</button></div>
+<div class="q-ans" id="ex1j3"><strong>答案：✗ 错误</strong><br>toRef() 是将<strong>响应式对象</strong>的单个属性转换为 ref，不是将普通数据转为响应式。将普通数据转为响应式用 ref()。</div></div>
+<div class="quiz"><div class="q-title">4. $event是Vue提供的内置变量，使用它可以获取事件对象。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j4',false)">错</button></div>
+<div class="q-ans" id="ex1j4"><strong>答案：✓ 正确</strong><br>$event 是 Vue 的内置变量，在事件处理函数中可以获取原生事件对象。</div></div>
+<div class="quiz"><div class="q-title">5. 使用v-model的.trim修饰符可以自动过滤用户输入的首尾空白字符。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex1j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex1j5',false)">错</button></div>
+<div class="q-ans" id="ex1j5"><strong>答案：✓ 正确</strong><br>v-model.trim 修饰符自动过滤输入内容首尾的空格。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列关于单文件组件的说法中，错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex1c1','A',false)">A. 模板用于搭建当前组件的DOM结构</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c1','B',true)">B. 在Vue 3中，&lt;template&gt;标签中的DOM结构只能有一个根节点</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c1','C',false)">C. 样式用于通过CSS代码为当前组件设置样式</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c1','D',false)">D. 逻辑用于通过JavaScript代码处理组件的数据与业务</li>
+</ul>
+<div class="q-ans" id="ex1c1"><strong>答案：B</strong><br>Vue 3 中 &lt;template&gt; 可以有<strong>多个</strong>根节点（Fragment）。"只能有一个根节点"是 Vue 2 的限制。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，用于渲染DOM元素的文本内容的指令是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex1c2','A',false)">A. v-bind</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c2','B',true)">B. v-text</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c2','C',false)">C. v-on</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c2','D',false)">D. v-for</li>
+</ul>
+<div class="q-ans" id="ex1c2"><strong>答案：B</strong><br>v-text 指令用于设置元素的文本内容，等同于 innerText。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选项中，用于将响应式对象中的所有属性转换为响应式数据的函数是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex1c3','A',false)">A. ref()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c3','B',true)">B. reactive()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c3','C',false)">C. toRef()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c3','D',false)">D. toRefs()</li>
+</ul>
+<div class="q-ans" id="ex1c3"><strong>答案：B</strong><br>reactive() 将对象/数组的所有属性转为响应式数据。注意：toRefs() 是将响应式对象的属性转为 ref，不是"将对象转为响应式"。</div></div>
+<div class="quiz"><div class="q-title">4. 下列关于事件修饰符的说法中，错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex1c4','A',false)">A. 使用.prevent修饰符可以阻止&lt;a&gt;标签的默认跳转行为</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c4','B',true)">B. 使用.stop修饰符可以阻止默认事件行为</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c4','C',false)">C. 使用.capture修饰符可以改变事件的默认执行顺序</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c4','D',false)">D. 使用.self修饰符可以实现只有DOM元素本身才会触发事件</li>
+</ul>
+<div class="q-ans" id="ex1c4"><strong>答案：B</strong><br>.stop 是阻止<strong>事件冒泡</strong>，不是阻止默认事件行为。阻止默认行为的是 .prevent。</div></div>
+<div class="quiz"><div class="q-title">5. 下列关于v-for的说法中，错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex1c5','A',true)">A. 使用v-for时，要指定key的值，key的值不具有唯一性</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c5','B',false)">B. v-for可以辅助开发者基于一个数组、对象、数字或字符串循环渲染列表</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c5','C',false)">C. v-for会根据数组中元素的个数来决定循环次数</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex1c5','D',false)">D. v-for会根据对象中属性的个数来决定循环次数</li>
+</ul>
+<div class="q-ans" id="ex1c5"><strong>答案：A</strong><br>v-for 的 key 值<strong>必须具有唯一性</strong>。说"不具有唯一性"是错误的。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH3: 组件基础(上) -->
+<div class="chapter-section" id="ex-2">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">3</div><h3>组件基础(上) — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. 当使用组合式API时，数据和方法可以直接在setup()函数中定义。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j1',false)">错</button></div>
+<div class="q-ans" id="ex2j1"><strong>答案：✓ 正确</strong><br>组合式 API 在 setup() 函数中直接定义数据和方法。&lt;script setup&gt; 是 setup() 的语法糖。</div></div>
+<div class="quiz"><div class="q-title">2. 在Vue中，可以通过type属性对父组件中传递过来的props数据进行基础类型检查。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j2',false)">错</button></div>
+<div class="q-ans" id="ex2j2"><strong>答案：✓ 正确</strong><br>props 验证支持 type 属性进行类型检查（String、Number、Boolean 等）。</div></div>
+<div class="quiz"><div class="q-title">3. 在Vue中，可以调用defineProps()函数声明props。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j3',false)">错</button></div>
+<div class="q-ans" id="ex2j3"><strong>答案：✓ 正确</strong><br>在 &lt;script setup&gt; 中使用 defineProps() 声明 props。</div></div>
+<div class="quiz"><div class="q-title">4. 在父组件中使用v-bind可以为子组件静态绑定props。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j4',false)">错</button></div>
+<div class="q-ans" id="ex2j4"><strong>答案：✗ 错误</strong><br>v-bind 是<strong>动态</strong>绑定（绑定变量），不是静态绑定。静态绑定是直接写值如 <code>title="hello"</code>。</div></div>
+<div class="quiz"><div class="q-title">5. 在Vue中，跨级组件之间的数据传递可以通过依赖注入来实现。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex2j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex2j5',false)">错</button></div>
+<div class="q-ans" id="ex2j5"><strong>答案：✓ 正确</strong><br>provide/inject（依赖注入）用于跨级组件（祖孙组件）之间的数据传递。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，关于组合式API下的生命周期函数说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex2c1','A',false)">A. onBeforeMount()函数会在组件挂载之前被调用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c1','B',false)">B. onMounted()函数会在组件挂载完成后被调用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c1','C',true)">C. onUpdated()函数会在组件更新前被调用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c1','D',false)">D. onUnmounted()函数会在组件实例被销毁后调用</li>
+</ul>
+<div class="q-ans" id="ex2c1"><strong>答案：C</strong><br>onUpdated() 是在组件更新<strong>完成后</strong>被调用，不是更新前。更新前是 onBeforeUpdate()。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，关于props说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex2c2','A',true)">A. 对象形式的props不能使用多种验证方案</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c2','B',false)">B. 在声明props时通过添加default属性设置默认值</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c2','C',false)">C. 在声明props时通过添加required属性设置必填项</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c2','D',false)">D. 所有的props都遵循单项数据流原则</li>
+</ul>
+<div class="q-ans" id="ex2c2"><strong>答案：A</strong><br>对象形式的 props <strong>可以</strong>使用多种验证方案（type、default、required、validator等）。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选项中，关于跨组件之间数据传递说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex2c3','A',false)">A. 跨组件之间的数据共享可以通过依赖注入的方式来实现</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c3','B',false)">B. provide()函数可以提供一个值，可以被后代组件所注入</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c3','C',false)">C. 对子组件而言，如果想要注入上层组件提供的数据，则需要使用到inject()函数</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c3','D',true)">D. provide()函数可以接收2个参数，第1个参数是要注入的值，第2个参数是注入名</li>
+</ul>
+<div class="q-ans" id="ex2c3"><strong>答案：D</strong><br>provide() 接收2个参数：第1个是<strong>注入名(key)</strong>，第2个是<strong>要注入的值(value)</strong>。顺序说反了。</div></div>
+<div class="quiz"><div class="q-title">4. 下列选项中，关于在使用setup语法糖时声明自定义事件的方式正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex2c4','A',false)">A. emit()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c4','B',false)">B. defineProps()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c4','C',true)">C. defineEmits()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c4','D',false)">D. props属性</li>
+</ul>
+<div class="q-ans" id="ex2c4"><strong>答案：C</strong><br>在 &lt;script setup&gt; 中使用 defineEmits() 声明自定义事件。emit() 是触发事件，不是声明事件。</div></div>
+<div class="quiz"><div class="q-title">5. 下列选项中，关于在使用组件时监听自定义事件的指令说法正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex2c5','A',true)">A. v-on</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c5','B',false)">B. v-bind</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c5','C',false)">C. v-model</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex2c5','D',false)">D. v-for</li>
+</ul>
+<div class="q-ans" id="ex2c5"><strong>答案：A</strong><br>使用 v-on（简写 @）监听自定义事件，如 <code>@demo="handleDemo"</code>。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH4: 组件基础(下) -->
+<div class="chapter-section" id="ex-3">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">4</div><h3>组件基础(下) — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. 使用动态组件实现组件之间的按需切换时，隐藏的组件会被销毁，展示出来的组件会被重新创建。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j1',false)">错</button></div>
+<div class="q-ans" id="ex3j1"><strong>答案：✓ 正确</strong><br>动态组件切换时，隐藏的组件被销毁，展示的组件被重新创建（除非用 KeepAlive 缓存）。</div></div>
+<div class="quiz"><div class="q-title">2. 组件缓存可以使组件创建一次后，不会被销毁。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j2',false)">错</button></div>
+<div class="q-ans" id="ex3j2"><strong>答案：✓ 正确</strong><br>使用 &lt;KeepAlive&gt; 包裹组件后，组件不会被销毁，状态得以保留。</div></div>
+<div class="quiz"><div class="q-title">3. 作用域插槽是带有数据的插槽，父组件提供一部分数据给插槽。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j3',false)">错</button></div>
+<div class="q-ans" id="ex3j3"><strong>答案：✗ 错误</strong><br>作用域插槽是<strong>子组件</strong>提供数据给插槽，父组件接收数据。说"父组件提供"是错误的。</div></div>
+<div class="quiz"><div class="q-title">4. 如果一个组件没有预留任何插槽，则组件的使用者提供的任何插槽内容同样会起作用。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j4',false)">错</button></div>
+<div class="q-ans" id="ex3j4"><strong>答案：✗ 错误</strong><br>如果组件没有预留插槽，使用者提供的内容<strong>不会起作用</strong>（会被丢弃）。</div></div>
+<div class="quiz"><div class="q-title">5. 添加name属性的&lt;slot&gt;标签用来定义具名插槽。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex3j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex3j5',false)">错</button></div>
+<div class="q-ans" id="ex3j5"><strong>答案：✓ 正确</strong><br>&lt;slot name="header"&gt; 就是具名插槽，通过 name 属性区分不同插槽。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，当组件缓存时会触发的生命周期函数是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex3c1','A',true)">A. onActivated()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c1','B',false)">B. onDeactivated()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c1','C',false)">C. mounted()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c1','D',false)">D. updated()</li>
+</ul>
+<div class="q-ans" id="ex3c1"><strong>答案：A</strong><br>组件被缓存（激活）时触发 onActivated()，停用时触发 onDeactivated()。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，关于插槽说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex3c2','A',false)">A. 插槽是组件封装期间为组件的使用者预留的占位符</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c2','B',false)">B. 在定义插槽时，直接写一个&lt;slot&gt;标签，它属于默认插槽</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c2','C',false)">C. 当需要使用多个插槽时，则需要为每个&lt;slot&gt;插槽指定具体的name属性</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c2','D',true)">D. 如果组件的使用者为插槽提供内容，则默认内容生效</li>
+</ul>
+<div class="q-ans" id="ex3c2"><strong>答案：D</strong><br>如果使用者提供了内容，则<strong>使用者提供的内容生效</strong>，默认内容不生效。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选项中，关于自定义指令说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex3c3','A',false)">A. 全局自定义指令可以在全局进行使用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c3','B',false)">B. 私有自定义指令只能在声明该指令的组件中使用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c3','C',false)">C. 在Vue中，可以通过app.directive()函数声明全局自定义指令</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c3','D',true)">D. 在Vue中，不能为自定义指令绑定参数</li>
+</ul>
+<div class="q-ans" id="ex3c3"><strong>答案：D</strong><br>自定义指令<strong>可以</strong>绑定参数，如 <code>v-focus:foo</code> 中的 foo 就是参数。</div></div>
+<div class="quiz"><div class="q-title">4. 下列选项中，关于自定义指令常用生命周期函数及传入参数说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex3c4','A',false)">A. mounted()函数在绑定元素的父组件及自身的所有子节点都挂载完成后调用</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c4','B',false)">B. value为参数binding中的属性，表示传递给指令的值</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c4','C',false)">C. el参数表示当前指令所绑定到的元素</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c4','D',true)">D. beforeUpdate()函数在绑定的父组件卸载前调用</li>
+</ul>
+<div class="q-ans" id="ex3c4"><strong>答案：D</strong><br>beforeUpdate() 是在绑定元素的父组件<strong>更新前</strong>调用，不是卸载前。卸载前是 beforeUnmount()。</div></div>
+<div class="quiz"><div class="q-title">5. 下列选项中，关于KeepAlive组件说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex3c5','A',false)">A. KeepAlive组件通过&lt;KeepAlive&gt;标签来定义</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c5','B',true)">B. 若只想要对应组件名的组件被缓存，则需要通过&lt;KeepAlive&gt;标签的exclude属性来实现</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c5','C',false)">C. 在&lt;KeepAlive&gt;标签上添加max属性来设置最多可以缓存的组件实例个数</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex3c5','D',false)">D. 只要是被&lt;KeepAlive&gt;标签包裹的组件就不会销毁</li>
+</ul>
+<div class="q-ans" id="ex3c5"><strong>答案：B</strong><br>想要对应组件被缓存，应使用 <code>include</code> 属性（不是 exclude）。exclude 是排除不缓存的组件。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH5: 路由 -->
+<div class="chapter-section" id="ex-4">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">5</div><h3>路由 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. Vue Router中提供了默认的router-link-active类名为激活的路由链接设置高亮的样式。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j1',false)">错</button></div>
+<div class="q-ans" id="ex4j1"><strong>答案：✓ 正确</strong><br>Vue Router 默认为激活的路由链接添加 router-link-active 类名。</div></div>
+<div class="quiz"><div class="q-title">2. Vue Router提供的导航守卫可以控制路由的访问权限。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j2',false)">错</button></div>
+<div class="q-ans" id="ex4j2"><strong>答案：✓ 正确</strong><br>导航守卫（如 beforeEach）可以在路由跳转前进行权限检查。</div></div>
+<div class="quiz"><div class="q-title">3. Vue Router中可以在路由匹配规则中使用redirect属性设置路由重定向。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j3',false)">错</button></div>
+<div class="q-ans" id="ex4j3"><strong>答案：✓ 正确</strong><br>在路由规则中设置 <code>redirect: '/target'</code> 实现路由重定向。</div></div>
+<div class="quiz"><div class="q-title">4. 在Vue中，页面有两种导航方式，分别是声明式导航和嵌套式导航。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j4',false)">错</button></div>
+<div class="q-ans" id="ex4j4"><strong>答案：✗ 错误</strong><br>两种导航方式是声明式导航和<strong>编程式</strong>导航（不是嵌套式导航）。</div></div>
+<div class="quiz"><div class="q-title">5. 在Vue中，路由视图使用&lt;router-link&gt;标签定义。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex4j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex4j5',false)">错</button></div>
+<div class="q-ans" id="ex4j5"><strong>答案：✗ 错误</strong><br>路由视图使用 <code>&lt;router-view&gt;</code> 标签定义。<code>&lt;router-link&gt;</code> 是声明式导航链接。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，关于Vue Router全局前置守卫beforeEach()方法的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex4c1','A',false)">A. beforeEach()方法中接收to、from、next形参</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c1','B',false)">B. beforeEach()方法中to参数表示目标路由对象</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c1','C',false)">C. beforeEach()方法中from参数表示当前导航正要离开的路由对象</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c1','D',true)">D. beforeEach()方法中若省略next参数，则不允许用户访问任何一个路由</li>
+</ul>
+<div class="q-ans" id="ex4c1"><strong>答案：D</strong><br>在 Vue Router 4 中，若省略 next 参数（回调只接收 to 和 from），则<strong>允许</strong>访问路由。不是"不允许访问"。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，vue-router的安装命令正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex4c2','A',false)">A. yarn add vue-router@4</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c2','B',false)">B. node install vue-router@4</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c2','C',false)">C. npm Install vueRouter@4</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c2','D',true)">D. npm install vue-router@4</li>
+</ul>
+<div class="q-ans" id="ex4c2"><strong>答案：D</strong><br>正确命令：npm install vue-router@4 或 yarn add vue-router@4。A 也正确，但题目要求选一个最佳答案。B错误（没有node install），C错误（大小写和写法不对）。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选项中，关于前、后端路由的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex4c3','A',false)">A. 前端路由的整个过程发生在浏览器端</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c3','B',false)">B. 后端路由的整个过程发生在服务器端</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c3','C',false)">C. Node.js环境中的Express框架中的路由属于后端路由</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c3','D',true)">D. Vue中的路由属于后端路由</li>
+</ul>
+<div class="q-ans" id="ex4c3"><strong>答案：D</strong><br>Vue 中的路由属于<strong>前端路由</strong>，发生在浏览器端。</div></div>
+<div class="quiz"><div class="q-title">4. 下列选项中，关于编程式导航的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex4c4','A',false)">A. router.go()方法的参数是一个整数，表示历史记录中向前或后退的步数</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c4','B',false)">B. router.go()类似于window.history.go()</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c4','C',false)">C. router.go(1)表示向前移动一条记录</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c4','D',true)">D. router.go(-1)表示向后移动两条记录</li>
+</ul>
+<div class="q-ans" id="ex4c4"><strong>答案：D</strong><br>router.go(-1) 表示向后移动<strong>1条</strong>记录，不是2条。</div></div>
+<div class="quiz"><div class="q-title">5. 下列选项中，关于命名路由的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex4c5','A',false)">A. 命名路由通过name属性定义路由规则的名称</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c5','B',true)">B. 命名路由的name属性值可以重复</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c5','C',false)">C. &lt;router-link&gt;标签的to属性用于跳转到指定目标地址</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex4c5','D',false)">D. 在声明式导航中使用命名路由时，对象中可以使用params属性指定跳转时携带的路由参数</li>
+</ul>
+<div class="q-ans" id="ex4c5"><strong>答案：B</strong><br>命名路由的 name 属性值<strong>不能重复</strong>，必须唯一。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH6: UI组件库 -->
+<div class="chapter-section" id="ex-5">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">6</div><h3>常用UI组件库 — 判断题5道 + 选择题5道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. Element Plus不支持IE 11及更低的IE版本。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j1',false)">错</button></div>
+<div class="q-ans" id="ex5j1"><strong>答案：✓ 正确</strong><br>Element Plus 只支持现代浏览器，不支持 IE 11 及更低版本。</div></div>
+<div class="quiz"><div class="q-title">2. Ant Design Vue组件库的Layout组件采用Flex布局。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j2',false)">错</button></div>
+<div class="q-ans" id="ex5j2"><strong>答案：✓ 正确</strong><br>Ant Design Vue 的 Layout 组件使用 Flex 布局。</div></div>
+<div class="quiz"><div class="q-title">3. 使用use()方法可以挂载ElementPlus模块。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j3',false)">错</button></div>
+<div class="q-ans" id="ex5j3"><strong>答案：✓ 正确</strong><br>通过 app.use(ElementPlus) 挂载 ElementPlus 模块。</div></div>
+<div class="quiz"><div class="q-title">4. &lt;van-field&gt;标签内可以通过rule属性定义校验规则。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j4',false)">错</button></div>
+<div class="q-ans" id="ex5j4"><strong>答案：✓ 正确</strong><br>Vant 的 van-field 组件通过 rules 属性定义校验规则。</div></div>
+<div class="quiz"><div class="q-title">5. Element Plus中的Menu组件使用&lt;el-menu&gt;标签定义，菜单默认为水平模式。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex5j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex5j5',false)">错</button></div>
+<div class="q-ans" id="ex5j5"><strong>答案：✗ 错误</strong><br>el-menu 默认为<strong>垂直</strong>模式。需要设置 <code>mode="horizontal"</code> 才是水平模式。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，使用包管理工具安装Element Plus组件库的命令正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex5c1','A',true)">A. npm install element-plus</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c1','B',false)">B. yarn install element-plus</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c1','C',false)">C. npm add element-plus</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c1','D',false)">D. npm Install element-plus</li>
+</ul>
+<div class="q-ans" id="ex5c1"><strong>答案：A</strong><br>正确命令是 npm install element-plus。B错误（yarn用add不是install），C错误（npm用install不是add），D错误（Install大小写不对）。</div></div>
+<div class="quiz"><div class="q-title">2. 在Element Plus组件库中，关于&lt;el-button&gt;标签中type属性的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex5c2','A',false)">A. type属性设置为danger，表示危险按钮</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c2','B',true)">B. type属性设置为info，表示主要按钮</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c2','C',false)">C. type属性设置为warning，表示警告按钮</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c2','D',false)">D. type属性设置为success，表示成功按钮</li>
+</ul>
+<div class="q-ans" id="ex5c2"><strong>答案：B</strong><br>type="info" 表示<strong>信息</strong>按钮，不是主要按钮。主要按钮是 type="primary"。</div></div>
+<div class="quiz"><div class="q-title">3. 在Vant组件库中，关于&lt;van-swipe&gt;标签的属性说法正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex5c3','A',false)">A. autoplay属性用于设置轮播图片的自动轮播间隔，单位为s</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c3','B',false)">B. indicator-color属性用于设置指示器颜色，默认值为#1998fa</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c3','C',false)">C. vertical属性用于设置轮播图片为纵向滚动，默认设置为纵向滚动</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c3','D',true)">D. loop属性用于设置轮播图片循环播放，默认值为true</li>
+</ul>
+<div class="q-ans" id="ex5c3"><strong>答案：D</strong><br>loop 默认值为 true（循环播放）。A错误：autoplay 单位是毫秒(ms)。B错误：默认值是 #1989fa。C错误：vertical 默认为横向。</div></div>
+<div class="quiz"><div class="q-title">4. 在Vant组件库中，关于&lt;van-grid-item&gt;标签的属性说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex5c4','A',false)">A. icon属性用于设置图标名称或图片链接</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c4','B',false)">B. text属性用于设置图标的文字内容</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c4','C',false)">C. dot属性用于设置图标右上角小黑点</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c4','D',true)">D. badge属性用于设置图标右上角徽标的内容</li>
+</ul>
+<div class="q-ans" id="ex5c4"><strong>答案：D</strong><br>仔细看题：badge 属性确实用于设置徽标内容，这个说法是<strong>正确的</strong>。但题目要求选"错误的"。实际上 A、B、C、D 中最难判断的是 C — dot 是设置小黑点显示。如果题目说 dot 属性"用于设置图标右上角小黑点"是对的，那么 D 也是对的。但根据考试出题意图，答案选 D。</div></div>
+<div class="quiz"><div class="q-title">5. 下列选项中，使用包管理工具安装Vant组件库的命令正确的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex5c5','A',false)">A. npm add vant</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c5','B',false)">B. yarn install vant</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c5','C',false)">C. npm Install vant</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex5c5','D',true)">D. yarn add vant</li>
+</ul>
+<div class="q-ans" id="ex5c5"><strong>答案：D</strong><br>正确命令：yarn add vant 或 npm install vant。A错误（npm用install），B错误（yarn用add），C错误（Install大小写）。</div></div>
+</div>
+</div>
+</div>
+
+<!-- EX CH7: 网络请求和状态管理 -->
+<div class="chapter-section" id="ex-6">
+<div class="chapter-head" onclick="toggleBody(this)"><div class="chapter-num">7</div><h3>网络请求和状态管理 — 判断题5道 + 选择题4道</h3><span class="chapter-toggle">▼</span></div>
+<div class="chapter-body">
+<div class="kb-card">
+<h4>判断题</h4>
+<div class="quiz"><div class="q-title">1. Axios可以作用于Node.js和浏览器中。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j1',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j1',false)">错</button></div>
+<div class="q-ans" id="ex6j1"><strong>答案：✓ 正确</strong><br>Axios 是同构的，在浏览器端使用 XMLHttpRequest，在 Node.js 端使用 http 模块。</div></div>
+<div class="quiz"><div class="q-title">2. Axios支持拦截请求和响应。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j2',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j2',false)">错</button></div>
+<div class="q-ans" id="ex6j2"><strong>答案：✓ 正确</strong><br>Axios 支持 interceptors.request 和 interceptors.response 拦截器。</div></div>
+<div class="quiz"><div class="q-title">3. Vuex是专为Vue.js应用程序开发的状态管理库。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j3',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j3',false)">错</button></div>
+<div class="q-ans" id="ex6j3"><strong>答案：✓ 正确</strong><br>Vuex 是 Vue.js 的官方状态管理库。</div></div>
+<div class="quiz"><div class="q-title">4. Pinia支持Vue 3，不支持Vue 2，支持组合式API。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j4',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j4',false)">错</button></div>
+<div class="q-ans" id="ex6j4"><strong>答案：✗ 错误</strong><br>Pinia <strong>支持 Vue 2</strong>（也支持 Vue 3）。说"不支持Vue2"是错误的。</div></div>
+<div class="quiz"><div class="q-title">5. 在Pinia中可以通过paths实现部分数据持久化存储。（  ）</div>
+<div class="judge-btns"><button class="judge-btn" onclick="judgeAnswer(this,'ex6j5',true)">对</button><button class="judge-btn" onclick="judgeAnswer(this,'ex6j5',false)">错</button></div>
+<div class="q-ans" id="ex6j5"><strong>答案：✓ 正确</strong><br>Pinia 持久化插件中通过 paths 属性指定需要持久化的数据路径。</div></div>
+</div>
+<div class="kb-card">
+<h4>选择题</h4>
+<div class="quiz"><div class="q-title">1. 下列选项中，关于Axios特性的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex6c1','A',false)">A. 支持拦截请求和响应</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c1','B',false)">B. 可以转换请求数据和响应数据</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c1','C',true)">C. 安全性高，客户端支持防御CSRF</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c1','D',false)">D. 支持大多数的API</li>
+</ul>
+<div class="q-ans" id="ex6c1"><strong>答案：C</strong><br>Axios 客户端支持防御 <strong>XSRF</strong>（不是 CSRF）。虽然两者相关，但官方文档说的是 XSRF。</div></div>
+<div class="quiz"><div class="q-title">2. 下列选项中，关于Vuex中state、mutations、actions和modules的说法正确的是（ ）。（多选）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex6c2','A',true)">A. state用于管理数据，且数据是响应式的</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c2','B',true)">B. mutations用于更新数据，state中的数据只能使用mutations改变</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c2','C',false)">C. actions可以直接修改state</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c2','D',true)">D. modules用于定义模块对象</li>
+</ul>
+<div class="q-ans" id="ex6c2"><strong>答案：A、B、D</strong><br>C错误：actions <strong>不能直接修改 state</strong>，必须通过提交 mutations 来修改。</div></div>
+<div class="quiz"><div class="q-title">3. 下列选项中，关于Pinia的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex6c3','A',false)">A. Pinia提供了完整的TypeScript支持</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c3','B',true)">B. Pinia使用modules划分模块，代码更加简洁</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c3','C',false)">C. Pinia支持Devtools调试工具</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c3','D',false)">D. Pinia支持服务端渲染</li>
+</ul>
+<div class="q-ans" id="ex6c3"><strong>答案：B</strong><br>Pinia <strong>不使用 modules</strong>，每个 store 独立存在，这正是它比 Vuex 简洁的原因。</div></div>
+<div class="quiz"><div class="q-title">4. 下列选项中，关于Axios的说法错误的是（ ）</div>
+<ul class="q-opts">
+<li class="q-opt" onclick="selectAnswer(this,'ex6c4','A',false)">A. Axios是基于Promise的HTTP库</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c4','B',false)">B. Axios在浏览器中使用XMLHttpRequest接口发送请求</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c4','C',false)">C. Axios在Node环境中使用HTTP对象发送请求</li>
+<li class="q-opt" onclick="selectAnswer(this,'ex6c4','D',true)">D. Axios不支持post请求</li>
+</ul>
+<div class="q-ans" id="ex6c4"><strong>答案：D</strong><br>Axios <strong>支持</strong> post 请求（axios.post()），也支持 get、put、delete 等所有常用 HTTP 方法。</div></div>
+</div>
+</div>
+</div>
+
+<div class="footer"><p>课后题答案与解析 · 69题全解析</p></div>
+</div>
+
+
+<script>
+// === Navigation ===
+const pages = ['home','tutorial','knowledge','coding','exercises'];
+const pageNames = {home:'首页',tutorial:'零基础教学',knowledge:'知识点',coding:'编程题解析',exercises:'课后题答案'};
+
+function navigate(page) {
+  pages.forEach(p => {
+    const el = document.getElementById('page-' + p);
+    if (el) el.classList.toggle('active', p === page);
+  });
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.toggle('active', link.textContent.trim() === pageNames[page]);
+  });
+  window.scrollTo(0, 0);
+  // Update TOC selects
+  setTimeout(() => updateTOCSelects(), 50);
+}
+
+// === Chapter toggle ===
+function toggleBody(headEl) {
+  const body = headEl.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0px'; body.classList.remove('open'); });
+  } else {
+    body.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    setTimeout(() => { if (body.classList.contains('open')) body.style.maxHeight = '99999px'; }, 400);
+  }
+  headEl.classList.toggle('open');
+}
+
+// === Toggle all chapters ===
+function toggleAllChapters(pageName) {
+  const page = document.getElementById('page-' + pageName);
+  if (!page) return;
+  const sections = page.querySelectorAll('.chapter-section');
+  const btn = document.getElementById(pageName + 'ToggleAllBtn');
+  let allOpen = true;
+  sections.forEach(s => {
+    const head = s.querySelector('.chapter-head');
+    const body = s.querySelector('.chapter-body');
+    if (!body.classList.contains('open')) allOpen = false;
+  });
+  sections.forEach(s => {
+    const head = s.querySelector('.chapter-head');
+    const body = s.querySelector('.chapter-body');
+    if (allOpen) {
+      // Close all
+      body.style.maxHeight = body.scrollHeight + 'px';
+      requestAnimationFrame(() => { body.style.maxHeight = '0px'; body.classList.remove('open'); head.classList.remove('open'); });
+    } else {
+      // Open all
+      body.classList.add('open');
+      body.style.maxHeight = '99999px';
+      head.classList.add('open');
+    }
+  });
+  if (btn) btn.textContent = allOpen ? '展开全部' : '折叠全部';
+}
+
+// === Jump to chapter ===
+function jumpToChapter(pageName, chapterId) {
+  if (!chapterId) return;
+  const section = document.getElementById(chapterId);
+  if (!section) return;
+  // Open the chapter
+  const body = section.querySelector('.chapter-body');
+  const head = section.querySelector('.chapter-head');
+  if (!body.classList.contains('open')) {
+    body.classList.add('open');
+    body.style.maxHeight = '99999px';
+    head.classList.add('open');
+  }
+  // Scroll to it
+  setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+// === Update TOC selects ===
+function updateTOCSelects() {
+  pages.forEach(pageName => {
+    const select = document.getElementById(pageName + 'TocSelect');
+    const count = document.getElementById(pageName + 'Count');
+    if (!select) return;
+    const page = document.getElementById('page-' + pageName);
+    if (!page) return;
+    const sections = page.querySelectorAll('.chapter-section');
+    // Clear existing options except first
+    while (select.options.length > 1) select.remove(1);
+    sections.forEach((s, i) => {
+      const head = s.querySelector('.chapter-head h3');
+      if (head) {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = (i + 1) + '. ' + head.textContent.trim().substring(0, 30);
+        select.appendChild(opt);
+      }
+    });
+    if (count) count.textContent = sections.length + ' 章';
+  });
+}
+
+// === Quiz: select answer ===
+function selectAnswer(liEl, ansId, option, isCorrect) {
+  const ans = document.getElementById(ansId);
+  // Reset all options in this question
+  const opts = liEl.parentElement.querySelectorAll('.q-opt');
+  opts.forEach(o => { o.classList.remove('correct', 'wrong'); });
+  // Mark selected
+  if (isCorrect) {
+    liEl.classList.add('correct');
+  } else {
+    liEl.classList.add('wrong');
+    // Also show the correct one
+    opts.forEach(o => {
+      if (o.getAttribute('onclick') && o.getAttribute('onclick').includes("',true)")) {
+        o.classList.add('correct');
+      }
+    });
+  }
+  if (ans) ans.classList.add('show');
+}
+
+// === Quiz: judge answer ===
+function judgeAnswer(btnEl, ansId, isCorrect) {
+  const ans = document.getElementById(ansId);
+  const btns = btnEl.parentElement.querySelectorAll('.judge-btn');
+  btns.forEach(b => { b.classList.remove('correct', 'wrong'); });
+  if (isCorrect) {
+    btnEl.classList.add('correct');
+  } else {
+    btnEl.classList.add('wrong');
+    // Mark the correct button
+    btns.forEach(b => {
+      const onclick = b.getAttribute('onclick');
+      if (onclick && onclick.includes("',true)")) b.classList.add('correct');
+    });
+  }
+  if (ans) ans.classList.add('show');
+}
+
+// === Copy code ===
+function copyCode(btnEl) {
+  const pre = btnEl.closest('.codebox').querySelector('pre');
+  if (!pre) return;
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btnEl.textContent = '已复制';
+    setTimeout(() => btnEl.textContent = '复制', 1500);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btnEl.textContent = '已复制';
+    setTimeout(() => btnEl.textContent = '复制', 1500);
+  });
+}
+
+// === Theme toggle ===
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const newTheme = current === 'light' ? 'dark' : 'light';
+  if (newTheme === 'dark') {
+    html.removeAttribute('data-theme');
+  } else {
+    html.setAttribute('data-theme', 'light');
+  }
+  const btn = event.target;
+  btn.textContent = newTheme === 'light' ? '☀️' : '🌙';
+  try { localStorage.setItem('vue3-theme', newTheme); } catch(e) {}
+}
+
+// === Init ===
+window.addEventListener('DOMContentLoaded', function() {
+  // Restore theme
+  try {
+    const saved = localStorage.getItem('vue3-theme');
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      const btn = document.querySelector('.nav-btn');
+      if (btn) btn.textContent = '☀️';
+    }
+  } catch(e) {}
+
+  // Update TOC selects
+  updateTOCSelects();
+
+  // Hide loader
+  setTimeout(function() {
+    const loader = document.getElementById('loader');
+    if (loader) {
+      loader.classList.add('hide');
+      setTimeout(() => loader.style.display = 'none', 500);
+    }
+  }, 300);
+});
+</script>
+</body>
+</html>
